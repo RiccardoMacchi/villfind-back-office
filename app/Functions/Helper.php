@@ -16,9 +16,4 @@ class Helper
         return $same_original_slug_count ? "{$original_slug}-{$same_original_slug_count}" : $original_slug;
     }
 
-    // Get the reading time in minutes as an int from the given string
-    public static function getReadingTime($string)
-    {
-        return ceil(str_word_count($string) / 200);
-    }
 }

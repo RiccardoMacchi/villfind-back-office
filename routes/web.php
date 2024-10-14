@@ -23,10 +23,6 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DasboardController::class, 'index'])->name('home');
-
-    Route::resource('posts', PostController::class);
-    Route::resource('post-types', PostTypeController::class)->except(['show', 'edit', 'update', 'create']);
-    Route::resource('tags', TagController::class)->except(['show', 'edit', 'update', 'create']);
 });
 
 
