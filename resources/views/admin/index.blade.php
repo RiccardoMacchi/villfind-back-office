@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2 class="fs-4 text-primary my-4">
+    <div class="container mt-5">
+        <h2 class="fs-3 text-primary my-4">
             Dashboard
         </h2>
         <div class="row justify-content-center">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">{{ __('User Dashboard') }}</div>
+            <div class="col-md-8">
+                <div class="card border-primary shadow-sm">
+                    <div class="card-header bg-primary text-white">{{ __('User Dashboard') }}</div>
 
                     <div class="card-body">
                         @if (session('status'))
