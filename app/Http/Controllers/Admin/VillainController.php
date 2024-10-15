@@ -18,9 +18,9 @@ class VillainController extends Controller
      */
     public function index()
     {
-        $villains = Villain::where('user_id', Auth::id())->first();;
+        $villain = Villain::where('user_id', Auth::id())->first();
 
-        return view('admin.villains.index', compact('villains'));
+        return view('admin.villains.index', compact('villain'));
     }
 
     /**
