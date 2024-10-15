@@ -1,6 +1,5 @@
 @php
     $side_bar_links = config('admin.side_bar_links');
-    $userVillain = App\Models\Villain::where('user_id', Auth::id())->first();
 
 @endphp
 
@@ -25,11 +24,6 @@
                     <div class="d-none d-md-block position-absolute top-0 end-0 w-25 h-100 text-fade"></div>
                 </a>
             </li>
-            @if (!$userVillain)
-                <li class="d-flex gap-2 nav-link position-relativ">
-                    <a href="{{ route('admin.villains.create') }}" class="nav-link">Become a Villain</a>
-                </li>
-            @endif
         @endforeach
     </menu>
 </nav>
