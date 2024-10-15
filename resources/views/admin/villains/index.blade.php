@@ -16,8 +16,6 @@
                     </div>
 
                     <div class="card-body py-4">
-                        <hr>
-
                         {{-- Villain's email --}}
                         <p>
                             <i class="fas fa-envelope text-primary"></i>
