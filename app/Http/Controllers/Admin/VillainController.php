@@ -16,8 +16,7 @@ class VillainController extends Controller
      */
     public function index()
     {
-        $villains = Villain::where('user_id', Auth::id())->get();;
-        dd('villains');
+        $villains = Villain::where('user_id', Auth::id())->get();
         return view('admin.villains.index', compact('villains'));
     }
 
@@ -91,7 +90,9 @@ class VillainController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $villain = Villain::find($id);
+
+        return view('admin.villains.edit', compact('villain'));
     }
 
     /**
@@ -99,7 +100,18 @@ class VillainController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->all();
+        $villain = Villain::find($id);
+
+        if($data['name'] === $villain->name){
+            $data['slug'] = $villain->slug;
+        }else{
+            $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
+        }
+
+        $villain->update($data);
+
+        return redirect()->route('admin.villains.index', $villain)->with('edited', 'Edited successfully');
     }
 
     /**
