@@ -12,4 +12,9 @@ class Skill extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function villains()
+    {
+        return $this->belongsToMany(Villain::class);
+    }
 }
