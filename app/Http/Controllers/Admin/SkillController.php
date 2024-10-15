@@ -34,16 +34,14 @@ class SkillController extends Controller
     {
         $exists = Skill::where('name', $request->name)->first();
         if ($exists == null) {
-
             $data = $request->all();
             $new_skill = new Skill();
             $new_skill->fill($data);
             $new_skill->save();
 
-            return redirect()->route('admin.skills.index')->with('success', 'Skill creata con successo!');
+            return redirect()->route('admin.skills.index')->with('success', 'Skill created successfully!');
         } else {
-
-            return redirect()->route('admin.skills.index')->with('error', 'Skill già presente nel database!');
+            return redirect()->route('admin.skills.index')->withErrors(['name' => 'Skill already exists in the database!']);
         }
     }
 
@@ -73,9 +71,9 @@ class SkillController extends Controller
             $data = $request->all();
             $skill->update($data);
 
-            return redirect()->route('admin.skills.index')->with('success', 'Skill aggiornata con successo!');
+            return redirect()->route('admin.skills.index')->with('success', 'Skill updated successfully!');
         } else {
-            return redirect()->route('admin.skills.index')->with('error', 'Skill già presente nel database!');
+            return redirect()->route('admin.skills.index')->with('error', 'Skill already exists in the database!');
         }
     }
 
@@ -86,6 +84,6 @@ class SkillController extends Controller
     {
         $skill->delete();
 
-        return redirect()->route('admin.skills.index')->with('success', 'Skill eliminata con successo!');
+        return redirect()->route('admin.skills.index')->with('success', 'Skill deleted successfully!');
     }
 }

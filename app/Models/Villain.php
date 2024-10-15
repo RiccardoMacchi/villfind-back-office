@@ -15,6 +15,8 @@ class Villain extends Model
         'image',
         'phone',
         'universe_id',
+        'email_contact',
+        'user_id',
     ];
 
     public function user()

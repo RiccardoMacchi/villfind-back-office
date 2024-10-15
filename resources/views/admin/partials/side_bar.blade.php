@@ -1,5 +1,6 @@
 @php
     $side_bar_links = config('admin.side_bar_links');
+
 @endphp
 
 <nav class="navbar-dark bg-dark h-100 px-3 px-xxl-4 overflow-auto">
