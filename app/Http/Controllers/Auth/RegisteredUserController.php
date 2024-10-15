@@ -46,6 +46,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('admin.villains.create')->with('error', 'Diventa un Villain.');
+        return redirect()->route('admin.villains.create');
     }
 }
