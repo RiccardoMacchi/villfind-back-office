@@ -12,4 +12,9 @@ class Rating extends Model
     protected $fillable = [
         'value',
     ];
+
+    public function villains()
+    {
+        return $this->belongsToMany(Villain::class);
+    }
 }

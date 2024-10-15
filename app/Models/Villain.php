@@ -36,4 +36,9 @@ class Villain extends Model
     {
         return $this->belongsToMany(Service::class);
     }
+
+    public function ratings()
+    {
+        return $this->belongsToMany(Rating::class);
+    }
 }
