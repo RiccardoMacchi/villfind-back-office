@@ -11,7 +11,7 @@
             <div class="card-body">
                 <h3 class="card-title">{{ $villain->name }}</h3>
                 <h5 class="card-text">{{ $villain->universe->name }}</h5>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a href="{{ route('admin.villains.edit', $villain) }}" class="btn btn-primary">Edit</a>
             </div>
         </div>
     </div>
