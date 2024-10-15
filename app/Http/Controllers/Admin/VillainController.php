@@ -63,7 +63,6 @@ class VillainController extends Controller
 
         // Crea il Villain
         $new_villain = new Villain;
-        var_dump($new_villain);
         $new_villain->slug = Helper::generateSlug($data['name'], Villain::class);
         $new_villain->user_id = Auth::id();
 
