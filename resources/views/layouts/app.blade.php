@@ -32,7 +32,10 @@
 
         <div class="flex-grow-1 d-flex page-center">
             <aside class="flex-shrink-0">
-                @include('admin.partials.side_bar')
+                @auth
+                    @include('admin.partials.side_bar')
+                @endauth
+
             </aside>
 
             <main class="flex-grow-1 overflow-auto bg-white">

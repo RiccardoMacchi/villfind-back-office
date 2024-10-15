@@ -27,6 +27,7 @@ class VillainsTableSeeder extends Seeder
                 if ($row_data[2]) {
                     $new_villain->phone = $row_data[2];
                 }
+
                 $new_villain->universe_id = Universe::where('name', '=', $row_data[3])->first()->id;
                 $new_villain->user_id = $row_count;
 
