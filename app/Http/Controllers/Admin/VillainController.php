@@ -53,12 +53,15 @@ class VillainController extends Controller
 
         $data = $request->all();
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('uploads', 'public');
-            $data['image'] = $imagePath;
+        if (array_key_exists('image', $data)) {
+            $image = Storage::put('uploads', $data['image']);
+            $data['image'] = $image;
         }
 
+
+        // Crea il Villain
         $new_villain = new Villain;
+        $new_villain->slug = Helper::generateSlug($data['name'], Villain::class);
         $new_villain->user_id = Auth::id();
 
         $new_villain->fill($data);
@@ -76,9 +79,8 @@ class VillainController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Villain $villain)
     {
-        $villain = Villain::find($id);
         $universes = Universe::all();
         $skills = Skill::all();
 
@@ -88,10 +90,9 @@ class VillainController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Villain $villain)
+    public function update(VillainRequest $request, Villain $villain)
     {
         $data = $request->all();
-        $villain = Villain::find($id);
 
         if ($data['name'] === $villain->name) {
             $data['slug'] = $villain->slug;
