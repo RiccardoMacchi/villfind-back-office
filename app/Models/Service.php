@@ -13,4 +13,9 @@ class Service extends Model
         'name',
         'description',
     ];
+
+    public function villains()
+    {
+        return $this->belongsToMany(Villain::class);
+    }
 }

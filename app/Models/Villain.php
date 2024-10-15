@@ -31,4 +31,9 @@ class Villain extends Model
     {
         return $this->belongsToMany(Skill::class);
     }
+
+    public function service()
+    {
+        return $this->belongsToMany(Service::class);
+    }
 }
