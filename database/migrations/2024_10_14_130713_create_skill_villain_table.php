@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('skill_villain', function (Blueprint $table) {
-            $table->foreignId('skill_id')->constrained('skills')->cascadeOnDelete();
             $table->foreignId('villain_id')->constrained('villains')->cascadeOnDelete();
+            $table->foreignId('skill_id')->constrained('skills')->cascadeOnDelete();
         });
-
     }
 
     /**

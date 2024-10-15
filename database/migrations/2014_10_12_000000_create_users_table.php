@@ -11,8 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -21,10 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**

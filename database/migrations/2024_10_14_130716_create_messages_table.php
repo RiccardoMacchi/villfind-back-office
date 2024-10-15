@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('villain_id')->nullable()->constrained('villains')->onDelete('set null');
+            $table->foreignId('villain_id')->constrained('villains')->cascadeOnDelete();
             $table->string('full_name');
-            $table->string('email')->nullable();
-            $table->string('telephone')->nullable();
+            $table->string('email');
+            $table->string('phone')->nullable();
             $table->text('content');
             $table->timestamps();
         });
