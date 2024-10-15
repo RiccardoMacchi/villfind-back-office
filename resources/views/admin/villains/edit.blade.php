@@ -31,7 +31,7 @@
             <div class="row mb-3">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" name="email" id="email" class="form-control" required value="{{ old('email', $villain->email) }}">
+                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $villain->email_contact) }}" required>
                 </div>
             </div>
 

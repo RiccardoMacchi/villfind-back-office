@@ -10,6 +10,7 @@ use App\Models\Villain;
 use App\Models\Universe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class VillainController extends Controller
 {
@@ -18,9 +19,9 @@ class VillainController extends Controller
      */
     public function index()
     {
-        $villains = Villain::where('user_id', Auth::id())->first();;
+        $villain = Villain::where('user_id', Auth::id())->first();;
 
-        return view('admin.villains.index', compact('villains'));
+        return view('admin.villains.index', compact('villain'));
     }
 
     /**
@@ -53,6 +54,12 @@ class VillainController extends Controller
         }
 
         $data = $request->all();
+
+        if(array_key_exists('image', $data)){
+            $image = Storage::put('uploads', $data['image']);
+        }
+
+        $data['image'] = $image;
 
         // Crea il Villain
         $new_villain = new Villain;
