@@ -7,7 +7,6 @@ use App\Models\Villain;
 use App\Models\Universe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Villain;
 
 class VillainController extends Controller
 {
@@ -16,7 +15,7 @@ class VillainController extends Controller
      */
     public function index()
     {
-        $villains= Villain::where('user_id');
+        $villains = Villain::where('user_id');
         return view('admin.villains.index', compact('villains'));
     }
 
