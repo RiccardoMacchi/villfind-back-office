@@ -13,4 +13,9 @@ class Universe extends Model
         'name',
         'description',
     ];
+
+    public function villains()
+    {
+        return $this->hasMany(Villain::class);
+    }
 }
