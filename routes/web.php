@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DasboardController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PostTypeController;
+use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DasboardController::class, 'index'])->name('home');
+
+    Route::resource('skills', SkillController::class);
 });
 
 
