@@ -18,7 +18,6 @@ class VillainController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
         $villain = Villain::where('user_id', Auth::id())->first();
         return view('admin.villains.index', compact('villain'));
     }
@@ -65,6 +64,12 @@ class VillainController extends Controller
         var_dump($new_villain);
         $new_villain->slug = Helper::generateSlug($data['name'], Villain::class);
         $new_villain->user_id = Auth::id();
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('villains', 'public');
+            $new_villain->image = $imagePath;
+        }
+
         $new_villain->fill($data);
         $new_villain->save();
 
