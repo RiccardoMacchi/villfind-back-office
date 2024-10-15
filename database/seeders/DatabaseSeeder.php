@@ -13,7 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // code
+            SkillsTableSeeder::class,
+            UniversesTableSeeder::class,
+            UsersTableSeeder::class,
+            VillainsTableSeeder::class,
+            SkillVillainTableSeeder::class,
         ]);
     }
 }

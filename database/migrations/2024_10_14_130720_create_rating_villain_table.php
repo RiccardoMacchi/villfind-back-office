@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('rating_villain', function (Blueprint $table) {
-            $table->foreignId('villan_id')->nullable()->constrained('villains');
-            $table->foreignId('rating_id')->nullable()->constrained('ratings');
+            $table->foreignId('villan_id')->constrained('villains')->cascadeOnDelete();
+            $table->foreignId('rating_id')->constrained('ratings')->cascadeOnDelete();
             $table->string('full_name');
             $table->text('content')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
