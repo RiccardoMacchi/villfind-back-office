@@ -80,7 +80,7 @@ class VillainController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Villain $villain)
     {
         //
     }
@@ -88,8 +88,16 @@ class VillainController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Villain $villain)
     {
-        //
+        $userVillain = Villain::where('user_id', Auth::id())->first();
+
+        if ($userVillain) {
+            $villain->delete();
+
+            return redirect()->route('admin.villains.create')->with('success', 'Villan eliminato con successo!');
+        } else {
+            return redirect()->route('admin.villains.index')->with('error', 'Non puoi eliminare questo Villain.');
+        }
     }
 }
