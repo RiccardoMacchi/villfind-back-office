@@ -18,12 +18,8 @@ class VillainController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         $villains = Villain::where('user_id', Auth::id())->first();;
 
-=======
-        $villains = Villain::where('user_id', Auth::id())->get();
->>>>>>> edit
         return view('admin.villains.index', compact('villains'));
     }
 
@@ -80,8 +76,10 @@ class VillainController extends Controller
     public function edit(string $id)
     {
         $villain = Villain::find($id);
+        $universes = Universe::all();
+        $skills = Skill::all();
 
-        return view('admin.villains.edit', compact('villain'));
+        return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
     }
 
     /**

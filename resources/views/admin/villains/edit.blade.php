@@ -58,7 +58,7 @@
             </div>
 
             <div class="d-grid gap-2 d-md-block">
-                <a href="{{ route('admin.villains.edit', $villain) }}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('admin.villains.index', $villain) }}" class="btn btn-primary">Edit</a>
             </div>
         </form>
     </div>
