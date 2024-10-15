@@ -10,6 +10,7 @@ use App\Models\Villain;
 use App\Models\Universe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class VillainController extends Controller
 {
@@ -17,9 +18,7 @@ class VillainController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $villain = Villain::where('user_id', Auth::id())->first();;
-
+        $villain = Villain::where('user_id', Auth::id())->first();
         return view('admin.villains.index', compact('villain'));
     }
 
@@ -54,6 +53,12 @@ class VillainController extends Controller
 
         $data = $request->all();
 
+        if(array_key_exists('image', $data)){
+            $image = Storage::put('uploads', $data['image']);
+        }
+
+        $data['image'] = $image;
+
         // Crea il Villain
         $new_villain = new Villain;
         var_dump($new_villain);
@@ -81,7 +86,11 @@ class VillainController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $villain = Villain::find($id);
+        $universes = Universe::all();
+        $skills = Skill::all();
+
+        return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
     }
 
     /**
@@ -89,7 +98,18 @@ class VillainController extends Controller
      */
     public function update(Request $request, Villain $villain)
     {
-        //
+        $data = $request->all();
+        $villain = Villain::find($id);
+
+        if($data['name'] === $villain->name){
+            $data['slug'] = $villain->slug;
+        }else{
+            $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
+        }
+
+        $villain->update($data);
+
+        return redirect()->route('admin.villains.index', $villain)->with('edited', 'Edited successfully');
     }
 
     /**
