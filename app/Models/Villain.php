@@ -15,6 +15,8 @@ class Villain extends Model
         'image',
         'phone',
         'universe_id',
+        'email_contact',
+        'user_id',
     ];
 
     public function user()
@@ -30,5 +32,15 @@ class Villain extends Model
     public function skills()
     {
         return $this->belongsToMany(Skill::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsToMany(Service::class);
+    }
+
+    public function ratings()
+    {
+        return $this->belongsToMany(Rating::class);
     }
 }
