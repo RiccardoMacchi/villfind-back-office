@@ -25,14 +25,4 @@ class SkillsRequest extends FormRequest
             'name' => 'required|unique:skills,name|min:2|max:255'
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'name.required' => 'Il campo nome è obbligatorio.',
-            'name.unique' => 'Il nome deve essere univoco.',
-            'name.min' => 'Il nome deve contenere almeno :min caratteri.',
-            'name.max' => 'Il nome non può superare i :max caratteri.',
-        ];
-    }
 }

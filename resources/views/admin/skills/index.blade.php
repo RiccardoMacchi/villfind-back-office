@@ -11,22 +11,19 @@
                 {{ session('success') }}
             </div>
         @endif
-        @if (session('error'))
+        @if ($errors->any())
             <div class="alert alert-danger">
-                {{ session('error') }}
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
             </div>
         @endif
         <div class="card">
-            {{-- <div class="card-header">
-                {{ $skills->links() }}
-            </div> --}}
-
             <div class="card-body p-0">
                 <table class="table table-striped table-hover align-middle mb-0">
                     <thead>
                         <tr>
                             <th scope="col" class="text-primary col-9">Name</th>
-
                             <th scope="col" class="text-primary text-center col-3">Option</th>
                         </tr>
                     </thead>
@@ -41,7 +38,6 @@
                                         <input
                                             class="input-edit form-control @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
                                             type="text" name="name" value="{{ $skill->name }}">
-                                        {{-- Input hidden per salvare id in old e fare verifica --}}
                                         <input type="hidden" name="id" value="{{ $skill->id }}">
                                     </form>
                                 </th>
@@ -51,9 +47,7 @@
                                         <li>
                                             <form action="{{ route('admin.skills.destroy', $skill) }}" method="POST">
                                                 @csrf
-
                                                 @method('DELETE')
-
                                                 <button type="submit" class="btn btn-sm btn-danger">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </button>
@@ -67,20 +61,22 @@
                         <tr>
                             <form action="{{ route('admin.skills.store') }}" method="POST">
                                 @csrf
-
                                 <th scope="row" class="col-9 py-0">
                                     <div class="position-relative py-3">
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
                                             id="input-name" name="name" aria-errormessage="input-name-error"
-                                            value="{!! old('name', '') !!}" minlength="3" maxlength="55"
-                                            placeholder="Name..." required>
-
-                                        @error('name')
-                                            <small id="input-name-error"
-                                                class="invalid-feedback position-absolute bottom-0 start-0">
-                                                {{ $message }}
-                                            </small>
-                                        @enderror
+                                            value="@if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) {{ old('name') }} @endif"
+                                            minlength="3" maxlength="55" placeholder="Name..." required>
+                                        <input type="hidden" name="id" value="0">
+                                        @if ($errors->any() && old('name'))
+                                            @error('name')
+                                                <small id="input-name-error"
+                                                    class="invalid-feedback position-absolute bottom-0 start-0">
+                                                    {{ $message }}
+                                                </small>
+                                            @enderror
+                                        @endif
                                     </div>
                                 </th>
 
@@ -100,4 +96,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function submitUpdate(id) {
+            let form = document.getElementById(`update-${id}`)
+            form.submit();
+        }
+    </script>
 @endsection

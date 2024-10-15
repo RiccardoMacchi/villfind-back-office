@@ -13,5 +13,10 @@ return [
             'route_name' => 'admin.villains.index',
             'menu_icon' => '<i class="fa-solid fa-house"></i>',
         ],
+        [
+            'menu_text' => 'SKILLS',
+            'route_name' => 'admin.skills.index',
+            'menu_icon' => '<i class="fa-solid fa-book-skull"></i>',
+        ],
     ],
 ];
