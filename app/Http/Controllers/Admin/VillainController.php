@@ -56,9 +56,9 @@ class VillainController extends Controller
 
         if(array_key_exists('image', $data)){
             $image = Storage::put('uploads', $data['image']);
+            $data['image'] = $image;
         }
 
-        $data['image'] = $image;
 
         // Crea il Villain
         $new_villain = new Villain;
