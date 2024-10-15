@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Skill;
 use App\Models\Villain;
 use App\Models\Universe;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +32,9 @@ class VillainController extends Controller
         }
 
         $universes = Universe::all();
+        $skills = Skill::all();
 
-        return view('admin.villains.create', compact('universes'));
+        return view('admin.villains.create', compact('universes', 'skills'));
     }
 
     /**

@@ -51,6 +51,18 @@
                     <small class="form-text text-muted">Select the universe.</small>
                 </div>
             </div>
+            {{-- Skills --}}
+            <div class="row mb-3">
+                <label for="skill_id" class="col-sm-2 col-form-label">Skills</label>
+                <div class="col-sm-10">
+                    <select name="skill_id" id="skill_id" class="form-select">
+                        @foreach ($skills as $skill)
+                            <option value="{{ $skill->id }}">{{ $skill->name }}</option>
+                        @endforeach
+                    </select>
+                    <small class="form-text text-muted">Select the universe.</small>
+                </div>
+            </div>
 
             <div class="d-grid gap-2 d-md-block">
                 <button type="submit" class="btn btn-primary">Sign in now</button>
