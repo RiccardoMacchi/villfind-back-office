@@ -15,9 +15,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SkillsTableSeeder::class,
             UniversesTableSeeder::class,
+            ServicesTableSeeder::class,
+            RatingsTableSeeder::class,
             UsersTableSeeder::class,
             VillainsTableSeeder::class,
             SkillVillainTableSeeder::class,
+            ServiceVillainTableSeeder::class,
+            RatingVillainTableSeeder::class,
         ]);
     }
 }
