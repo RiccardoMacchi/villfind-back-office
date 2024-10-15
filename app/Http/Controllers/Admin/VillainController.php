@@ -46,33 +46,23 @@ class VillainController extends Controller
      */
     public function store(VillainRequest $request)
     {
-
         $userVillain = Villain::where('user_id', Auth::id())->first();
-
         if ($userVillain) {
             return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
         }
 
         $data = $request->all();
 
-        if (array_key_exists('image', $data)) {
-            $image = Storage::put('uploads', $data['image']);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads', 'public');
+            $data['image'] = $imagePath;
         }
 
-        $data['image'] = $image;
-
-        // Crea il Villain
         $new_villain = new Villain;
-        var_dump($new_villain);
-        $new_villain->slug = Helper::generateSlug($data['name'], Villain::class);
         $new_villain->user_id = Auth::id();
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('villains', 'public');
-            $new_villain->image = $imagePath;
-        }
-
         $new_villain->fill($data);
+
         $new_villain->save();
 
         return redirect()->route('admin.villains.index')->with('success', 'Benvenuto ora sei un vero Villain!');
