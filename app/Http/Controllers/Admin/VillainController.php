@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\Helper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\VillainRequest;
 use App\Models\Skill;
 use App\Models\Villain;
 use App\Models\Universe;
@@ -16,8 +18,7 @@ class VillainController extends Controller
      */
     public function index()
     {
-        $villains = Villain::where('user_id', Auth::id())->get();;
-        dd('villains');
+        $villains = Villain::where('user_id', Auth::id())->get();
         return view('admin.villains.index', compact('villains'));
     }
 
@@ -41,7 +42,7 @@ class VillainController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(VillainRequest $request)
     {
 
         $userVillain = Villain::where('user_id', Auth::id())->first();
@@ -50,30 +51,15 @@ class VillainController extends Controller
             return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
         }
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:villains,slug',
-            'email_contact' => 'nullable|email|max:255',
-            'image' => 'nullable|image',
-            'phone' => 'nullable|string|max:20',
-            'universe_id' => 'required|exists:universes,id'
-        ]);
-
-        // Salvataggio dell'immagine se presente
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('villains', 'public');
-        }
+        $data = $request->all();
 
         // Crea il Villain
-        Villain::create([
-            'name' => $request->input('name'),
-            'slug' => $request->input('slug'),
-            'email_contact' => $request->input('email'),
-            'phone' => $request->input('phone'),
-            'universe_id' => $request->input('universe_id'),
-            'image' => $imagePath
-        ]);
+        $new_villain = new Villain;
+        var_dump($new_villain);
+        $new_villain->slug = Helper::generateSlug($data['name'], Villain::class);
+        $new_villain->user_id = Auth::id();
+        $new_villain->fill($data);
+        $new_villain->save();
 
         return redirect()->route('admin.villains.index')->with('success', 'Benvenuto ora sei un vero Villain!');
     }
@@ -81,10 +67,7 @@ class VillainController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
