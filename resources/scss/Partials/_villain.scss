@@ -1,0 +1,23 @@
+.villain-card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.villain-image img {
+    object-fit: cover;
+    height: 400px;
+    filter: brightness(85%);
+}
+
+.villain-name-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+}
+
+.villain-card .card-body {
+    padding: 1.5rem;
+}
+
+.villain-card i {
+    margin-right: 8px;
+}
