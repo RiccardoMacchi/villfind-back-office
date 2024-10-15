@@ -54,15 +54,14 @@ class VillainController extends Controller
 
         $data = $request->all();
 
-        if(array_key_exists('image', $data)){
+        if (array_key_exists('image', $data)) {
             $image = Storage::put('uploads', $data['image']);
         }
-
         $data['image'] = $image;
+
 
         // Crea il Villain
         $new_villain = new Villain;
-        var_dump($new_villain);
         $new_villain->slug = Helper::generateSlug($data['name'], Villain::class);
         $new_villain->user_id = Auth::id();
         $new_villain->fill($data);
@@ -96,9 +95,9 @@ class VillainController extends Controller
         $data = $request->all();
         $villain = Villain::find($id);
 
-        if($data['name'] === $villain->name){
+        if ($data['name'] === $villain->name) {
             $data['slug'] = $villain->slug;
-        }else{
+        } else {
             $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
         }
 
