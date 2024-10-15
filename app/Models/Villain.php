@@ -16,4 +16,9 @@ class Villain extends Model
         'phone',
         'universe_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
