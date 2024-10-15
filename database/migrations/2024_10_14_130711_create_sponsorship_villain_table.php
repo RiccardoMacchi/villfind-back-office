@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('sponsorship_villain', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sponsorship_id')->nullable()->constrained('sponsorships')->onCascade('set null');
             $table->foreignId('villain_id')->nullable()->constrained('villains')->onCascade('set null');
+            $table->foreignId('sponsorship_id')->nullable()->constrained('sponsorships')->onCascade('set null');
             $table->decimal('purchase_price');
             $table->date('expiration_date');
             $table->timestamps();
