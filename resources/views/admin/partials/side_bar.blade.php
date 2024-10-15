@@ -27,7 +27,7 @@
             </li>
             @if (!$userVillain)
                 <li class="d-flex gap-2 nav-link position-relativ">
-                    <a href="{{ route('admin.villains.create') }}" class="nav-link">Diventa Villain</a>
+                    <a href="{{ route('admin.villains.create') }}" class="nav-link">Become a Villain</a>
                 </li>
             @endif
         @endforeach
