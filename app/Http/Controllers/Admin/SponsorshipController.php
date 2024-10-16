@@ -13,8 +13,7 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        $sponsorship = Sponsorship::orderBy('id')->first();
-        var_dump($sponsorship);
+        $sponsorship = Sponsorship::orderBy('id')->get();
         return view('admin.sponsorship.index', compact('sponsorship'));
     }
 
