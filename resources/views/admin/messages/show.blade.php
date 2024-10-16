@@ -12,27 +12,18 @@
         </div>
     @endif
 
-    <div>
-        <h2>Dettaglio di: {{ $message->name }}</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Sender</th>
-                    <th scope="col">Content</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">{{ $message->name }}</th>
-                    <td>{{ $message->content }}</td>
-                    <td>{{ $message->created_at }}</td>
-                    <td>
-                        show
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="container py-4">
+        <div class="fs-5 mb-3"><strong>Sender:</strong> {{ $message->full_name }}</div>
+        <div class="fs-6 mb-3"><strong>Phone:</strong> {{ $message->phone }}</div>
+        <div class="fs-6 mb-5"><strong>Email:</strong> {{ $message->email }}</div>
+
+        <div class="fs-5 mb-3"><strong>Message:</strong></div>
+        <p>{{ $message->content }}</p>
+
+        <button class="btn btn-primary mt-4">
+            <a href="{{ route('admin.messages.index') }}">Back</a>
+        </button>
     </div>
+
+
 @endsection
