@@ -20,7 +20,7 @@
             <div class="card villain-card shadow-lg border-0">
                 {{-- Show the villain's image --}}
                 <div class="position-relative villain-image">
-                    <img src="{{ asset('storage/' . $villain->image) }}" class="card-img-top img-fluid"
+                    <img src="/placeholder_img.jpg" alt="{{ $villain->name }}" class="card-img-top img-fluid"
                         alt="{{ $villain->name }}">
                     <div class="position-absolute bottom-0 start-0 p-3 text-white villain-name-overlay">
                         <h3 class="text-center mb-0">{{ $villain->name }}</h3>
