@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\VillainRequest;
+use App\Models\Service;
 use App\Models\Skill;
 use App\Models\Villain;
 use App\Models\Universe;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -22,8 +24,9 @@ class VillainController extends Controller
         $villain = Villain::where('user_id', Auth::id())->first();
         $skills = $villain->skills;
         $services = $villain->services;
+        $averageRating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
 
-        return view('admin.villains.index', compact('villain', 'skills', 'services'));
+        return view('admin.villains.index', compact('villain', 'skills', 'services', 'averageRating'));
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
@@ -97,9 +100,10 @@ class VillainController extends Controller
         if ($userVillain) {
             if ($villain->user_id == Auth::id()) {
                 $universes = Universe::all();
+                $services = Service::all();
                 $skills = Skill::all();
 
-                return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
+                return view('admin.villains.edit', compact('villain', 'universes', 'services', 'skills'));
             } else {
                 return redirect()->route('admin.villains.index')->with('error', 'Non puoi modificare questo Villain');
             }

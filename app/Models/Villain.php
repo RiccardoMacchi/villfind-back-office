@@ -42,7 +42,7 @@ class Villain extends Model
 
     public function ratings()
     {
-        return $this->belongsToMany(Rating::class);
+        return $this->belongsToMany(Rating::class)->withPivot('villain_id', 'rating_id', 'full_name', 'content');
     }
 
     public function messages()
