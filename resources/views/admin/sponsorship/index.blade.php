@@ -2,10 +2,11 @@
 
 @section('content')
     <div class="container mb-3">
-        <h2 class="fs-4 text-primary my-4">
+        <h1 class="text-primary my-4">
             Sponsorship
-        </h2>
-        <div class=" d-flex gap-3">
+        </h1>
+
+        <div class="d-flex justify-content-between gap-3">
             @foreach ($sponsorship as $plan)
                 <div class="card mb-3 p-0 p-4" style="width: 15rem">
                     <div>

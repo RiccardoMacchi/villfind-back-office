@@ -1,22 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- controllo errori --}}
-    @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     <div class="container mb-3">
-        <h2 class="fs-4 text-primary my-4 text-center">
+        <h1 class="text-primary my-4">
             Skills
-        </h2>
+        </h1>
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">

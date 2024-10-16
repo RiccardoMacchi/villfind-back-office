@@ -2,22 +2,10 @@ rendimi responsive questo codice senza cambiare niente altro
 @extends('layouts.app')
 
 @section('content')
-    <div class="container p-4">
-        <h2 class="fs-4 text-primary my-4 text-center">
-            <i class="fa-solid fa-envelope"></i> Messages
-        </h2>
-
-        {{-- controllo errori --}}
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+    <div class="container mb-3">
+        <h1 class="text-primary my-4">
+            Messages
+        </h1>
 
         <div>
             @if (session('success'))
