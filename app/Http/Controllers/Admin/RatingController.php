@@ -17,18 +17,28 @@ class RatingController extends Controller
     {
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
+        $ratingsCount = \DB::table('rating_villain')
+        ->where('villain_id', $userVillain->id)
+        ->select('rating_id', \DB::raw('count(*) as total'))
+        ->groupBy('rating_id')
+        ->pluck('total', 'rating_id');
+
+        $ratingsData = [
+            '1_star' => $ratingsCount[1] ?? 0,
+            '2_stars' => $ratingsCount[2] ?? 0,
+            '3_stars' => $ratingsCount[3] ?? 0,
+            '4_stars' => $ratingsCount[4] ?? 0,
+            '5_stars' => $ratingsCount[5] ?? 0
+        ];
+
         if ($userVillain) {
 
             $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
 
-            $ratingsPerVillain = Villain::where('user_id', Auth::id())->with('ratings')->get();
-
-            return view('admin.ratings.index', compact('averageRating', 'ratingsPerVillain'));
+            return view('admin.ratings.index', compact('averageRating', 'ratingsCount', 'ratingsData'));
         } else {
             return redirect()->route('admin.villains.index');
         }
-
-        // Aggiungere ogni utente e il voto dato
     }
 
     /**
@@ -96,4 +106,5 @@ class RatingController extends Controller
     {
         //
     }
+
 }

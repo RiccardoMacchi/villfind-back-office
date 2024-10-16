@@ -12,7 +12,7 @@
     {{-- favicon --}}
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    <title>{{ config('app.name', 'Laravel') }} - Dashboard</title>
+    <title>Villain</title>
 
 
     <!-- Fonts -->
@@ -27,6 +27,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <!-- Using Vite -->
     @vite(['resources/js/app.js'])
@@ -43,13 +47,13 @@
                 @auth
                     @include('admin.partials.side_bar')
                 @endauth
-
             </aside>
 
             <main class="flex-grow-1 overflow-auto bg-white">
                 @yield('content')
             </main>
         </div>
+
     </div>
 </body>
 

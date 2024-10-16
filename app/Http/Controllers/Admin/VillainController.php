@@ -21,18 +21,16 @@ class VillainController extends Controller
      */
     public function index()
     {
-        $villain = Villain::where('user_id', Auth::id())->first();
-        $skills = $villain->skills;
-        $services = $villain->services;
-        $averageRating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
 
-        return view('admin.villains.index', compact('villain', 'skills', 'services', 'averageRating'));
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
             $villain = Villain::where('user_id', Auth::id())->first();
+            $skills = $villain->skills;
+            $services = $villain->services;
+            $averageRating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
 
-            return view('admin.villains.index', compact('villain'));
+            return view('admin.villains.index', compact('villain', 'skills', 'services', 'averageRating'));
         } else {
             return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
         }
@@ -52,8 +50,9 @@ class VillainController extends Controller
         $universes = Universe::all();
         $skills = Skill::all();
 
-        return view('admin.villains.create', compact('universes', 'skills'));
+        return view('admin.villains.create', compact('universes', 'skills'))->with('creatingProfile', true);
     }
+
 
     /**
      * Store a newly created resource in storage.
