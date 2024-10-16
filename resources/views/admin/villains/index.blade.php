@@ -19,7 +19,7 @@
                 <div class="row g-0 p-0">
                     <div class="col-md-5 p-0">
                         <img src="{{ asset('storage/' . $villain->image) }}" class="img-fluid rounded-2 p-0 h-100"
-                            style="width: 100%; alt="{{ $villain->name }}">
+                            style="width: 100%; object-fit: cover;" alt="{{ $villain->name }}">
                     </div>
                     <div class="col-md-7">
                         <div class="card-body ms-3">
