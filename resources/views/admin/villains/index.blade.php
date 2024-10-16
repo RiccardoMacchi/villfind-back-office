@@ -37,6 +37,11 @@
                                 {{ $villain->phone ?? '-' }}
                             </div>
                             <div class="mb-4">
+                                <i class="fas fa-star text-primary"></i>
+                                <strong class="text-primary">Average rating:</strong>
+                                {{ number_format($averageRating, 2) }}
+                            </div>
+                            <div class="mb-4">
                                 <i class="fas fa-globe text-primary"></i>
                                 <strong class="text-primary">Universe:</strong>
                                 {{ $villain->universe->name }}
