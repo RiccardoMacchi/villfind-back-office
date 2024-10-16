@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DasboardController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\VillainController;
@@ -26,6 +27,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [DasboardController::class, 'index'])->name('home');
     Route::resource('villains', VillainController::class);
     Route::resource('skills', SkillController::class);
+    Route::resource('ratings', RatingController::class);
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
     Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);
 });
