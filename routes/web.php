@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [DasboardController::class, 'index'])->name('home');
     Route::resource('villains', VillainController::class);
     Route::resource('skills', SkillController::class);
-    Route::resource('messages', MessageController::class);
+    Route::resource('messages', MessageController::class)->except(['index', 'destroy','show']);
 });
 
 
