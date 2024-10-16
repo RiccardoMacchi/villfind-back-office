@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Sponsorship;
 
 class SponsorshipController extends Controller
 {
@@ -12,7 +13,9 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        //
+        $sponsorship = Sponsorship::orderBy('id')->first();
+        var_dump($sponsorship);
+        return view('admin.sponsorship.index', compact('sponsorship'));
     }
 
     /**

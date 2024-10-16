@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\VillainController;
+use App\Http\Controllers\Admin\SponsorshipController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('villains', VillainController::class);
     Route::resource('skills', SkillController::class);
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
+    Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);
 });
 
 

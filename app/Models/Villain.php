@@ -49,4 +49,8 @@ class Villain extends Model
     {
         return $this->belongsToMany(Message::class);
     }
+    public function sponsorship()
+    {
+        return $this->belongsToMany(Sponsorship::class);
+    }
 }

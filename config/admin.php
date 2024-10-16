@@ -23,5 +23,10 @@ return [
             'route_name' => 'admin.messages.index',
             'menu_icon' => '<i class="fa-solid fa-envelope"></i>',
         ],
+        [
+            'menu_text' => 'SPONSORSHIP',
+            'route_name' => 'admin.sponsorship.index',
+            'menu_icon' => '<i class="fa-solid fa-hand-holding-dollar"></i>',
+        ],
     ],
 ];
