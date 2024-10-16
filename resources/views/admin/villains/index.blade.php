@@ -14,42 +14,46 @@
             </div>
         </div>
     </div> --}}
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            {{-- Card for villain profile --}}
-            <div class="card villain-card shadow-lg border-0">
-                {{-- Show the villain's image --}}
-                <div class="position-relative villain-image">
-                    <img src="{{ asset('storage/' . $villain->image) }}" class="card-img-top img-fluid"
-                        alt="{{ $villain->name }}">
-                    <div class="position-absolute bottom-0 start-0 p-3 text-white villain-name-overlay">
-                        <h3 class="text-center mb-0">{{ $villain->name }}</h3>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                {{-- Card for villain profile --}}
+                <div class="card villain-card shadow-lg border-0">
+                    {{-- Show the villain's image --}}
+                    <div class="position-relative villain-image">
+                        <img src="{{ asset('storage/' . $villain->image) }}"
+                             class="card-img-top img-fluid" alt="{{ $villain->name }}">
+                        <div
+                             class="position-absolute bottom-0 start-0 p-3 text-white villain-name-overlay">
+                            <h3 class="text-center mb-0">{{ $villain->name }}</h3>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card-body py-4">
-                    {{-- Villain's email --}}
-                    <p>
-                        <i class="fas fa-envelope text-primary"></i>
-                        <strong>Email:</strong>
-                        <a href="mailto:{{ $villain->email_contact }}"
-                            class="text-decoration-none">{{ $villain->email_contact }}</a>
-                    </p>
+                    <div class="card-body py-4">
+                        {{-- Villain's email --}}
+                        <div>
+                            <i class="fas fa-envelope text-primary"></i>
+                            <strong>Email:</strong>
+                            <a href="mailto:{{ $villain->email_contact }}" class="text-decoration-none">
+                                {{ $villain->email_contact }}
+                            </a>
+                        </div>
 
-                    {{-- Villain's phone number --}}
-                    <p>
-                        <i class="fas fa-phone text-primary"></i>
-                        <strong>Phone:</strong>
-                        {{ $villain->phone ?? 'Not provided' }}
-                    </p>
+                        {{-- Villain's phone number --}}
+                        <div>
+                            <i class="fas fa-phone text-primary"></i>
+                            <strong>Phone:</strong>
+                            {{ $villain->phone ?? 'Not provided' }}
+                        </div>
 
-                    {{-- Villain's universe --}}
-                    <p>
-                        <i class="fas fa-globe text-primary"></i>
-                        <strong>Universe:</strong>
-                        {{ $villain->universe->name }}
-                    </p>
+                        {{-- Villain's universe --}}
+                        <div>
+                            <i class="fas fa-globe text-primary"></i>
+                            <strong>Universe:</strong>
+                            {{ $villain->universe->name }}
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
