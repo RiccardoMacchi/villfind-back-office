@@ -25,6 +25,15 @@ class VillainController extends Controller
         $services = $villain->services;
 
         return view('admin.villains.index', compact('villain', 'skills', 'services'));
+        $userVillain = Villain::where('user_id', Auth::id())->first();
+
+        if ($userVillain) {
+            $villain = Villain::where('user_id', Auth::id())->first();
+
+            return view('admin.villains.index', compact('villain'));
+        } else {
+            return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
+        }
     }
 
     /**
