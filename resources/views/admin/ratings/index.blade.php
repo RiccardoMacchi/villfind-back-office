@@ -60,6 +60,7 @@
                     }]
                 },
                 options: {
+                    devicePixelRatio: 4,
                     responsive: true,
                     maintainAspectRatio: true,
                     scales: {
