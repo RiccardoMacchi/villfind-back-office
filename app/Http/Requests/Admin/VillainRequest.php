@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
 class VillainRequest extends FormRequest
 {
@@ -22,7 +21,6 @@ class VillainRequest extends FormRequest
      */
     public function rules(): array
     {
-        Log::info('Validazione in corso...');
 
         return [
             'name' => 'required|string|max:255',
