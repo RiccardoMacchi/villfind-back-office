@@ -15,7 +15,7 @@
     {{-- information card for each individual profile --}}
 <div class="container py-4">
     <div class="row justify-content-center">
-        <div class="card mb-3" style="max-width: 800px;">
+        <div class="card mb-3 p-0" style="max-width: 800px;">
             <div class="row g-0 p-0">
                 <div class="col-md-5 p-0">
                     <img src="{{ asset('storage/' . $villain->image) }}" class="img-fluid rounded-2 p-0 h-100" style="width: 100%; alt="{{ $villain->name }}">
