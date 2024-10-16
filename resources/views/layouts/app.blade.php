@@ -47,13 +47,13 @@
                 @auth
                     @include('admin.partials.side_bar')
                 @endauth
-
             </aside>
 
             <main class="flex-grow-1 overflow-auto bg-white">
                 @yield('content')
             </main>
         </div>
+
     </div>
 </body>
 

@@ -15,19 +15,22 @@
     {{-- information card for each individual profile --}}
     <div class="container py-4">
         <div class="row justify-content-center">
-            <div class="card mb-3 p-0" style="max-width: 800px;">
+            <div class="card mb-3 p-0 col-12 col-sm-11 col-lg-9 col-xl-8">
                 <div class="row g-0 p-0">
-                    <div class="col-md-5 p-0">
-                        <img src="{{ asset('storage/' . $villain->image) }}" class="img-fluid rounded-2 p-0 h-100"
-                            style="width: 100%; object-fit: cover;" alt="{{ $villain->name }}">
+                    <div class="col-lg-5 p-0">
+                        <img src="{{ asset('storage/' . $villain->image) }}" alt="{{ $villain->name }}"
+                             class="img-fluid rounded-2 p-0 h-100 w-100 object-fit-cover">
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-lg-7">
                         <div class="card-body ms-3">
-                            <h2 class="card-title mb-4 fw-bold text-primary fs-1">{{ $villain->name }}</h2>
+                            <h2 class="card-title mb-4 fw-bold text-primary fs-1">
+                                {{ $villain->name }}
+                            </h2>
                             <div class="mb-4">
                                 <i class="fas fa-envelope text-primary"></i>
                                 <strong class="text-primary">Email:</strong>
-                                <a href="mailto:{{ $villain->email_contact }}" class="text-decoration-none">
+                                <a href="mailto:{{ $villain->email_contact }}"
+                                   class="text-decoration-none">
                                     {{ $villain->email_contact ?? '-' }}
                                 </a>
                             </div>
@@ -66,8 +69,10 @@
                                     @endforeach
                                 </ul>
                             </div>
-                            <a href="{{ route('admin.villains.edit', $villain) }}" class="btn btn-primary mt-4">Edit your
-                                profile</a>
+                            <a href="{{ route('admin.villains.edit', $villain) }}"
+                               class="btn btn-primary mt-4">
+                                Edit your profile
+                            </a>
                         </div>
                     </div>
                 </div>
