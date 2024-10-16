@@ -13,7 +13,6 @@
                 {{ session('error') }}
             </div>
         @endif
-
         <h1 class="mb-4">Become a Villain</h1>
 
         <form action="{{ route('admin.villains.store') }}" method="POST" enctype="multipart/form-data"
