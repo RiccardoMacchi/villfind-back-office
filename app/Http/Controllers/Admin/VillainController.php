@@ -20,9 +20,15 @@ class VillainController extends Controller
      */
     public function index()
     {
-        $villain = Villain::where('user_id', Auth::id())->first();
+        $userVillain = Villain::where('user_id', Auth::id())->first();
 
-        return view('admin.villains.index', compact('villain'));
+        if ($userVillain) {
+            $villain = Villain::where('user_id', Auth::id())->first();
+
+            return view('admin.villains.index', compact('villain'));
+        } else {
+            return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
+        }
     }
 
     /**
@@ -91,10 +97,16 @@ class VillainController extends Controller
      */
     public function edit(Villain $villain)
     {
-        $universes = Universe::all();
-        $skills = Skill::all();
+        $userVillain = Villain::where('user_id', Auth::id())->first();
 
-        return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
+        if ($userVillain) {
+            $universes = Universe::all();
+            $skills = Skill::all();
+
+            return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
+        } else {
+            return redirect()->route('admin.villains.index')->with('error', 'Non puoi modificare questo Villain');
+        }
     }
 
     /**
