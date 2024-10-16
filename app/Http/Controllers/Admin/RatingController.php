@@ -21,7 +21,9 @@ class RatingController extends Controller
 
             $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
 
-            return view('admin.ratings.index', compact('averageRating'));
+            $ratingsPerVillain = Villain::where('user_id', Auth::id())->with('ratings')->get();
+
+            return view('admin.ratings.index', compact('averageRating', 'ratingsPerVillain'));
         } else {
             return redirect()->route('admin.villains.index');
         }
