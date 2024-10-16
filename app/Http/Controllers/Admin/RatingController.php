@@ -50,10 +50,28 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $ratingId)
     {
-        //
+        $villain = Villain::where('user_id', Auth::id())
+            ->with('ratings')
+            ->first();
+
+        if (!$villain) {
+            return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.');
+        }
+
+        $rating = $villain->ratings()->whereIn('rating_villain.id', [$ratingId])->first();
+
+
+        if (!$rating) {
+            return redirect()->route('admin.ratings.index')->with('error', 'Rating non trovato.');
+        }
+
+        return view('admin.ratings.show', compact('rating', 'rating'));
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.

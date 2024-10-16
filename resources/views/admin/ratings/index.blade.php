@@ -15,6 +15,11 @@
     <div class="container mt-5">
         <h1>rating</h1>
         <span>Media: {{ $averageRating }}</span>
+        {{-- @foreach ($ratingsPerVillain as $villainRate)
+            @foreach ($villainRate->ratings as $userRating)
+                <h2>{{ $userRating->pivot }}</h2>
+            @endforeach
+        @endforeach --}}
         <table class="table">
             <thead>
                 <tr>
@@ -34,7 +39,7 @@
                             <td>{{ $userRating->pivot->content ?? 'No content' }}</td>
                             <td>{{ $userRating->pivot->rating_id }}</td>
                             <td>
-                                <a class="btn btn-warning" href="{{ route('admin.ratings.show', $villainRate) }}"><i
+                                <a class="btn btn-warning" href="{{ route('admin.ratings.show', $userRating->pivot->id) }}"><i
                                         class="fa-solid fa-eye"></i></a>
                             </td>
                         </tr>
