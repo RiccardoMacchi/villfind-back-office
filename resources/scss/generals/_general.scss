@@ -1,24 +1,47 @@
-*,
-*::before,
-*::after {
+@use './variables' as *;
+@use './mixins' as *;
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-// Stili generali per il body
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+menu,
+ul,
+ol {
+    list-style: none;
 }
 
-// Altri stili generali
-h1 {
-    font-size: $h1-size;
-    font-weight: bold;
-    color: $primary;
+a {
+    color: inherit;
+    text-decoration: inherit;
 }
 
-.card {
-    @include border-radius(); // Usa mixin per arrotondare gli angoli
+.bg-white {
+    scrollbar-color: $primary $white;
+}
+
+.bg-dark {
+    scrollbar-color: $gray-600 $dark;
+}
+
+
+.app-admin {
+    .page-center {
+        min-height: 0;
+
+        .link-text {
+            width: 8em;
+            white-space: nowrap;
+        }
+
+        .text-fade {
+            background: linear-gradient(to right, #00000000 0%, $dark 100%);
+        }
+    }
+
+    main {
+        border-radius: $border-radius-sm 0 0 0;
+    }
 }

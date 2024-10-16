@@ -1,34 +1,5 @@
-@import 'generals/variables';
-@import 'generals/mixins';
-@import 'generals/general';
-@import 'partials/villain';
+@import './bootstrap/bootstrap_variables';
 
-// Importa Bootstrap
-@import 'bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
-// Stili personalizzati per il progetto
-.form-control, .form-select {
-    @include border-radius();
-    @include transition(border-color, 0.3s);
-
-    &:focus {
-        border-color: $primary;
-        @include box-shadow($primary);
-    }
-}
-
-.is-invalid {
-    border-color: $error-color;
-    @include box-shadow($error-color);
-}
-
-.btn-primary {
-    background-color: $primary;
-    border-color: $primary;
-    @include border-radius();
-    @include transition(background-color);
-
-    &:hover {
-        background-color: darken($primary, 10%);
-    }
-}
+@import './generals/general';
