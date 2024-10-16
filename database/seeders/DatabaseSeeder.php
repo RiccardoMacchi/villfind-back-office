@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ServiceVillainTableSeeder::class,
             RatingVillainTableSeeder::class,
             SponsorshipTableSeeder::class,
+            SponsorshipVillainTableSeeder::class,
         ]);
     }
 }
