@@ -45,7 +45,7 @@
                         <tbody>
                             @foreach ($messages as $message)
                                 <tr>
-                                    <th scope="row">{{ $message->name }}</th>
+                                    <th scope="row">{{ $message->full_name }}</th>
                                     <td>{{ $message->content }}</td>
                                     <td>{{ $message->created_at }}</td>
                                     <td>
