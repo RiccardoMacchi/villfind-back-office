@@ -25,8 +25,11 @@ class RatingController extends Controller
                 ->select('full_name', 'content', 'rating_id')
                 ->get();
 
+            // recupero la media dei voti
+            $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
 
-            return view('admin.ratings.index', compact('ratingsDetails'));
+
+            return view('admin.ratings.index', compact('ratingsDetails', 'averageRating'));
             
         } else {
             return redirect()->route('admin.villains.index');
@@ -52,10 +55,28 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Rating $rating)
+    public function show(string $ratingId)
     {
-        // 
+        $villain = Villain::where('user_id', Auth::id())
+            ->with('ratings')
+            ->first();
+
+        if (!$villain) {
+            return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.');
+        }
+
+        $rating = $villain->ratings()->whereIn('rating_villain.id', [$ratingId])->first();
+
+
+        if (!$rating) {
+            return redirect()->route('admin.ratings.index')->with('error', 'Rating non trovato.');
+        }
+
+        return view('admin.ratings.show', compact('rating', 'ratingId'));
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.
