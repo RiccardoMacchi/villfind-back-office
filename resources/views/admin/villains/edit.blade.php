@@ -1,5 +1,16 @@
 @extends('layouts.app')
 @section('content')
+    {{-- controllo erroi --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="container mt-5">
         <h1 class="mb-4">{{ $villain->name }}, edit your profile</h1>
 
@@ -10,7 +21,8 @@
             <div class="row mb-3">
                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
-                    <input type="text" name="name" id="name" class="form-control" required value="{{ old('name', $villain->name) }}">
+                    <input type="text" name="name" id="name" class="form-control" required
+                        value="{{ old('name', $villain->name) }}">
                 </div>
             </div>
 
@@ -24,14 +36,16 @@
             <div class="row mb-3">
                 <label for="phone" class="col-sm-2 col-form-label">Phone</label>
                 <div class="col-sm-10">
-                    <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $villain->phone) }}">
+                    <input type="text" name="phone" id="phone" class="form-control"
+                        value="{{ old('phone', $villain->phone) }}">
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $villain->email_contact) }}" required>
+                    <input type="email" name="email" id="email" class="form-control"
+                        value="{{ old('email', $villain->email_contact) }}" required>
                 </div>
             </div>
 

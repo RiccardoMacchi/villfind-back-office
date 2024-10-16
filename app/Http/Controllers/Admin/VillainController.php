@@ -19,6 +19,11 @@ class VillainController extends Controller
      */
     public function index()
     {
+        $villain = Villain::where('user_id', Auth::id())->first();
+        $skills = $villain->skills;
+        $services = $villain->services;
+
+        return view('admin.villains.index', compact('villain', 'skills', 'services'));
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {

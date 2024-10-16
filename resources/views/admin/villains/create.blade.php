@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+    {{-- controllo erroi --}}
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -11,6 +11,7 @@
             </ul>
         </div>
     @endif
+
 
     <div class="container mt-5">
 

@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- controllo erroi --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="container mb-3">
         <h2 class="fs-4 text-primary my-4">
             Skills
@@ -36,23 +47,20 @@
                             <tr>
                                 <th scope="row" class="col-11">
                                     <form id="update-{{ $skill->id }}"
-                                          action="{{ route('admin.skills.update', $skill) }}"
-                                          method="POST">
+                                        action="{{ route('admin.skills.update', $skill) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input class="input-edit form-control @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
-                                               type="text" name="name"
-                                               value="{{ $skill->name }}">
-                                        <input type="hidden" name="id"
-                                               value="{{ $skill->id }}">
+                                        <input
+                                            class="input-edit form-control @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
+                                            type="text" name="name" value="{{ $skill->name }}">
+                                        <input type="hidden" name="id" value="{{ $skill->id }}">
                                     </form>
                                 </th>
 
                                 <td class="text-center col-1">
                                     <menu class="d-flex justify-content-center gap-1">
                                         <li>
-                                            <form action="{{ route('admin.skills.destroy', $skill) }}"
-                                                  method="POST">
+                                            <form action="{{ route('admin.skills.destroy', $skill) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -71,17 +79,15 @@
                                 <th scope="row" class="col-11 py-0">
                                     <div class="position-relative py-3">
                                         <input type="text"
-                                               class="form-control @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
-                                               id="input-name" name="name"
-                                               aria-errormessage="input-name-error"
-                                               value="@if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) {{ old('name') }} @endif"
-                                               minlength="3" maxlength="55" placeholder="Name..."
-                                               required>
+                                            class="form-control @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
+                                            id="input-name" name="name" aria-errormessage="input-name-error"
+                                            value="@if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) {{ old('name') }} @endif"
+                                            minlength="3" maxlength="55" placeholder="Name..." required>
                                         <input type="hidden" name="id" value="0">
                                         @if ($errors->any() && old('name'))
                                             @error('name')
                                                 <small id="input-name-error"
-                                                       class="invalid-feedback position-absolute bottom-0 start-0">
+                                                    class="invalid-feedback position-absolute bottom-0 start-0">
                                                     {{ $message }}
                                                 </small>
                                             @enderror
