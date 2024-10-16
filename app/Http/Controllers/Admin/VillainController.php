@@ -11,6 +11,7 @@ use App\Models\Universe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class VillainController extends Controller
 {
@@ -35,6 +36,10 @@ class VillainController extends Controller
      */
     public function create()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Devi essere autenticato per creare un Villain.');
+        }
+
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
@@ -52,16 +57,21 @@ class VillainController extends Controller
      */
     public function store(VillainRequest $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Devi essere autenticato per creare un Villain.');
+        }
+
         $userVillain = Villain::where('user_id', Auth::id())->first();
         if ($userVillain) {
             return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
         }
 
+        Log::info('Dati ricevuti dal form:', $request->all()); // Logga i dati del form
+
         $data = $request->all();
 
-        if (array_key_exists('image', $data)) {
-            $image = Storage::put('uploads', $data['image']);
-            $data['image'] = $image;
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('uploads', 'public');
         }
 
 

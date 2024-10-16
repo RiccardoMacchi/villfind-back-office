@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="container mt-5">
 
         @if (session('success'))
@@ -13,7 +24,6 @@
                 {{ session('error') }}
             </div>
         @endif
-
         <h1 class="mb-4">Become a Villain</h1>
 
         <form action="{{ route('admin.villains.store') }}" method="POST" enctype="multipart/form-data"
@@ -62,11 +72,11 @@
             <div class="row mb-3">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" name="email" id="email"
-                        class="form-control @error('email') is-invalid @enderror" placeholder="Enter contact email"
+                    <input type="email" name="email_contact" id="email"
+                        class="form-control @error('email_contact') is-invalid @enderror" placeholder="Enter contact email"
                         required>
                     <small class="form-text text-muted">Provide a contact email.</small>
-                    @error('email')
+                    @error('email_contact')
                         <small class="text-danger mt-2">{{ $message }}</small>
                     @enderror
                 </div>
