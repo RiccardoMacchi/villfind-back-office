@@ -20,13 +20,11 @@ class VillainController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         $villain = Villain::where('user_id', Auth::id())->first();
         $skills = $villain->skills;
         $services = $villain->services;
 
         return view('admin.villains.index', compact('villain', 'skills', 'services'));
-=======
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
@@ -36,7 +34,6 @@ class VillainController extends Controller
         } else {
             return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
         }
->>>>>>> b10927cb5a93b24a356288fd6b7a59b5d06b315c
     }
 
     /**
