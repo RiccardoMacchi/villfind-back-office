@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\VillainRequest;
+use App\Models\Service;
 use App\Models\Skill;
 use App\Models\Villain;
 use App\Models\Universe;
@@ -99,9 +100,10 @@ class VillainController extends Controller
         if ($userVillain) {
             if ($villain->user_id == Auth::id()) {
                 $universes = Universe::all();
+                $services = Service::all();
                 $skills = Skill::all();
 
-                return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
+                return view('admin.villains.edit', compact('villain', 'universes', 'services', 'skills'));
             } else {
                 return redirect()->route('admin.villains.index')->with('error', 'Non puoi modificare questo Villain');
             }
