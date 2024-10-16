@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             SkillVillainTableSeeder::class,
             ServiceVillainTableSeeder::class,
             RatingVillainTableSeeder::class,
+            SponsorshipTableSeeder::class,
         ]);
     }
 }
