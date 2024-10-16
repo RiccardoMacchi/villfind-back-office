@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <menu class="navbar-nav h-100">
+    <menu class="navbar-nav h-100% mt-3">
         @foreach ($side_bar_links as $link)
             <li>
                 <a href="{{ route($link['route_name']) }}"
