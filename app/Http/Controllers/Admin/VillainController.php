@@ -98,9 +98,9 @@ class VillainController extends Controller
 
         if ($userVillain) {
             if ($villain->user_id == Auth::id()) {
-                $universes = Universe::all();
-                $services = Service::all();
-                $skills = Skill::all();
+                $universes = Universe::orderBy('name')->get();
+                $services = Service::orderBy('name')->get();
+                $skills = Skill::orderBy('name')->get();
 
                 return view('admin.villains.edit', compact('villain', 'universes', 'services', 'skills'));
             } else {
@@ -133,6 +133,8 @@ class VillainController extends Controller
 
         if ($request->has('skill_id')) {
             $villain->skills()->sync($request->input('skill_id'));
+        } else {
+            $villain->skills()->detach();
         }
 
         return redirect()->route('admin.villains.index', $villain)->with('edited', 'Edited successfully');

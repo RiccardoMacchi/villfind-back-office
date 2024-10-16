@@ -1,16 +1,6 @@
 @extends('layouts.app')
-@section('content')
-    {{-- controllo erroi --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
+@section('content')
     <div class="container mt-5">
         <h1 class="mb-4">{{ $villain->name }}, edit your profile</h1>
 
@@ -28,14 +18,13 @@
                                class="form-control @error('name') is-invalid @enderror"
                                value="{{ old('name', $villain->name) }}" placeholder="Villain name"
                                required>
-
-                        @error('name')
-                            <small id="name-error"
-                                   class="invalid-feedback position-absolute bottom-0 start-0">
-                                {{ $message }}
-                            </small>
-                        @enderror
                     </div>
+
+                    @error('name')
+                        <small id="name-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                            {{ $message }}
+                        </small>
+                    @enderror
                 </div>
             </div>
 
@@ -56,13 +45,13 @@
                             </div>
                         @endisset
                     </div>
-                </div>
 
-                @error('image')
-                    <small id="image-error" class="invalid-feedback position-absolute bottom-0 start-0">
-                        {{ $message }}
-                    </small>
-                @enderror
+                    @error('image')
+                        <small id="image-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                            {{ $message }}
+                        </small>
+                    @enderror
+                </div>
             </div>
 
             <div class="row mb-3">
@@ -75,14 +64,14 @@
                                value="{{ old('email_contact', $villain->email_contact) }}"
                                placeholder="Email address" required>
                     </div>
-                </div>
 
-                @error('email_contact')
-                    <small id="email_contact-error"
-                           class="invalid-feedback position-absolute bottom-0 start-0">
-                        {{ $message }}
-                    </small>
-                @enderror
+                    @error('email_contact')
+                        <small id="email_contact-error"
+                               class="invalid-feedback position-absolute bottom-0 start-0">
+                            {{ $message }}
+                        </small>
+                    @enderror
+                </div>
             </div>
 
             <div class="row mb-3">
@@ -95,13 +84,13 @@
                                class="form-control @error('phone') is-invalid @enderror"
                                value="{{ old('phone', $villain->phone) }}" placeholder="Phone number">
                     </div>
-                </div>
 
-                @error('phone')
-                    <small id="phone-error" class="invalid-feedback position-absolute bottom-0 start-0">
-                        {{ $message }}
-                    </small>
-                @enderror
+                    @error('phone')
+                        <small id="phone-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                            {{ $message }}
+                        </small>
+                    @enderror
+                </div>
             </div>
 
             <div class="row mb-3">
@@ -124,21 +113,20 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
 
-                @error('universe_id')
-                    <small id="universe_id-error"
-                           class="invalid-feedback position-absolute bottom-0 start-0">
-                        {{ $message }}
-                    </small>
-                @enderror
+                    @error('universe_id')
+                        <small id="universe_id-error"
+                               class="invalid-feedback position-absolute bottom-0 start-0">
+                            {{ $message }}
+                        </small>
+                    @enderror
+                </div>
             </div>
 
             <div class="row mb-3">
                 <label for="services" class="col-sm-2 col-form-label">Services</label>
 
                 <div class="col-sm-10 pb-3">
-
                     <div class="dropdown">
                         <button type="button" id="services"
                                 class="form-select text-start @error('services') is-invalid @enderror"
@@ -164,19 +152,18 @@
                             @endforeach
                         </ul>
                     </div>
-                </div>
 
-                @error('services')
-                    <small id="services-error"
-                           class="invalid-feedback position-absolute bottom-0 start-0">
-                        {{ $message }}
-                    </small>
-                @enderror
+                    @error('services')
+                        <small id="services-error"
+                               class="invalid-feedback position-absolute bottom-0 start-0">
+                            {{ $message }}
+                        </small>
+                    @enderror
+                </div>
             </div>
 
             <div class="d-grid gap-2 d-md-block">
-                <a href="{{ route('admin.villains.index', $villain) }}"
-                   class="btn btn-primary">Edit</a>
+                <button type="submit" class="btn btn-primary">Edit</button>
             </div>
         </form>
     </div>
