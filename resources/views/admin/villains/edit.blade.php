@@ -44,8 +44,8 @@
             <div class="row mb-3">
                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
-                    <input type="email" name="email" id="email" class="form-control"
-                        value="{{ old('email', $villain->email_contact) }}" required>
+                    <input type="email" name="email_contact" id="email" class="form-control"
+                        value="{{ old('email_contact', $villain->email_contact) }}" required>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
             </div>
 
             <div class="d-grid gap-2 d-md-block">
-                <a href="{{ route('admin.villains.index', $villain) }}" class="btn btn-primary">Edit</a>
+                <button href="{{ route('admin.villains.index', $villain) }}" class="btn btn-primary">Edit</button>
             </div>
         </form>
     </div>
