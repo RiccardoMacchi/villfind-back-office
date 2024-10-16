@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RatingsTableSeeder::class,
             UsersTableSeeder::class,
             VillainsTableSeeder::class,
+            MessagesTableSeeder::class,
             SkillVillainTableSeeder::class,
             ServiceVillainTableSeeder::class,
             RatingVillainTableSeeder::class,
