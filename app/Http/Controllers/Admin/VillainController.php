@@ -11,6 +11,7 @@ use App\Models\Universe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class VillainController extends Controller
 {
@@ -19,11 +20,23 @@ class VillainController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $villain = Villain::where('user_id', Auth::id())->first();
         $skills = $villain->skills;
         $services = $villain->services;
 
         return view('admin.villains.index', compact('villain', 'skills', 'services'));
+=======
+        $userVillain = Villain::where('user_id', Auth::id())->first();
+
+        if ($userVillain) {
+            $villain = Villain::where('user_id', Auth::id())->first();
+
+            return view('admin.villains.index', compact('villain'));
+        } else {
+            return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
+        }
+>>>>>>> b10927cb5a93b24a356288fd6b7a59b5d06b315c
     }
 
     /**
@@ -31,6 +44,10 @@ class VillainController extends Controller
      */
     public function create()
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Devi essere autenticato per creare un Villain.');
+        }
+
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
@@ -48,16 +65,21 @@ class VillainController extends Controller
      */
     public function store(VillainRequest $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Devi essere autenticato per creare un Villain.');
+        }
+
         $userVillain = Villain::where('user_id', Auth::id())->first();
         if ($userVillain) {
             return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
         }
 
+        Log::info('Dati ricevuti dal form:', $request->all()); // Logga i dati del form
+
         $data = $request->all();
 
-        if (array_key_exists('image', $data)) {
-            $image = Storage::put('uploads', $data['image']);
-            $data['image'] = $image;
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('uploads', 'public');
         }
 
 
@@ -83,10 +105,16 @@ class VillainController extends Controller
      */
     public function edit(Villain $villain)
     {
-        $universes = Universe::all();
-        $skills = Skill::all();
+        $userVillain = Villain::where('user_id', Auth::id())->first();
 
-        return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
+        if ($userVillain) {
+            $universes = Universe::all();
+            $skills = Skill::all();
+
+            return view('admin.villains.edit', compact('villain', 'universes', 'skills'));
+        } else {
+            return redirect()->route('admin.villains.index')->with('error', 'Non puoi modificare questo Villain');
+        }
     }
 
     /**
