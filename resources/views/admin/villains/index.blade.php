@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- controllo erroi --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {{-- information card for each individual profile --}}
     {{-- <div class="d-flex justify-content-center">
         <div class="card" style="width: 100%;">
