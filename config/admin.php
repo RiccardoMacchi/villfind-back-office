@@ -31,7 +31,7 @@ return [
         [
             'menu_text' => 'RATINGS',
             'route_name' => 'admin.ratings.index',
-            'menu_icon' => '<i class="fa-solid fa-envelope"></i>',
+            'menu_icon' => '<i class="fa-solid fa-star"></i>',
         ],
     ],
 ];

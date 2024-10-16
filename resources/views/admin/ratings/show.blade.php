@@ -19,10 +19,6 @@
         <div class="fs-5 mb-3"><strong>Message:</strong></div>
         <p>{{ $rating->pivot->content }}</p>
 
-        <button class="btn btn-primary mt-4">
-            <a href="{{ route('admin.messages.index') }}">Back</a>
-        </button>
     </div>
-
 
 @endsection
