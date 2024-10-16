@@ -12,72 +12,33 @@
         </div>
     @endif
 
-    <div class="container mt-5">
+    <div class="container p-3">
+
         <h2 class="fs-4 text-primary my-4">
-            Ratings
+            Statistics
         </h2>
-        <div class="fs-5 mb-3"><strong>Average rating:</strong> {{ number_format($averageRating, 2) }}</div>
-    
-        <!-- grafico ratings -->
-        <canvas id="ratingsChart" width="300" height="100" class="p-4"></canvas>
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            
-            const ratingsData = @json($ratingsData);
-
-            console.log(ratingsData); 
-
-            const ctx = document.getElementById('ratingsChart').getContext('2d');
-            const ratingsChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'],  
-                    datasets: [{
-                        label: 'Number of Ratings',
-                        data: [
-                            ratingsData['1_star'],   
-                            ratingsData['2_stars'],  
-                            ratingsData['3_stars'],  
-                            ratingsData['4_stars'],  
-                            ratingsData['5_stars']   
-                        ],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    devicePixelRatio: 4,
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1,  
-                                callback: function(value) {
-                                    if (Number.isInteger(value)) {
-                                        return value;  
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        </script>
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Rating</th>
+                        <th>Content</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($ratingsDetails as $rating)
+                        <tr>
+                            <td>{{ $rating->full_name }}</td>
+                            <td>{{ $rating->rating_id }}</td>
+                            <td>{{ $rating->content ?? '-' }}</td>
+                            <td><a class="btn btn-warning" href="{{ route('admin.ratings.show', $userRating->pivot->id) }}"><i
+                            class="fa-solid fa-eye"></i></a></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+       
+            <a href="{{ route('admin.ratings.statistics', $rating->rating_id) }}" class="btn btn-primary">Statistics</a>
     </div>
 @endsection
