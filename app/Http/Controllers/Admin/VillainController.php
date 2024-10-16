@@ -127,7 +127,15 @@ class VillainController extends Controller
             $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
         }
 
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('uploads', 'public');
+        }
+
         $villain->update($data);
+
+        if ($request->has('skill_id')) {
+            $villain->skills()->sync($request->input('skill_id'));
+        }
 
         return redirect()->route('admin.villains.index', $villain)->with('edited', 'Edited successfully');
     }
