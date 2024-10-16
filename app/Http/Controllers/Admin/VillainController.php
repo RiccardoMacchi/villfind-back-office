@@ -133,6 +133,8 @@ class VillainController extends Controller
 
         if ($request->has('skill_id')) {
             $villain->skills()->sync($request->input('skill_id'));
+        } else {
+            $villain->skills()->detach();
         }
 
         return redirect()->route('admin.villains.index', $villain)->with('edited', 'Edited successfully');
