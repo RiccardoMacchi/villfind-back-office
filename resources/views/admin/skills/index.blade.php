@@ -1,57 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- controllo erroi --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <div class="container mb-3">
-        <h2 class="fs-4 text-primary my-4">
+        <h1 class="text-primary my-4">
             Skills
-        </h2>
+        </h1>
 
         @if (session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
         @if ($errors->any())
             <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    <div>{{ $error }}</div>
-                @endforeach
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
-        <div class="card">
-            <div class="card-header">
+
+        <div class="card shadow-lg mb-3 overflow-hidden border-primary-subtle">
+            <div class="card-header bg-primary-subtle border-primary-subtle">
                 {{ $skills->links() }}
             </div>
 
             <div class="card-body p-0">
-                <table class="table table-striped table-hover align-middle mb-0">
-                    <thead>
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-light">
                         <tr>
                             <th scope="col" class="text-primary col-11">Name</th>
                             <th scope="col" class="text-primary text-center col-1">Option</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="align-middle">
                         @foreach ($skills as $skill)
-                            <tr>
+                            <tr class="skill-row">
                                 <th scope="row" class="col-11">
                                     <form id="update-{{ $skill->id }}"
                                         action="{{ route('admin.skills.update', $skill) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <input
-                                            class="input-edit form-control @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
+                                            class="input-edit form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
                                             type="text" name="name" value="{{ $skill->name }}">
                                         <input type="hidden" name="id" value="{{ $skill->id }}">
                                     </form>
@@ -60,13 +53,9 @@
                                 <td class="text-center col-1">
                                     <menu class="d-flex justify-content-center gap-1">
                                         <li>
-                                            <form action="{{ route('admin.skills.destroy', $skill) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </form>
+                                            @include('admin.general.button_delete', [
+                                                'link' => route('admin.skills.destroy', $skill),
+                                            ])
                                         </li>
                                     </menu>
                                 </td>
@@ -79,7 +68,7 @@
                                 <th scope="row" class="col-11 py-0">
                                     <div class="position-relative py-3">
                                         <input type="text"
-                                            class="form-control @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
+                                            class="form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
                                             id="input-name" name="name" aria-errormessage="input-name-error"
                                             value="@if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) {{ old('name') }} @endif"
                                             minlength="3" maxlength="55" placeholder="Name..." required>
@@ -95,7 +84,7 @@
                                     </div>
                                 </th>
 
-                                <td class="text-center col-1">
+                                <td class="col-1">
                                     <menu class="d-flex justify-content-center gap-1">
                                         <li>
                                             <button type="submit" class="btn btn-sm btn-primary">
@@ -114,7 +103,9 @@
 
     <script>
         function submitUpdate(id) {
-            let form = document.getElementById(`update-${id}`)
+            let form = document.getElementById(update - $ {
+                id
+            })
             form.submit();
         }
     </script>

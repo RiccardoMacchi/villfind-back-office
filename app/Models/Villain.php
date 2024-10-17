@@ -42,11 +42,15 @@ class Villain extends Model
 
     public function ratings()
     {
-        return $this->belongsToMany(Rating::class);
+        return $this->belongsToMany(Rating::class)->withPivot('villain_id', 'rating_id', 'full_name', 'content', 'id');
     }
 
     public function messages()
     {
         return $this->belongsToMany(Message::class);
+    }
+    public function sponsorships()
+    {
+        return $this->belongsToMany(Sponsorship::class)->withPivot('purchase_price', 'expiration_date')->withTimestamps();
     }
 }

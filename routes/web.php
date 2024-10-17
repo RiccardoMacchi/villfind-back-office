@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\Admin\DasboardController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\VillainController;
+use App\Http\Controllers\Admin\SponsorshipController;
+use App\Http\Controllers\Admin\SponsorshipVillainController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +28,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [DasboardController::class, 'index'])->name('home');
     Route::resource('villains', VillainController::class);
     Route::resource('skills', SkillController::class);
+    Route::resource('ratings', RatingController::class);
+    Route::get('ratings/{id}', [RatingController::class, 'show'])->name('ratings.show');
+    Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
+    Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);
+    Route::resource('admin/villains/sponsorships', SponsorshipVillainController::class);
 });
 
 
