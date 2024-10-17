@@ -8,7 +8,8 @@
 
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             @foreach ($sponsorship as $plan)
-                <div class="card p-3 d-flex flex-column justify-content-end gap-4" style="width: 15rem">
+                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4"
+                     style="width: 15rem">
                     <h2 class="card-title text-primary mb-auto" style="font-size: 1.75rem">
                         {{ $plan->name }}
                     </h2>
