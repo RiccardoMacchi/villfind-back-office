@@ -2,17 +2,19 @@
 
 @section('content')
     <div class="container mb-3">
-        <h2 class="fs-4 text-primary my-4 text-center">
-            Sponsorship plans available
-        </h2>
-        <div class="d-flex gap-3 justify-content-center">
+        <h1 class="text-primary my-4">
+            Sponsorship
+        </h1>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
             @foreach ($sponsorships as $plan)
-                <div class="card mb-3 p-0 p-4" style="width: 15rem">
+                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4"
+                     style="width: 15rem">
+                    <h2 class="card-title text-primary mb-auto" style="font-size: 1.75rem">
+                        {{ $plan->name }}
+                    </h2>
+
                     <div>
-                        <div>
-                            <strong class="fw-bolder">Name:</strong>
-                            <span>{{ $plan->name }} hours</span>
-                        </div>
                         <div>
                             <strong class="fw-bolder">Price:</strong>
                             <span>{{ number_format($plan->price, 2) }} &#8364</span>
@@ -27,7 +29,6 @@
                     <a href="#" class="btn btn-primary btn-lg">
                         <i class="fa-solid fa-cart-plus"></i>
                     </a>
-
                 </div>
             @endforeach
         </div>
@@ -43,8 +44,10 @@
         @else
             <div>
                 <div class="card shadow-lg border-0 mb-4">
-                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                        <span><i class="fa-solid fa-timeline"></i> Sponsorships linked to this profile</span>
+                    <div
+                         class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <span><i class="fa-solid fa-timeline"></i> Sponsorships linked to this
+                            profile</span>
                         <span class="pagination-info"></span>
                     </div>
                     <div class="card-body p-0">
