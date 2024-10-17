@@ -30,20 +30,28 @@
                 <table class="table table-striped table-hover mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th scope="col" class="text-primary">Sender</th>
-                            <th scope="col" class="w-50 text-primary">Content</th>
-                            <th scope="col" class="text-primary">Sent on</th>
-                            <th scope="col" class="text-center text-primary">Options</th>
+                            <th scope="col" class="col-3 text-primary">Sender</th>
+                            <th scope="col" class="col-6 text-primary">Content</th>
+                            <th scope="col" class="col-2 text-primary text-center">Sent on</th>
+                            <th scope="col" class="col-1 text-primary text-center">Options</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
                         @foreach ($messages as $message)
                             <tr class="message-row">
-                                <th scope="row" class="fw-normal">{{ $message->full_name }}</th>
-                                <td>{{ $message->content }}</td>
-                                <td>{{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y H:i') }}
+                                <th scope="row" class="fw-normal col-3">
+                                    {{ $message->full_name }}
+                                </th>
+
+                                <td class="col-6">
+                                    {{ $message->content }}
                                 </td>
-                                <td>
+
+                                <td class="col-2 text-center">
+                                    {{ \Carbon\Carbon::parse($message->created_at)->format('d/m/Y H:i') }}
+                                </td>
+
+                                <td class="col-1 text-center">
                                     <menu class="d-flex justify-content-center gap-1">
                                         <li>
                                             @include('admin.general.button_view', [

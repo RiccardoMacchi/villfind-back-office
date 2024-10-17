@@ -34,7 +34,7 @@
                             <th scope="col" class="text-primary text-center col-1">Option</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="align-middle">
                         @foreach ($skills as $skill)
                             <tr class="skill-row">
                                 <th scope="row" class="col-11">
@@ -43,7 +43,7 @@
                                           method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input class="input-edit form-control @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
+                                        <input class="input-edit form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
                                                type="text" name="name"
                                                value="{{ $skill->name }}">
                                         <input type="hidden" name="id"
@@ -71,7 +71,7 @@
                                 <th scope="row" class="col-11 py-0">
                                     <div class="position-relative py-3">
                                         <input type="text"
-                                               class="form-control @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
+                                               class="form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
                                                id="input-name" name="name"
                                                aria-errormessage="input-name-error"
                                                value="@if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) {{ old('name') }} @endif"
