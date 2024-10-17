@@ -7,18 +7,20 @@
     box-sizing: border-box;
 }
 
-// font
-body {
+
+:root {
     font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 800;
-}
-
-p, li, span, input, button, textarea {
-    font-family: 'Nunito Sans', sans-serif;
 }
 
 menu,
@@ -58,4 +60,8 @@ a {
     main {
         border-radius: $border-radius-sm 0 0 0;
     }
+}
+
+.rating {
+    color: $clr-rating-stars;
 }
