@@ -18,11 +18,12 @@ class RatingController extends Controller
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
+            // $ratingsPerVillain = Villain::where('user_id', Auth::id())->with('ratings')->get();
 
             // recupero nomi e contenuto delle review
             $ratingsDetails = \DB::table('rating_villain')
                 ->where('villain_id', $userVillain->id)
-                ->select('full_name', 'content', 'rating_id')
+                ->select('full_name', 'content', 'rating_id', 'id')
                 ->get();
 
             // recupero la media dei voti
@@ -30,7 +31,6 @@ class RatingController extends Controller
 
 
             return view('admin.ratings.index', compact('ratingsDetails', 'averageRating'));
-            
         } else {
             return redirect()->route('admin.villains.index');
         }
@@ -110,10 +110,10 @@ class RatingController extends Controller
 
             // recupero i ratings da inserire nel grafico
             $ratingsCount = \DB::table('rating_villain')
-            ->where('villain_id', $userVillain->id)
-            ->select('rating_id', \DB::raw('count(*) as total'))
-            ->groupBy('rating_id')
-            ->pluck('total', 'rating_id');
+                ->where('villain_id', $userVillain->id)
+                ->select('rating_id', \DB::raw('count(*) as total'))
+                ->groupBy('rating_id')
+                ->pluck('total', 'rating_id');
 
             $ratingsData = [
                 '1_star' => $ratingsCount[1] ?? 0,
@@ -127,11 +127,8 @@ class RatingController extends Controller
             $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
 
             return view('admin.ratings.statistics', compact('ratingsCount', 'ratingsData', 'averageRating'));
-            
         } else {
             return redirect()->route('admin.villains.index');
         }
     }
-
-
 }
