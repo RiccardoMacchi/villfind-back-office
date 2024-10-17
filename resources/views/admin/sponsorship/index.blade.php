@@ -16,8 +16,6 @@
                         <div>
                             <strong class="fw-bolder">Price:</strong>
                             <span>{{ number_format($plan->price, 2) }} &#8364</span>
-                            <span class="fs-6" style="font: 900"><strong>Price:</strong></span>
-                            <span>{{ $plan->price }} &#8364</span>
                         </div>
 
                         <div>
@@ -33,8 +31,10 @@
                 </div>
             @endforeach
         </div>
+    </div>
+@endsection
 
-        {{-- <div class="container p-4">
+{{-- <div class="container p-4">
             <h2 class="fs-4 text-primary my-4 text-center">
                 History of your Sponsorship
             </h2>
@@ -71,5 +71,3 @@
                 </div>
             @endif
         </div> --}}
-    </div>
-@endsection

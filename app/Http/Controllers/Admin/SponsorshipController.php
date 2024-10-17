@@ -14,8 +14,8 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        $sponsorship = Sponsorship::orderBy('id')->get();
-        return view('admin.sponsorship.index', compact('sponsorship'));
+        $sponsorships = Sponsorship::orderBy('id')->get();
+        return view('admin.sponsorship.index', compact('sponsorships'));
     }
 
     /**
@@ -65,5 +65,4 @@ class SponsorshipController extends Controller
     {
         //
     }
-
 }
