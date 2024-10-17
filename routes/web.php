@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('villains', VillainController::class);
     Route::resource('skills', SkillController::class);
     Route::resource('ratings', RatingController::class);
+    Route::get('ratings/{id}', [RatingController::class, 'show'])->name('ratings.show');
     Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
     Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use App\Models\Villain;
@@ -58,24 +59,25 @@ class RatingController extends Controller
     public function show(string $ratingId)
     {
         $villain = Villain::where('user_id', Auth::id())
-            ->with('ratings')
+            ->with(['ratings' => function ($query) use ($ratingId) {
+                $query->where('rating_villain.rating_id', $ratingId);
+            }])
             ->first();
 
         if (!$villain) {
-            return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.');
+            return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.',);
         }
 
+        // $rating = $villain->ratings()->where('rating_villain.rating_id', $ratingId)->first();
         $rating = $villain->ratings()->whereIn('rating_villain.id', [$ratingId])->first();
-
+        $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if (!$rating) {
             return redirect()->route('admin.ratings.index')->with('error', 'Rating non trovato.');
         }
 
-        return view('admin.ratings.show', compact('rating', 'ratingId'));
+        return view('admin.ratings.show', compact('rating', 'userVillain'));
     }
-
-
 
 
     /**
