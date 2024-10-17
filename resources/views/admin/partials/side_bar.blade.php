@@ -4,16 +4,6 @@
 @endphp
 
 <nav class="navbar-dark bg-dark h-100 px-3 px-xxl-4 overflow-auto">
-    {{-- controllo erroi --}}
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <menu class="navbar-nav h-100% mt-3">
         @foreach ($side_bar_links as $link)
