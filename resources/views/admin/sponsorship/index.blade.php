@@ -10,6 +10,10 @@
                 <div class="card mb-3 p-0 p-4" style="width: 15rem">
                     <div>
                         <div>
+                            <strong class="fw-bolder">Name:</strong>
+                            <span>{{ $plan->name }} hours</span>
+                        </div>
+                        <div>
                             <strong class="fw-bolder">Price:</strong>
                             <span>{{ number_format($plan->price, 2) }} &#8364</span>
                             <span class="fs-6" style="font: 900"><strong>Price:</strong></span>
@@ -25,9 +29,7 @@
                     <a href="#" class="btn btn-primary btn-lg">
                         <i class="fa-solid fa-cart-plus"></i>
                     </a>
-                    <div class="flex-shrink-0 py-3 text-primary fs-3">
-                        <a href="#"><i class="fa-solid fa-cart-plus"></i></a>
-                    </div>
+
                 </div>
             @endforeach
         </div>
