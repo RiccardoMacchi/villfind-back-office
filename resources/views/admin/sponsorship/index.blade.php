@@ -9,16 +9,22 @@
             @foreach ($sponsorship as $plan)
                 <div class="card mb-3 p-0 p-4" style="width: 15rem">
                     <div>
-                        <h3 class="card-title mb-4 fw-bold text-primary fs-5">{{ $plan->name }}</h3>
                         <div>
+                            <strong class="fw-bolder">Price:</strong>
+                            <span>{{ number_format($plan->price, 2) }} &#8364</span>
                             <span class="fs-6" style="font: 900"><strong>Price:</strong></span>
                             <span>{{ $plan->price }} &#8364</span>
                         </div>
+
                         <div>
-                            <span class="fs-6"><strong>Duration:</strong></span>
+                            <strong class="fw-bolder">Duration:</strong>
                             <span>{{ $plan->hours }} hours</span>
                         </div>
                     </div>
+
+                    <a href="#" class="btn btn-primary btn-lg">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </a>
                     <div class="flex-shrink-0 py-3 text-primary fs-3">
                         <a href="#"><i class="fa-solid fa-cart-plus"></i></a>
                     </div>

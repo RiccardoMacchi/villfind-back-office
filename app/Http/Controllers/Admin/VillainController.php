@@ -25,12 +25,11 @@ class VillainController extends Controller
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
-            // $villain = Villain::where('user_id', Auth::id())->first();
-            $skills = $villain->skills;
-            $services = $villain->services;
-            $averageRating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
+            $villain = Villain::where('user_id', Auth::id())->first();
+            $average_rating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
+            $average_rating_icons = Helper::iconifyRating($average_rating);
 
-            return view('admin.villains.index', compact('villain', 'skills', 'services', 'averageRating'));
+            return view('admin.villains.index', compact('villain', 'average_rating', 'average_rating_icons'));
         } else {
             return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
         }
@@ -47,10 +46,11 @@ class VillainController extends Controller
             return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
         }
 
-        $universes = Universe::all();
-        $skills = Skill::all();
+        $universes = Universe::orderBy('name')->get();
+        $services = Service::orderBy('name')->get();
+        $skills = Skill::orderBy('name')->get();
 
-        return view('admin.villains.create', compact('universes', 'skills'))->with('creatingProfile', true);
+        return view('admin.villains.create', compact('universes', 'services', 'skills'));
     }
 
 
@@ -66,20 +66,18 @@ class VillainController extends Controller
 
         $data = $request->all();
 
-        if (array_key_exists('image', $data)) {
-            $image = Storage::put('uploads', $data['image']);
-            $data['image'] = $image;
+        $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
+        $data['user_id'] =  Auth::id();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = Storage::put('uploads', $data['image']);
         }
 
+        $new_villain = Villain::create($data);
 
-        // Crea il Villain
-        $new_villain = new Villain;
-        $new_villain->slug = Helper::generateSlug($data['name'], Villain::class);
-        $new_villain->user_id = Auth::id();
-
-        $new_villain->fill($data);
-
-        $new_villain->save();
+        if (array_key_exists('services', $data)) {
+            $new_villain->services()->sync($request->input('services'));
+        }
 
         return redirect()->route('admin.villains.index')->with('success', 'Benvenuto ora sei un vero Villain!');
     }
@@ -119,22 +117,27 @@ class VillainController extends Controller
     {
         $data = $request->all();
 
-        if ($data['name'] === $villain->name) {
-            $data['slug'] = $villain->slug;
-        } else {
-            $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
-        }
+        $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
+        $data['user_id'] =  Auth::id();
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('uploads', 'public');
+        if ($request->hasFile('image') || $request->input('image_delete')) {
+            if ($villain->image) {
+                Storage::delete($villain->image);
+            }
+
+            if ($request->hasFile('image')) {
+                $data['image'] = Storage::put('uploads', $data['image']);
+            } else {
+                $data['image'] = null;
+            }
         }
 
         $villain->update($data);
 
-        if ($request->has('skill_id')) {
-            $villain->skills()->sync($request->input('skill_id'));
+        if (array_key_exists('services', $data)) {
+            $villain->services()->sync($request->input('services'));
         } else {
-            $villain->skills()->detach();
+            $villain->services()->detach();
         }
 
         return redirect()->route('admin.villains.index', $villain)->with('edited', 'Edited successfully');

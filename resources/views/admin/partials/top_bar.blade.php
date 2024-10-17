@@ -12,7 +12,10 @@
 
     <div class="container-fluid px-xxl-4">
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img style="height: 32px" src="{!! Vite::asset('resources/images/logos/logos-lt/logo-lt-horizontal.png') !!}"
+            <img class="d-block d-md-none" style="height: 32px" src="{!! Vite::asset('resources/images/logos/logos-lt/logo-lt-mark.png') !!}"
+                 alt="{{ config('app.name', 'Laravel') }}">
+
+            <img class="d-none d-md-block" style="height: 32px" src="{!! Vite::asset('resources/images/logos/logos-lt/logo-lt-horizontal.png') !!}"
                  alt="{{ config('app.name', 'Laravel') }}">
         </a>
 
@@ -21,11 +24,23 @@
             <!-- Authentication Links -->
             @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link d-block d-md-none" href="{{ route('login') }}">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </a>
+
+                    <a class="nav-link d-none d-md-block" href="{{ route('login') }}">
+                        Login
+                    </a>
                 </li>
                 @if (Route::has('register'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="nav-link d-block d-md-none" href="{{ route('register') }}">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </a>
+
+                        <a class="nav-link d-none d-md-block" href="{{ route('register') }}">
+                            Register
+                        </a>
                     </li>
                 @endif
             @else
@@ -33,7 +48,9 @@
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#"
                        role="button" data-bs-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
+                        <span class="d-inline d-md-none"><i class="fa-solid fa-user"></i></span>
+
+                        <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark"

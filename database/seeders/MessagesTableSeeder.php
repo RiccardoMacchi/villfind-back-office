@@ -20,7 +20,7 @@ class MessagesTableSeeder extends Seeder
             while (rand(0, 2)) {
                 $new_message = new Message();
                 $new_message->villain_id = $villain_id;
-                $new_message->full_name = $faker->firstName() . $faker->lastName();
+                $new_message->full_name = $faker->firstName() . ' ' . $faker->lastName();
                 $new_message->email = $faker->email();
                 $new_message->phone = $faker->phoneNumber();
                 $new_message->content = $faker->text();
