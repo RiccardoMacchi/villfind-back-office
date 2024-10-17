@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('image')->nullable();
+            $table->string('cv')->nullable();
             $table->string('phone')->nullable();
-            $table->file('cv')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
