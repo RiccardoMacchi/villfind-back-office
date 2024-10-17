@@ -26,7 +26,7 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DasboardController::class, 'index'])->name('home');
-    Route::resource('villains', VillainController::class);
+    Route::resource('villains', VillainController::class)->except(['create', 'show']);
     Route::resource('skills', SkillController::class);
     Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('ratings', RatingController::class);
