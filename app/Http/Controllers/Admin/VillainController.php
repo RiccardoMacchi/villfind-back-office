@@ -27,8 +27,10 @@ class VillainController extends Controller
             $villain = Villain::where('user_id', Auth::id())->first();
             $average_rating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
             $average_rating_icons = Helper::iconifyRating($average_rating);
+            $user = Auth::user();
+            $userEmail = $user->email;
 
-            return view('admin.villains.index', compact('villain', 'average_rating', 'average_rating_icons'));
+            return view('admin.villains.index', compact('villain', 'average_rating', 'average_rating_icons', 'userEmail'));
         } else {
             return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
         }

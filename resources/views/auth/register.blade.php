@@ -18,6 +18,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
+                                        pattern=".{3,}" title="The name must be at least 3 characters long"
                                         value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                     @error('name')
@@ -35,6 +36,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
+                                        pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$" title="Please enter a valid email"
                                         value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
@@ -52,7 +54,9 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
+                                        pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
+                                        title="Must contain at least one number, and at least 8 or more characters" required
+                                        autocomplete="new-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -72,13 +76,14 @@
                                 </div>
                             </div>
                             {{-- Univers --}}
-                            <div class="row mb-3">
-                                <label for="universe_id" class="col-sm-2 col-form-label">Universe</label>
+                            <div class="mb-4 row">
+                                <label for="universe_id" class="col-md-4 col-form-label text-md-right">Universe</label>
 
-                                <div class="col-sm-10 pb-3">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <select name="universe_id" id="universe_id" aria-errormessage="universe_id-error"
-                                            class="form-select @error('universe_id') is-invalid @enderror" required>
+                                            class="form-select my_registration_select @error('universe_id') is-invalid @enderror"
+                                            required>
 
                                             <option value="" disabled>
                                                 Select a universe of origin
@@ -101,10 +106,10 @@
                                 </div>
                             </div>
                             {{-- Skills --}}
-                            <div class="row mb-3">
-                                <label for="skills" class="col-sm-2 col-form-label">skills</label>
+                            <div class="row mb-4">
+                                <label for="skills" class="col-md-4 col-form-label text-md-right">skills</label>
 
-                                <div class="col-sm-10 pb-3">
+                                <div class="col-md-6">
                                     <div class="dropdown">
                                         <button type="button" id="skills"
                                             class="form-select text-start @error('skills') is-invalid @enderror"
@@ -112,7 +117,7 @@
                                             None
                                         </button>
 
-                                        <ul class="dropdown-menu w-100" aria-labelledby="skills">
+                                        <ul class="dropdown-menu w-100 my_registration_select" aria-labelledby="skills">
                                             @foreach ($skills as $skill)
                                                 <li>
                                                     <label class="dropdown-item" for="skill-{!! $skill->id !!}"
@@ -138,14 +143,11 @@
                                 </div>
                             </div>
 
-                            <div class="mb-4 row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
-                                    </button>
-                                </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Register') }}
+                                </button>
                             </div>
-
                         </form>
                     </div>
                 </div>
