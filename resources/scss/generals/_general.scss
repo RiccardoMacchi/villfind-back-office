@@ -59,6 +59,11 @@ a {
 
     main {
         border-radius: $border-radius-sm 0 0 0;
+        background-image: url('~resources/images/logos/logos-dk/logo-dk-mark-50.png');
+        background-repeat: no-repeat;
+        background-size: 40%;
+        background-position: center;
+        background-attachment: scroll;
     }
 }
 
