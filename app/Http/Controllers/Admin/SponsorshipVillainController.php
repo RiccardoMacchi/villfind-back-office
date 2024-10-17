@@ -24,11 +24,9 @@ class SponsorshipVillainController extends Controller
         }
 
         $sponsorshipDetails = $userVillain->sponsorships()->get();
+        var_dump($sponsorshipDetails);
 
-        return view('admin.sponsorship.index', [
-            'sponsorships' => $sponsorshipDetails,
-            'villain' => $userVillain,
-        ]);
+        return view('admin.sponsorship.index', compact('userVillain', 'sponsorshipDetails'));
     }
 
 

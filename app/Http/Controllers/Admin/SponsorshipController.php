@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sponsorship;
 use App\Models\Villain;
+use Illuminate\Support\Facades\Auth;
 
 class SponsorshipController extends Controller
 {
@@ -14,8 +15,15 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
+        $userVillain = Villain::where('user_id', Auth::id())->first();
+
+        if (!$userVillain) {
+            return redirect()->back()->with('error', 'Nessun villain trovato per questo utente.');
+        }
         $sponsorships = Sponsorship::orderBy('id')->get();
-        return view('admin.sponsorship.index', compact('sponsorships'));
+
+        $sponsorshipDetails = $userVillain->sponsorships()->get();
+        return view('admin.sponsorship.index', compact('sponsorships', 'userVillain', 'sponsorshipDetails'));
     }
 
     /**
@@ -65,4 +73,6 @@ class SponsorshipController extends Controller
     {
         //
     }
+
+
 }
