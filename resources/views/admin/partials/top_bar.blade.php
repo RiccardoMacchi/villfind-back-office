@@ -12,8 +12,7 @@
 
     <div class="container-fluid px-xxl-4">
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img style="height: 32px; width: 74px;" src="{!! Vite::asset('resources/images/logo.png') !!}"
-                alt="{{ config('app.name', 'Laravel') }}">
+            <img style="width: 150px" src="{!! Vite::asset('resources/images/Logo/logo-chiaro/logo-esteso-chiaro.png') !!}" alt="{{ config('app.name', 'Laravel') }}">
         </a>
 
         <!-- Right Side Of Navbar -->
