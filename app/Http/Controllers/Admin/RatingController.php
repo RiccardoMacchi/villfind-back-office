@@ -8,6 +8,7 @@ use App\Models\Rating;
 use App\Models\Villain;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RatingController extends Controller
 {
@@ -22,10 +23,10 @@ class RatingController extends Controller
             // $ratingsPerVillain = Villain::where('user_id', Auth::id())->with('ratings')->get();
 
             // recupero nomi e contenuto delle review
-            $ratingsDetails = \DB::table('rating_villain')
+            $ratingsDetails = DB::table('rating_villain')
                 ->where('villain_id', $userVillain->id)
                 ->select('full_name', 'content', 'rating_id', 'id')
-                ->get();
+                ->paginate(25);
 
             // recupero la media dei voti
             $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
