@@ -2,18 +2,22 @@
 
 @section('content')
     <div class="container mb-3">
-        <h2 class="fs-4 text-primary my-4 text-center">
-            Sponsorship plans available
-        </h2>
-        <div class="d-flex gap-3 justify-content-center">
-            @foreach ($sponsorship as $plan)
-                <div class="card mb-3 p-0 p-4" style="width: 15rem">
+        <h1 class="text-primary my-4">
+            Sponsorship
+        </h1>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            @foreach ($sponsorships as $plan)
+                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4"
+                     style="width: 15rem">
+                    <h2 class="card-title text-primary mb-auto" style="font-size: 1.75rem">
+                        {{ $plan->name }}
+                    </h2>
+
                     <div>
                         <div>
                             <strong class="fw-bolder">Price:</strong>
                             <span>{{ number_format($plan->price, 2) }} &#8364</span>
-                            <span class="fs-6" style="font: 900"><strong>Price:</strong></span>
-                            <span>{{ $plan->price }} &#8364</span>
                         </div>
 
                         <div>
@@ -25,14 +29,13 @@
                     <a href="#" class="btn btn-primary btn-lg">
                         <i class="fa-solid fa-cart-plus"></i>
                     </a>
-                    <div class="flex-shrink-0 py-3 text-primary fs-3">
-                        <a href="#"><i class="fa-solid fa-cart-plus"></i></a>
-                    </div>
                 </div>
             @endforeach
         </div>
+    </div>
+@endsection
 
-        {{-- <div class="container p-4">
+{{-- <div class="container p-4">
             <h2 class="fs-4 text-primary my-4 text-center">
                 History of your Sponsorship
             </h2>
@@ -69,5 +72,3 @@
                 </div>
             @endif
         </div> --}}
-    </div>
-@endsection
