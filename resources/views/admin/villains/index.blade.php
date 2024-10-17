@@ -37,7 +37,7 @@
                                     <i class="fas fa-phone"></i>&ensp;Contact Phone:
                                 </strong>
 
-                                @if ($villain->skills)
+                                @if ($villain->phone)
                                     <span class="ps-3 d-block">
                                         {{ $villain->phone }}
                                     </span>
@@ -53,7 +53,7 @@
                                     <i class="fas fa-star"></i>&ensp;Average Rating:
                                 </strong>
 
-                                @if ($villain->skills)
+                                @if (!$villain->ratings->isEmpty())
                                     <span class="ps-3 d-block">
                                         <span class="rating">
                                             {!! $average_rating_icons !!}
@@ -82,9 +82,9 @@
                                     <i class="fas fa-hand-sparkles"></i>&ensp;Skills:
                                 </strong>
 
-                                @if ($villain->skills)
+                                @if (!$villain->skills->isEmpty())
                                     <ul class="ps-3">
-                                        @foreach ($villain->skills as $skill)
+                                        @foreach ($villain->skills->sortBy('name') as $skill)
                                             <li>{{ $skill->name }}</li>
                                         @endforeach
                                     </ul>
@@ -100,9 +100,9 @@
                                     <i class="fas fa-concierge-bell"></i>&ensp;Services:
                                 </strong>
 
-                                @if ($villain->services)
+                                @if (!$villain->services->isEmpty())
                                     <ul class="ps-3">
-                                        @foreach ($villain->services as $service)
+                                        @foreach ($villain->services->sortBy('name') as $service)
                                             <li>
                                                 {{ $service->name }}
                                             </li>
