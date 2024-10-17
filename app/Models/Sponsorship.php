@@ -17,6 +17,8 @@ class Sponsorship extends Model
 
     public function villains()
     {
-        return $this->hasMany(Villain::class);
+        return $this->belongsToMany(Villain::class, 'sponsorship_villain')
+                    ->withPivot('purchase_price', 'expiration_date')
+                    ->withTimestamps();
     }
 }

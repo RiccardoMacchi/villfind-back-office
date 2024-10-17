@@ -25,7 +25,7 @@ class VillainController extends Controller
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
-            $villain = Villain::where('user_id', Auth::id())->first();
+            // $villain = Villain::where('user_id', Auth::id())->first();
             $skills = $villain->skills;
             $services = $villain->services;
             $averageRating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
