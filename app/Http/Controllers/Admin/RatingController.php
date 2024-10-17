@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Functions\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use App\Models\Villain;
@@ -112,9 +111,9 @@ class RatingController extends Controller
         if ($userVillain) {
 
             // recupero i ratings da inserire nel grafico
-            $ratingsCount = \DB::table('rating_villain')
+            $ratingsCount = DB::table('rating_villain')
                 ->where('villain_id', $userVillain->id)
-                ->select('rating_id', \DB::raw('count(*) as total'))
+                ->select('rating_id', DB::raw('count(*) as total'))
                 ->groupBy('rating_id')
                 ->pluck('total', 'rating_id');
 
