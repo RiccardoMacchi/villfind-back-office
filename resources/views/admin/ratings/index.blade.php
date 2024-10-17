@@ -47,6 +47,6 @@
             </div>
         </div>
 
-        <a href="#" class="btn btn-primary mt-3">Statistics</a>
+        <a href="{{ route('admin.ratings.statistics') }}" class="btn btn-primary mt-3">Statistics</a>
     </div>
 @endsection
