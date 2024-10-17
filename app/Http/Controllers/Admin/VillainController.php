@@ -57,15 +57,15 @@ class VillainController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(VillainRequest $request)
+    public function store(Request $request)
     {
-        $userVillain = Villain::where('user_id', Auth::id())->first();
-        if ($userVillain) {
-            return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
-        }
+        // $userVillain = Villain::where('user_id', Auth::id())->first();
+        // if ($userVillain) {
+        //     return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
+        // }
 
         $data = $request->all();
-
+        var_dump(Auth::id());
         $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
         $data['user_id'] =  Auth::id();
 
@@ -75,11 +75,12 @@ class VillainController extends Controller
 
         $new_villain = Villain::create($data);
 
-        if (array_key_exists('services', $data)) {
-            $new_villain->services()->sync($request->input('services'));
+        if (array_key_exists('skills', $data)) {
+            $new_villain->skills()->sync($request->input('skills'));
         }
 
-        return redirect()->route('admin.villains.index')->with('success', 'Benvenuto ora sei un vero Villain!');
+
+        // return redirect()->route('admin.villains.index')->with('success', 'Benvenuto ora sei un vero Villain!');
     }
 
     /**

@@ -22,17 +22,17 @@
                         Login
                     </a>
                 </li>
-                @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link d-block d-md-none" href="{{ route('register') }}">
-                            <i class="fa-solid fa-user-pen"></i>
-                        </a>
+                {{-- @if (Route::has('register')) --}}
+                <li class="nav-item">
+                    <a class="nav-link d-block d-md-none" href="{{ route('register') }}">
+                        <i class="fa-solid fa-user-pen"></i>
+                    </a>
 
-                        <a class="nav-link d-none d-md-block" href="{{ route('register') }}">
-                            Register
-                        </a>
-                    </li>
-                @endif
+                    <a class="nav-link d-none d-md-block" href="{{ route('register') }}">
+                        Register
+                    </a>
+                </li>
+                {{-- @endif --}}
             @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

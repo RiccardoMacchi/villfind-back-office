@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Admin\VillainController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\Skill;
+use App\Models\Universe;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -20,7 +24,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $universes = Universe::all();
+        $skills = Skill::all();
+        return view('auth.register', compact('universes', 'skills'));
     }
 
     /**
@@ -28,16 +34,14 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -45,7 +49,16 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+    }
 
-        return redirect()->route('admin.villains.create');
+    public function processForm(RegisterRequest $request)
+    {
+        $this->store($request);
+
+        $villController = new VillainController();
+        $villController->store($request);
+
+        // Gestisci i risultati delle funzioni o reindirizza
+        return redirect()->back();
     }
 }

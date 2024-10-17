@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->string('phone')->nullable();
-            $table->string('email_contact')->nullable();
+            $table->file('cv')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

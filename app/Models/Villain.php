@@ -15,8 +15,8 @@ class Villain extends Model
         'slug',
         'image',
         'phone',
+        'cv',
         'universe_id',
-        'email_contact',
         'user_id',
     ];
 

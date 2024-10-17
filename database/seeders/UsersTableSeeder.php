@@ -18,7 +18,6 @@ class UsersTableSeeder extends Seeder
         for ($row_count = 0; ($row_data = fgetcsv($csv_file)) != false; $row_count++) {
             if ($row_count) {
                 $new_user = new User();
-                $new_user->name = 'test' . $row_count;
                 $new_user->email = 'test' . $row_count . '@test';
                 $new_user->password = Hash::make('test' . $row_count);
 
