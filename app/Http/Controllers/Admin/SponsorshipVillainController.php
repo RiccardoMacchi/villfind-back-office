@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Sponsorship;
 use App\Models\Villain;
+use App\Models\Sponsorship;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SponsorshipVillain;
 
-class SponsorshipController extends Controller
+class SponsorshipVillainController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $userVillain = Villain::where('user_id', Auth::id())->first();
@@ -20,11 +22,14 @@ class SponsorshipController extends Controller
         if (!$userVillain) {
             return redirect()->back()->with('error', 'Nessun villain trovato per questo utente.');
         }
-        $sponsorships = Sponsorship::orderBy('id')->get();
 
         $sponsorshipDetails = $userVillain->sponsorships()->get();
-        return view('admin.sponsorship.index', compact('sponsorships', 'userVillain', 'sponsorshipDetails'));
+        var_dump($sponsorshipDetails);
+
+        return view('admin.sponsorship.index', compact('userVillain', 'sponsorshipDetails'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -73,6 +78,4 @@ class SponsorshipController extends Controller
     {
         //
     }
-
-
 }

@@ -9,15 +9,16 @@
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
 
@@ -39,15 +40,13 @@
                             <tr class="skill-row">
                                 <th scope="row" class="col-11">
                                     <form id="update-{{ $skill->id }}"
-                                          action="{{ route('admin.skills.update', $skill) }}"
-                                          method="POST">
+                                        action="{{ route('admin.skills.update', $skill) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <input class="input-edit form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
-                                               type="text" name="name"
-                                               value="{{ $skill->name }}">
-                                        <input type="hidden" name="id"
-                                               value="{{ $skill->id }}">
+                                        <input
+                                            class="input-edit form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == $skill->id) is-invalid @endif"
+                                            type="text" name="name" value="{{ $skill->name }}">
+                                        <input type="hidden" name="id" value="{{ $skill->id }}">
                                     </form>
                                 </th>
 
@@ -55,9 +54,7 @@
                                     <menu class="d-flex justify-content-center gap-1">
                                         <li>
                                             @include('admin.general.button_delete', [
-                                                'link' => route(
-                                                    'admin.skills.destroy',
-                                                    $skill),
+                                                'link' => route('admin.skills.destroy', $skill),
                                             ])
                                         </li>
                                     </menu>
@@ -71,17 +68,15 @@
                                 <th scope="row" class="col-11 py-0">
                                     <div class="position-relative py-3">
                                         <input type="text"
-                                               class="form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
-                                               id="input-name" name="name"
-                                               aria-errormessage="input-name-error"
-                                               value="@if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) {{ old('name') }} @endif"
-                                               minlength="3" maxlength="55" placeholder="Name..."
-                                               required>
+                                            class="form-control bg-transparent border-top-0 border-end-0 border-start-0 @if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) is-invalid @endif"
+                                            id="input-name" name="name" aria-errormessage="input-name-error"
+                                            value="@if ($errors->any() && old('id') == count($skills) + 1 && $skills->contains('name', old('name'))) {{ old('name') }} @endif"
+                                            minlength="3" maxlength="55" placeholder="Name..." required>
                                         <input type="hidden" name="id" value="0">
                                         @if ($errors->any() && old('name'))
                                             @error('name')
                                                 <small id="input-name-error"
-                                                       class="invalid-feedback position-absolute bottom-0 start-0">
+                                                    class="invalid-feedback position-absolute bottom-0 start-0">
                                                     {{ $message }}
                                                 </small>
                                             @enderror
