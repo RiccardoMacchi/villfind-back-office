@@ -15,9 +15,9 @@ class PageController extends Controller
     public function index()
     {
         if (isset($_GET['search'])) {
-            $villains = Villain::where('name', 'LIKE', '%' . $_GET['search'] . '%')->orderBy('name')->with('skills', 'universe', 'services')->paginate(10);
+            $villains = Villain::where('name', 'LIKE', '%' . $_GET['search'] . '%')->orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(10);
         } else {
-            $villains = Villain::orderBy('name')->with('skills', 'universe', 'services')->paginate(10);
+            $villains = Villain::orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(10);
         }
 
         if ($villains) {
@@ -60,7 +60,7 @@ class PageController extends Controller
         return response()->json(compact('success', 'services'));
     }
 
-    public function allUniverse()
+    public function allUniverses()
     {
         $universes = Universe::all();
         if ($universes) {
@@ -73,7 +73,7 @@ class PageController extends Controller
 
     public function villainBySlug($slug)
     {
-        $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services')->first();
+        $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
         if ($villain) {
             $success = true;
             if ($villain->image) {
