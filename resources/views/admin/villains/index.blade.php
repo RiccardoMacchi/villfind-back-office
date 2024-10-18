@@ -7,9 +7,12 @@
                 <div class="row g-0 p-0">
                     <div class="col-lg-5 p-0">
                         <img src="{!! $villain->image !!}" alt="{!! $villain->name !!}"
+                             alt="{!! $villain->name !!}"
                              class="img-fluid p-0 h-100 w-100 object-fit-cover"
+                             data-original-image-path="{!! $villain->image !!}"
                              onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
                     </div>
+
                     <div class="col-lg-7">
                         <div class="card-body ps-5">
                             <h2 class="card-title fw-bold text-primary">

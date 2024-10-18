@@ -103,7 +103,7 @@ class VillainController extends Controller
             }
 
             if ($request->hasFile('image')) {
-                $data['image'] = Storage::put('uploads', $data['image']);
+                $data['image'] = Storage::disk('public')->put('uploads/images', $request->file('image'));
                 $data['image'] = asset('storage/' . $data['image']);
             } else {
                 $data['image'] = null;
@@ -116,8 +116,8 @@ class VillainController extends Controller
             }
 
             if ($request->hasFile('cv')) {
-                $data['cv'] = Storage::put('uploads.cv', $data['cv']);
-                $data['image'] = asset('storage/' . $data['cv']);
+                $data['cv'] = Storage::disk('public')->put('uploads/cvs', $request->file('cv'));
+                $data['cv'] = asset('storage/' . $data['cv']);
             } else {
                 $data['cv'] = null;
             }
