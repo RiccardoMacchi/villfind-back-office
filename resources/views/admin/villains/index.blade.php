@@ -6,9 +6,9 @@
             <div class="card mb-3 p-0 col-11 col-lg-9 col-xl-8 overflow-hidden">
                 <div class="row g-0 p-0">
                     <div class="col-lg-5 p-0">
-                        <img src="{!! asset('storage/' . $villain->image) !!}" alt="{!! $villain->name !!}"
-                            class="img-fluid p-0 h-100 w-100 object-fit-cover"
-                            onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
+                        <img src="{!! $villain->image !!}" alt="{!! $villain->name !!}"
+                             class="img-fluid p-0 h-100 w-100 object-fit-cover"
+                             onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
                     </div>
                     <div class="col-lg-7">
                         <div class="card-body ps-5">
@@ -116,7 +116,8 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('admin.villains.edit', $villain) }}" class="btn btn-primary">
+                            <a href="{{ route('admin.villains.edit', $villain) }}"
+                               class="btn btn-primary">
                                 Edit your profile
                             </a>
                         </div>
