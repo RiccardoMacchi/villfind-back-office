@@ -14,3 +14,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::get('/villains', [PageController::class, 'index']);
+
+Route::get('/skills', [PageController::class, 'allSkills']);
+Route::get('/services', [PageController::class, 'allServices']);
+Route::get('/universes', [PageController::class, 'allUniverses']);
+
+Route::get('/villain/{slug}', [PageController::class, 'villainBySlug']);
+Route::get('/list-by-skill/{id}', [PageController::class, 'listBySkill']);
+Route::get('/list-by-service/{id}', [PageController::class, 'listByService']);
+Route::get('/list-by-universe/{id}', [PageController::class, 'listByUniverse']);
