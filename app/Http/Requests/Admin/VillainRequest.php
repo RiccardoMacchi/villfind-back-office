@@ -24,7 +24,6 @@ class VillainRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'email_contact' => 'required|email|max:255',
             'image' => 'nullable|image',
             'phone' => 'nullable|string|max:20',
             'universe_id' => 'required|exists:universes,id'
