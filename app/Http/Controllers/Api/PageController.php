@@ -40,7 +40,7 @@ class PageController extends Controller
 
     public function allSkills()
     {
-        $skills = Skill::all();
+        $skills = Skill::orderBy('name')->get();
         if ($skills) {
             $success = true;
         } else {
@@ -51,7 +51,7 @@ class PageController extends Controller
 
     public function allServices()
     {
-        $services = Service::all();
+        $services = Service::orderBy('name')->get();
         if ($services) {
             $success = true;
         } else {
@@ -62,7 +62,7 @@ class PageController extends Controller
 
     public function allUniverses()
     {
-        $universes = Universe::all();
+        $universes = Universe::orderBy('name')->get();
         if ($universes) {
             $success = true;
         } else {
