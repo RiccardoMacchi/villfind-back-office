@@ -21,15 +21,16 @@ class VillainController extends Controller
      */
     public function index()
     {
-
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
         if ($userVillain) {
             $villain = Villain::where('user_id', Auth::id())->first();
             $average_rating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
             $average_rating_icons = Helper::iconifyRating($average_rating);
+            $user = Auth::user();
+            $userEmail = $user->email;
 
-            return view('admin.villains.index', compact('villain', 'average_rating', 'average_rating_icons'));
+            return view('admin.villains.index', compact('villain', 'average_rating', 'average_rating_icons', 'userEmail'));
         } else {
             return redirect()->route('admin.villains.create')->with('error', 'Devi prima essere un Villain');
         }
@@ -38,20 +39,7 @@ class VillainController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $userVillain = Villain::where('user_id', Auth::id())->first();
-
-        if ($userVillain) {
-            return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
-        }
-
-        $universes = Universe::orderBy('name')->get();
-        $services = Service::orderBy('name')->get();
-        $skills = Skill::orderBy('name')->get();
-
-        return view('admin.villains.create', compact('universes', 'services', 'skills'));
-    }
+    public function create() {}
 
 
     /**
@@ -59,34 +47,22 @@ class VillainController extends Controller
      */
     public function store(Request $request)
     {
-        // $userVillain = Villain::where('user_id', Auth::id())->first();
-        // if ($userVillain) {
-        //     return redirect()->route('admin.villains.index')->with('error', 'Sei già un Villain.');
-        // }
-
         $data = $request->all();
         var_dump(Auth::id());
         $data['slug'] = Helper::generateSlug($data['name'], Villain::class);
         $data['user_id'] =  Auth::id();
-
-        if ($request->hasFile('image')) {
-            $data['image'] = Storage::put('uploads', $data['image']);
-        }
 
         $new_villain = Villain::create($data);
 
         if (array_key_exists('skills', $data)) {
             $new_villain->skills()->sync($request->input('skills'));
         }
-
-
-        // return redirect()->route('admin.villains.index')->with('success', 'Benvenuto ora sei un vero Villain!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id) {}
+    public function show(Villain $villain) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -107,7 +83,7 @@ class VillainController extends Controller
             }
         }
 
-        return redirect()->route('admin.villains.index')->with('error', 'Villain non trovato');
+        return redirect()->route('admin.villains.index');
     }
 
 
@@ -127,9 +103,23 @@ class VillainController extends Controller
             }
 
             if ($request->hasFile('image')) {
-                $data['image'] = Storage::put('uploads', $data['image']);
+                $data['image'] = Storage::disk('public')->put('uploads/images', $request->file('image'));
+                $data['image'] = asset('storage/' . $data['image']);
             } else {
                 $data['image'] = null;
+            }
+        }
+
+        if ($request->hasFile('cv') || $request->input('cv_delete')) {
+            if ($villain->cv) {
+                Storage::delete($villain->cv);
+            }
+
+            if ($request->hasFile('cv')) {
+                $data['cv'] = Storage::disk('public')->put('uploads/cvs', $request->file('cv'));
+                $data['cv'] = asset('storage/' . $data['cv']);
+            } else {
+                $data['cv'] = null;
             }
         }
 
@@ -141,7 +131,13 @@ class VillainController extends Controller
             $villain->services()->detach();
         }
 
-        return redirect()->route('admin.villains.index', $villain)->with('edited', 'Edited successfully');
+        if (array_key_exists('skills', $data)) {
+            $villain->skills()->sync($request->input('skills'));
+        } else {
+            $villain->skills()->detach();
+        }
+
+        return redirect()->route('admin.villains.index', $villain);
     }
 
     /**

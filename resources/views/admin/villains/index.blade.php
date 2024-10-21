@@ -6,25 +6,27 @@
             <div class="card mb-3 p-0 col-11 col-lg-9 col-xl-8 overflow-hidden">
                 <div class="row g-0 p-0">
                     <div class="col-lg-5 p-0">
-                        <img src="{!! asset('storage/' . $villain->image) !!}" alt="{!! $villain->name !!}"
+                        <img src="{!! $villain->image !!}" alt="{!! $villain->name !!}"
+                             alt="{!! $villain->name !!}"
                              class="img-fluid p-0 h-100 w-100 object-fit-cover"
+                             data-original-image-path="{!! $villain->image !!}"
                              onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
                     </div>
+
                     <div class="col-lg-7">
                         <div class="card-body ps-5">
                             <h2 class="card-title fw-bold text-primary">
                                 {{ $villain->name }}
                             </h2>
-
                             <div class="my-4">
                                 <div class="mb-3">
                                     <strong class="text-primary">
                                         <i class="fas fa-envelope"></i>&ensp;Contact Email:
                                     </strong>
 
-                                    @if ($villain->email_contact)
+                                    @if ($userEmail)
                                         <span class="ps-3 d-block">
-                                            {{ $villain->email_contact }}
+                                            {{ $userEmail }}
                                         </span>
                                     @else
                                         <span class="fst-italic ps-3 d-block">

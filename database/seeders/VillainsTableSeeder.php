@@ -22,7 +22,7 @@ class VillainsTableSeeder extends Seeder
                 $new_villain->name = $row_data[0];
                 $new_villain->slug = Helper::generateSlug($row_data[0], Villain::class);
                 if ($row_data[1]) {
-                    $new_villain->image = $row_data[1];
+                    $new_villain->image = asset('storage/uploads/images/' . $row_data[1]);
                 }
                 if ($row_data[2]) {
                     $new_villain->phone = $row_data[2];

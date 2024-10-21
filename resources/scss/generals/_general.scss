@@ -1,4 +1,4 @@
-@use './partrials/button' ;
+@use './partrials/button';
 @use './variables' as *;
 @use './mixins' as *;
 
@@ -70,4 +70,11 @@ a {
 
 .rating {
     color: $clr-rating-stars;
+}
+
+// Select registrazione
+
+.my_registration_select {
+    max-height: 350px;
+    overflow: auto;
 }
