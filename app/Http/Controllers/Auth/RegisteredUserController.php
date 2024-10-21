@@ -24,8 +24,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $universes = Universe::all();
-        $skills = Skill::all();
+        $universes = Universe::orderBy('name')->get();
+        $skills = Skill::orderBy('name')->get();
         return view('auth.register', compact('universes', 'skills'));
     }
 

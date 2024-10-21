@@ -105,9 +105,10 @@
         <div class="col-sm-10 pb-3">
             <div class="input-group">
                 <select name="universe_id" id="universe_id" aria-errormessage="universe_id-error"
-                        class="form-select @error('universe_id') is-invalid @enderror" required>
+                        class="form-select select-height @error('universe_id') is-invalid @enderror"
+                        required>
 
-                    <option value="" disabled>
+                    <option value="" disabled @selected(!old('universe_id', $is_update_form ? $villain->universe_id : null))>
                         Select a universe of origin
                     </option>
 
@@ -139,7 +140,7 @@
                     None
                 </button>
 
-                <ul class="dropdown-menu w-100" aria-labelledby="skills">
+                <ul class="dropdown-menu w-100 select-height" aria-labelledby="skills">
                     @foreach ($skills as $skill)
                         <li>
                             <label class="dropdown-item" for="skill-{!! $skill->id !!}"
@@ -179,7 +180,7 @@
                     None
                 </button>
 
-                <ul class="dropdown-menu w-100" aria-labelledby="services">
+                <ul class="dropdown-menu w-100 select-height" aria-labelledby="services">
                     @foreach ($services as $service)
                         <li>
                             <label class="dropdown-item" for="service-{!! $service->id !!}"
@@ -216,42 +217,7 @@
     </div>
 </form>
 
-<script>
+<script type="module">
     checkboxListSelector('services');
     checkboxListSelector('skills');
-
-    function checkboxListSelector(listButtonId) {
-        const dropdownButton = document.getElementById(listButtonId);
-        const dropdownMenu = document.querySelectorAll(`#${listButtonId}+.dropdown-menu input`);
-
-        let selectedItems = [];
-
-        for (const checkbox of dropdownMenu) {
-            updateSelectedCheckbox(checkbox);
-            checkbox.addEventListener('change', handleCheckbox);
-        }
-
-        function handleCheckbox(event) {
-            const checkbox = event.target;
-            updateSelectedCheckbox(checkbox);
-        }
-
-        function updateSelectedCheckbox(checkbox) {
-            const newItem = {
-                name: checkbox.dataset.name,
-                value: checkbox.value,
-            };
-
-            if (checkbox.checked) {
-                selectedItems.push(newItem);
-            } else {
-                selectedItems = selectedItems.filter((item) => item.value !== newItem.value);
-            }
-
-            const selectedItemsNames = selectedItems.map(item => item.name);
-
-            dropdownButton.innerText = selectedItemsNames.length > 0 ? selectedItemsNames.join(
-                ' \u{02219} ') : 'None';
-        }
-    }
 </script>

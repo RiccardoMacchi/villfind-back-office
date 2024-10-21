@@ -13,13 +13,15 @@
 
                             <div class="mb-4 row">
                                 <label for="name"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
-                                        class="form-control @error('name') is-invalid @enderror" name="name"
-                                        pattern=".{3,}" title="The name must be at least 3 characters long"
-                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                           class="form-control @error('name') is-invalid @enderror"
+                                           name="name" pattern=".{3,}"
+                                           title="The name must be at least 3 characters long"
+                                           value="{{ old('name') }}" required autocomplete="name"
+                                           autofocus>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -31,13 +33,14 @@
 
                             <div class="mb-4 row">
                                 <label for="email"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$" title="Please enter a valid email"
-                                        value="{{ old('email') }}" required autocomplete="email">
+                                           class="form-control @error('email') is-invalid @enderror"
+                                           name="email" pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
+                                           title="Please enter a valid email"
+                                           value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -49,14 +52,14 @@
 
                             <div class="mb-4 row">
                                 <label for="password"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
-                                        title="Must contain at least one number, and at least 8 or more characters" required
-                                        autocomplete="new-password">
+                                           class="form-control @error('password') is-invalid @enderror"
+                                           name="password" pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
+                                           title="Must contain at least one number, and at least 8 or more characters"
+                                           required autocomplete="new-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -68,29 +71,35 @@
 
                             <div class="mb-4 row">
                                 <label for="password-confirm"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password">
+                                           name="password_confirmation" required
+                                           autocomplete="new-password">
                                 </div>
                             </div>
-                            {{-- Univers --}}
+
+                            {{-- Universe --}}
                             <div class="mb-4 row">
-                                <label for="universe_id" class="col-md-4 col-form-label text-md-right">Universe</label>
+                                <label for="universe_id"
+                                       class="col-md-4 col-form-label text-md-right">Universe</label>
 
                                 <div class="col-md-6">
                                     <div class="input-group">
-                                        <select name="universe_id" id="universe_id" aria-errormessage="universe_id-error"
-                                            class="form-select my_registration_select @error('universe_id') is-invalid @enderror"
-                                            required>
+                                        <select name="universe_id" id="universe_id"
+                                                aria-errormessage="universe_id-error"
+                                                class="form-select select-height @error('universe_id') is-invalid @enderror"
+                                                required>
 
-                                            <option value="" disabled>
+                                            <option value="" disabled
+                                                    @selected(!old('universe_id', null))>
                                                 Select a universe of origin
                                             </option>
 
                                             @foreach ($universes as $universe)
-                                                <option value="{!! $universe->id !!}" @selected($universe->id === old('universe_id', null))>
+                                                <option value="{!! $universe->id !!}"
+                                                        @selected($universe->id === old('universe_id', null))>
                                                     {{ $universe->name }}
                                                 </option>
                                             @endforeach
@@ -99,34 +108,40 @@
 
                                     @error('universe_id')
                                         <small id="universe_id-error"
-                                            class="invalid-feedback position-absolute bottom-0 start-0">
+                                               class="invalid-feedback position-absolute bottom-0 start-0">
                                             {{ $message }}
                                         </small>
                                     @enderror
                                 </div>
                             </div>
+
                             {{-- Skills --}}
                             <div class="row mb-4">
-                                <label for="skills" class="col-md-4 col-form-label text-md-right">skills</label>
+                                <label for="skills"
+                                       class="col-md-4 col-form-label text-md-right">Skills</label>
 
                                 <div class="col-md-6">
                                     <div class="dropdown">
                                         <button type="button" id="skills"
-                                            class="form-select text-start @error('skills') is-invalid @enderror"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                class="form-select text-start @error('skills') is-invalid @enderror"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
                                             None
                                         </button>
 
-                                        <ul class="dropdown-menu w-100 my_registration_select" aria-labelledby="skills">
+                                        <ul class="dropdown-menu w-100 select-height"
+                                            aria-labelledby="skills">
                                             @foreach ($skills as $skill)
                                                 <li>
-                                                    <label class="dropdown-item" for="skill-{!! $skill->id !!}"
-                                                        onclick="event.stopPropagation()">
+                                                    <label class="dropdown-item"
+                                                           for="skill-{!! $skill->id !!}"
+                                                           onclick="event.stopPropagation()">
                                                         <input type="checkbox" name="skills[]"
-                                                            value="{!! $skill->id !!}"
-                                                            id="skill-{!! $skill->id !!}"
-                                                            data-name="{!! $skill->name !!}" class="form-check-input"
-                                                            @checked(in_array($skill->id, old('skills', []))) onclick="event.stopPropagation()">
+                                                               value="{!! $skill->id !!}"
+                                                               id="skill-{!! $skill->id !!}"
+                                                               data-name="{!! $skill->name !!}"
+                                                               class="form-check-input"
+                                                               @checked(in_array($skill->id, old('skills', [])))
+                                                               onclick="event.stopPropagation()">
 
                                                         {{ $skill->name }}
                                                     </label>
@@ -136,7 +151,8 @@
                                     </div>
 
                                     @error('skills')
-                                        <small id="skills-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                                        <small id="skills-error"
+                                               class="invalid-feedback position-absolute bottom-0 start-0">
                                             {{ $message }}
                                         </small>
                                     @enderror
@@ -155,38 +171,7 @@
         </div>
     </div>
 
-    <script>
-        const dropdownButton = document.getElementById('skills');
-        const dropdownMenu = document.querySelectorAll('.dropdown-menu input');
-
-        let selectedItems = [];
-
-        for (const checkbox of dropdownMenu) {
-            updateSelectedCheckbox(checkbox);
-            checkbox.addEventListener('change', handleCheckbox);
-        }
-
-        function handleCheckbox(event) {
-            const checkbox = event.target;
-            updateSelectedCheckbox(checkbox);
-        }
-
-        function updateSelectedCheckbox(checkbox) {
-            const newItem = {
-                name: checkbox.dataset.name,
-                value: checkbox.value,
-            };
-
-            if (checkbox.checked) {
-                selectedItems.push(newItem);
-            } else {
-                selectedItems = selectedItems.filter((item) => item.value !== newItem.value);
-            }
-
-            const selectedItemsNames = selectedItems.map(item => item.name);
-
-            dropdownButton.innerText = selectedItemsNames.length > 0 ? selectedItemsNames.join(
-                ' \u{02219} ') : 'None';
-        }
+    <script type="module">
+        checkboxListSelector('skills');
     </script>
 @endsection

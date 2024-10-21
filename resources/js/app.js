@@ -39,3 +39,40 @@ window.onload = () => {
 
     });
 };
+
+window.checkboxListSelector = checkboxListSelector;
+
+function checkboxListSelector(listButtonId) {
+    const dropdownButton = document.getElementById(listButtonId);
+    const dropdownMenu = document.querySelectorAll(`#${listButtonId}+.dropdown-menu input`);
+
+    let selectedItems = [];
+
+    for (const checkbox of dropdownMenu) {
+        updateSelectedCheckbox(checkbox);
+        checkbox.addEventListener('change', handleCheckbox);
+    }
+
+    function handleCheckbox(event) {
+        const checkbox = event.target;
+        updateSelectedCheckbox(checkbox);
+    }
+
+    function updateSelectedCheckbox(checkbox) {
+        const newItem = {
+            name: checkbox.dataset.name,
+            value: checkbox.value,
+        };
+
+        if (checkbox.checked) {
+            selectedItems.push(newItem);
+        } else {
+            selectedItems = selectedItems.filter((item) => item.value !== newItem.value);
+        }
+
+        const selectedItemsNames = selectedItems.map(item => item.name);
+
+        dropdownButton.innerText = selectedItemsNames.length > 0 ? selectedItemsNames.join(
+            ' \u{02219} ') : 'None';
+    }
+}

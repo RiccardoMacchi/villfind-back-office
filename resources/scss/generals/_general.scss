@@ -72,9 +72,9 @@ a {
     color: $clr-rating-stars;
 }
 
-// Select registrazione
-
-.my_registration_select {
-    max-height: 350px;
+.select-height {
+    max-height: 40vh;
     overflow: auto;
+
+    scrollbar-color: $primary $gray-100;
 }
