@@ -77,7 +77,7 @@ class PageController extends Controller
         if ($villain) {
             $success = true;
             if ($villain->image) {
-                $villain->image = Storage::url($villain->image);
+                $villain->image = asset($villain->image);
             } else {
                 $villain->image = Storage::url('placeholder_img.jpg');
             }
