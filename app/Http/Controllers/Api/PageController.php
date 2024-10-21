@@ -121,20 +121,17 @@ class PageController extends Controller
         return response()->json(compact('success', 'service'));
     }
 
-    public function listBySkillName(Request $request)
+    public function listBySkillId($id)
     {
-        $search = $request->query('search');
 
-        $query = Service::orderBy('name')->with('villains');
+        $skills = Skill::where('id', $id)->with('villains', 'villains.ratings', 'villains.services')->first();
 
-        if ($search) {
-            $query->where('name', 'LIKE', '%' . $search . '%');
+        if ($skills) {
+            $success = true;
+        } else {
+            $success = false;
         }
 
-        $services = $query->paginate(12);
-
-        $success = $services->isNotEmpty();
-
-        return response()->json(compact('success', 'services'));
+        return response()->json(compact('success', 'skills'));
     }
 }
