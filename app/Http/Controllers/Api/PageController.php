@@ -15,9 +15,9 @@ class PageController extends Controller
     public function index()
     {
         if (isset($_GET['search'])) {
-            $villains = Villain::where('name', 'LIKE', '%' . $_GET['search'] . '%')->orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(10);
+            $villains = Villain::where('name', 'LIKE', '%' . $_GET['search'] . '%')->orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(12);
         } else {
-            $villains = Villain::orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(10);
+            $villains = Villain::orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(12);
         }
 
         if ($villains) {
@@ -119,5 +119,19 @@ class PageController extends Controller
             $success = false;
         }
         return response()->json(compact('success', 'service'));
+    }
+
+    public function listBySkillId($id)
+    {
+
+        $skills = Skill::where('id', $id)->with('villains', 'villains.ratings', 'villains.services')->first();
+
+        if ($skills) {
+            $success = true;
+        } else {
+            $success = false;
+        }
+
+        return response()->json(compact('success', 'skills'));
     }
 }
