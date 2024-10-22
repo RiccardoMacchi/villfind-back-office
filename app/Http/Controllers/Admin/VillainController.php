@@ -123,6 +123,10 @@ class VillainController extends Controller
             }
         }
 
+        if ($data['phone']) {
+            $data['phone'] = $data['country_code'] ? Helper::formatInternationalPhone($data['country_code'], $data['phone']) : null;
+        }
+
         $villain->update($data);
 
         if (array_key_exists('services', $data)) {

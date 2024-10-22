@@ -37,4 +37,10 @@ class Helper
 
         return $rating_in_stars;
     }
+
+    // Format phone numbers from already approved international country code string and national phone number string with separators into an interantional phone number string
+    public static function formatInternationalPhone($country_code, $national_number)
+    {
+        return $country_code . ' ' . preg_replace('/\D/', '', $national_number);
+    }
 }

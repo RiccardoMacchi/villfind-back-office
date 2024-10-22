@@ -3,17 +3,19 @@
 @endphp
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data"
-      class="p-4 border rounded bg-light">
+      class="p-4 border rounded bg-light" onchange="updateRequirements();">
     @csrf
 
     @if ($is_update_form)
         @method('PUT')
     @endif
 
-    <div class="row mb-3">
-        <label for="name" class="col-sm-2 col-form-label">Name</label>
+    <div class="row mb-4">
+        <label for="name" class="col-lg-3 col-form-label">
+            Name
+        </label>
 
-        <div class="col-sm-10 pb-3">
+        <div class="col-11 col-lg-8">
             <div class="input-group">
                 <input type="text" name="name" id="name" aria-errormessage="name-error"
                        class="form-control @error('name') is-invalid @enderror"
@@ -27,37 +29,18 @@
                 </small>
             @enderror
         </div>
+
+        <span class="col-1 text-center align-self-center g-0">
+            <i class="fa-solid fa-asterisk"></i>
+        </span>
     </div>
 
-    <div class="row mb-3">
-        <label for="cv" class="col-sm-2 col-form-label">Curriculum Vitae</label>
+    <div class="row mb-4">
+        <label for="image" class="col-lg-3 col-form-label">
+            Image
+        </label>
 
-        <div class="col-sm-10 pb-3">
-            <div class="input-group">
-                <input type="file" name="cv" id="cv" aria-errormessage="cv-error"
-                       class="form-control @error('cv') is-invalid @enderror">
-
-                @isset($villain->cv)
-                    <div class="input-group-text">
-                        <input class="form-check-input mt-0 me-2" type="checkbox" name="cv_delete"
-                               id="delete-cv">
-                        <label for="delete-cv">Delete</label>
-                    </div>
-                @endisset
-            </div>
-
-            @error('cv')
-                <small id="cv-error" class="invalid-feedback position-absolute bottom-0 start-0">
-                    {{ $message }}
-                </small>
-            @enderror
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <label for="image" class="col-sm-2 col-form-label">Image</label>
-
-        <div class="col-sm-10 pb-3">
+        <div class="col-11 col-lg-8">
             <div class="input-group">
                 <input type="file" name="image" id="image" aria-errormessage="image-error"
                        class="form-control @error('image') is-invalid @enderror">
@@ -66,7 +49,7 @@
                     <div class="input-group-text">
                         <input class="form-check-input mt-0 me-2" type="checkbox" name="image_delete"
                                id="delete-image">
-                        <label for="delete-image">Delete</label>
+                        <label for="delete-image"><i class="fa-regular fa-trash-can"></i></label>
                     </div>
                 @endisset
             </div>
@@ -79,16 +62,33 @@
         </div>
     </div>
 
-    <div class="row mb-3">
-        <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+    <div class="row mb-4">
+        <label for="phone" class="col-lg-3 col-form-label">
+            Phone
+        </label>
 
-        <div class="col-sm-10 pb-3">
+        <div class="col-11 col-lg-8">
             <div class="input-group">
+                <select name="country_code" id="country_code"
+                        class="form-select @error('country_code') is-invalid @enderror"
+                        style="flex-shrink: 4; flex-grow: 1; max-width: 5.5em">
+                    <option value="" disabled @selected(!old('country_code', $is_update_form && $villain->phone ? $villain->phone : null))>
+                        +0
+                    </option>
+
+                    @for ($i = 1; $i <= 380; $i++)
+                        <option value="+{{ $i }}" @selected('+' . $i === old('country_code', $is_update_form && $villain->phone ? explode(' ', $villain->phone)[0] : null))>
+                            +{{ $i }}
+                        </option>
+                    @endfor
+                </select>
+
                 <input type="text" name="phone" id="phone" aria-errormessage="phone-error"
                        class="form-control @error('phone') is-invalid @enderror"
-                       value="{{ old('phone', $is_update_form ? $villain->phone : '') }}"
-                       placeholder="Phone number"
-                       pattern="/^(?!0+$)(\+\d{1,3}[- ]?)?(?!0+$)\d{10}$/">
+                       value="{{ old('phone', $is_update_form && $villain->phone ? explode(' ', $villain->phone)[1] : '') }}"
+                       placeholder="Phone number" pattern="^(?:[^\d]*[\d][^\d]*){8,15}$"
+                       maxlength="25" title="Enter a valid phone number (8 to 15 digits)."
+                       style="flex-shrink: 1; flex-grow: 4">
             </div>
 
             @error('phone')
@@ -99,10 +99,12 @@
         </div>
     </div>
 
-    <div class="row mb-3">
-        <label for="universe_id" class="col-sm-2 col-form-label">Universe</label>
+    <div class="row mb-4">
+        <label for="universe_id" class="col-lg-3 col-form-label">
+            Universe
+        </label>
 
-        <div class="col-sm-10 pb-3">
+        <div class="col-11 col-lg-8">
             <div class="input-group">
                 <select name="universe_id" id="universe_id" aria-errormessage="universe_id-error"
                         class="form-select select-height @error('universe_id') is-invalid @enderror"
@@ -127,12 +129,18 @@
                 </small>
             @enderror
         </div>
+
+        <span class="col-1 text-center align-self-center g-0">
+            <i class="fa-solid fa-asterisk"></i>
+        </span>
     </div>
 
-    <div class="row mb-3">
-        <label for="skills" class="col-sm-2 col-form-label">Skills</label>
+    <div class="row mb-4">
+        <label for="skills" class="col-lg-3 col-form-label">
+            Skills
+        </label>
 
-        <div class="col-sm-10 pb-3">
+        <div class="col-11 col-lg-8">
             <div class="dropdown">
                 <button type="button" id="skills"
                         class="form-select text-start @error('skills') is-invalid @enderror"
@@ -148,8 +156,8 @@
                                 <input type="checkbox" name="skills[]"
                                        value="{!! $skill->id !!}"
                                        id="skill-{!! $skill->id !!}"
-                                       data-name="{!! $skill->name !!}"
-                                       class="form-check-input" onclick="event.stopPropagation()"
+                                       data-name="{!! $skill->name !!}" class="form-check-input"
+                                       onclick="event.stopPropagation()"
                                        @checked(in_array(
                                                $skill->id,
                                                old('skills', $is_update_form ? $villain->skills->pluck('id')->toArray() : [])))>
@@ -167,12 +175,18 @@
                 </small>
             @enderror
         </div>
+
+        <span class="col-1 text-center align-self-center g-0">
+            <i class="fa-solid fa-asterisk"></i>
+        </span>
     </div>
 
-    <div class="row mb-3">
-        <label for="services" class="col-sm-2 col-form-label">Services</label>
+    <div class="row mb-5">
+        <label for="services" class="col-lg-3 col-form-label">
+            Services
+        </label>
 
-        <div class="col-sm-10 pb-3">
+        <div class="col-11 col-lg-8">
             <div class="dropdown">
                 <button type="button" id="services"
                         class="form-select text-start @error('services') is-invalid @enderror"
@@ -210,7 +224,34 @@
         </div>
     </div>
 
-    <div class="d-grid gap-2 d-md-block">
+    <div class="row mb-4">
+        <label for="cv" class="col-lg-3 col-form-label">
+            Curriculum Vitae
+        </label>
+
+        <div class="col-11 col-lg-8">
+            <div class="input-group">
+                <input type="file" name="cv" id="cv" aria-errormessage="cv-error"
+                       class="form-control @error('cv') is-invalid @enderror">
+
+                @isset($villain->cv)
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0 me-2" type="checkbox" name="cv_delete"
+                               id="delete-cv">
+                        <label for="delete-cv"><i class="fa-regular fa-trash-can"></i></label>
+                    </div>
+                @endisset
+            </div>
+
+            @error('cv')
+                <small id="cv-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                    {{ $message }}
+                </small>
+            @enderror
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 d-lg-block">
         <button type="submit" class="btn btn-primary">
             {{ $is_update_form ? 'Edit' : 'Create' }}
         </button>
@@ -220,4 +261,23 @@
 <script type="module">
     checkboxListSelector('services');
     checkboxListSelector('skills');
+</script>
+
+<script>
+    let phoneInputField = document.getElementById('phone');
+
+    phoneInputField.addEventListener("input", () => updateRequirements());
+    phoneInputField.addEventListener("change", () => updateRequirements());
+
+    updateRequirements();
+
+    function updateRequirements() {
+        const countryCodeInputField = document.getElementById('country_code');
+
+        if (phoneInputField.value !== '') {
+            countryCodeInputField.required = true;
+        } else {
+            countryCodeInputField.required = false;
+        }
+    }
 </script>
