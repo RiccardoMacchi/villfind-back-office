@@ -150,31 +150,17 @@ class PageController extends Controller
             });
         }
 
+        if ($request->has('rating')) {
+            $rating = $request->input('rating');
+            $query->withAvg('ratings', 'value')
+                  ->having('ratings_avg_value', '>=', $rating);
+        }
+
         $villains = $query->get();
 
         $success = $villains->isNotEmpty();
 
         return response()->json(compact('success', 'villains'));
     }
-
-    public function villainsRating(Request $request)
-    {    
-        $rating = $request->input('rating', null);
-    
-        if ($rating) {
-
-            $villains = Villain::withAvg('ratings', 'value')
-            ->having('ratings_avg_value', '>=', $rating)
-            ->orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(12);
-            
-        } else {
-            $villains = Villain::orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(12);
-        }
-    
-        $success = $villains->isNotEmpty();
-    
-        return response()->json(compact('success', 'villains'));
-    }
-    
 }
 
