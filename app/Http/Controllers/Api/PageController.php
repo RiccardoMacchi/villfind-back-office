@@ -15,11 +15,11 @@ class PageController extends Controller
 {
     public function index()
     {
-        if (isset($_GET['search'])) {
-            $villains = Villain::where('name', 'LIKE', '%' . $_GET['search'] . '%')->orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(12);
-        } else {
-            $villains = Villain::orderBy('name')->with('skills', 'universe', 'services', 'ratings')->paginate(12);
-        }
+        // if (isset($_GET['search'])) {
+        //     $villains = Villain::where('name', 'LIKE', '%' . $_GET['search'] . '%')->orderBy('name')->with('skills', 'universe', 'services', 'ratings', 'sponsorships')->paginate(12);
+        // } else {
+        $villains = Villain::orderBy('name')->with('skills', 'universe', 'services', 'ratings', 'sponsorships')->paginate(12);
+        // }
 
         if ($villains) {
             $success = true;
@@ -130,19 +130,31 @@ class PageController extends Controller
         }
         return response()->json(compact('success', 'service'));
     }
-
-    public function listBySkillId($id)
+    public function listByFilters(Request $request)
     {
+        $query = Villain::orderBy('name')->with('ratings', 'universe', 'skills', 'services');
 
-        $skills = Skill::where('id', $id)->with('villains', 'villains.ratings', 'villains.services')->first();
-
-        if ($skills) {
-            $success = true;
-        } else {
-            $success = false;
+        if ($request->has('universe_id')) {
+            $query->where('universe_id', $request->input('universe_id'));
         }
 
-        return response()->json(compact('success', 'skills'));
+        if ($request->has('skill_id')) {
+            $query->whereHas('skills', function ($q) use ($request) {
+                $q->where('id', $request->input('skill_id'));
+            });
+        }
+
+        if ($request->has('service_id')) {
+            $query->whereHas('services', function ($q) use ($request) {
+                $q->where('id', $request->input('service_id'));
+            });
+        }
+
+        $villains = $query->get();
+
+        $success = $villains->isNotEmpty();
+
+        return response()->json(compact('success', 'villains'));
     }
 
     public function villainsRating(Request $request)

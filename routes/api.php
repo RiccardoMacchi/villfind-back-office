@@ -23,7 +23,7 @@ Route::get('/universes', [PageController::class, 'allUniverses']);
 Route::get('/ratings', [PageController::class, 'allRatings']);
 Route::get('/villain/{slug}', [PageController::class, 'villainBySlug']);
 Route::get('/list-by-skill/{id}', [PageController::class, 'listBySkill']);
-Route::get('/villains-by-skills/{id}', [PageController::class, 'listBySkillId']);
+Route::get('/list-by-filters', [PageController::class, 'listByFilters']);
 Route::get('/list-by-service/{id}', [PageController::class, 'listByService']);
 Route::get('/list-by-universe/{id}', [PageController::class, 'listByUniverse']);
 Route::get('/villains-rating', [PageController::class, 'villainsRating']);
