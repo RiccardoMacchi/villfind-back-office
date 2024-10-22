@@ -30,3 +30,5 @@ Route::get('/list-by-filters', [PageController::class, 'listByFilters']);
 Route::get('/list-by-service/{id}', [PageController::class, 'listByService']);
 Route::get('/list-by-universe/{id}', [PageController::class, 'listByUniverse']);
 Route::get('/villains-rating', [PageController::class, 'villainsRating']);
+Route::get('/active-sponsorship', [PageController::class, 'villainsSponsored']);
+

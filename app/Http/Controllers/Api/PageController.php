@@ -75,7 +75,7 @@ class PageController extends Controller
     public function allRatings()
     {
         $ratings = Rating::select('value')->distinct()->orderBy('value')->get();
-        
+
         $success = $ratings->isNotEmpty();
 
         return response()->json(compact('success', 'ratings'));
@@ -160,6 +160,20 @@ class PageController extends Controller
 
         $success = $villains->isNotEmpty();
 
+        return response()->json(compact('success', 'villains'));
+    }
+
+    public function villainsSponsored()
+    {
+        $sponsorships = Sponsorship::where('expiration_date', '>', Carbon::now())
+                                    ->with('villains')
+                                    ->get();
+        if ($sponsorships->isNotEmpty()) {
+            $success = true;
+            $villains = $sponsorships->pluck('villains')->flatten();
+            $success = false;
+            $villains = [];
+        }
         return response()->json(compact('success', 'villains'));
     }
 }
