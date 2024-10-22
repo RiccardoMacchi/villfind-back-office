@@ -12,6 +12,15 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        proxy: {
+          '/api': {
+            target: 'http://127.0.0.1:8000', // URL del tuo backend Laravel
+            changeOrigin: true,
+            secure: false, // imposta false se usi HTTP e non HTTPS
+          },
+        },
+      },
     // Add resolve object and aliases
     resolve: {
         alias: {
@@ -19,5 +28,6 @@ export default defineConfig({
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
             '~resources': '/resources/'
         }
-    }
+    },
+
 });
