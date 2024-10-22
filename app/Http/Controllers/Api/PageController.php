@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\Skill;
 use App\Models\Universe;
 use App\Models\Villain;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -69,6 +70,15 @@ class PageController extends Controller
             $success = false;
         }
         return response()->json(compact('success', 'universes'));
+    }
+
+    public function allRatings()
+    {
+        $ratings = Rating::select('value')->distinct()->orderBy('value')->get();
+        
+        $success = $ratings->isNotEmpty();
+
+        return response()->json(compact('success', 'ratings'));
     }
 
     public function villainBySlug($slug)
@@ -140,6 +150,12 @@ class PageController extends Controller
             });
         }
 
+        if ($request->has('rating')) {
+            $rating = $request->input('rating');
+            $query->withAvg('ratings', 'value')
+                  ->having('ratings_avg_value', '>=', $rating);
+        }
+
         $villains = $query->get();
 
         $success = $villains->isNotEmpty();
@@ -147,3 +163,4 @@ class PageController extends Controller
         return response()->json(compact('success', 'villains'));
     }
 }
+
