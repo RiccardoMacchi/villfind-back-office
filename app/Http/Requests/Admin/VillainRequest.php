@@ -22,10 +22,11 @@ class VillainRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'image' => 'nullable|image',
-            'phone' => 'nullable|string|max:25|regex:/^(?=(?:[^\d]*\d){8,15}[^\d]*$)[\d().,\s-]+$/',
-            'country_code' => 'required_with:phone|string|max:4|regex:/^\+\d{1,3}$/',
+            'name' => 'required|string|min:3|max:250',
+            'image' => 'nullable|image|max:4096',
+            'cv' => 'required|file|mimes:pdf|max:2048',
+            'phone' => 'nullable|string|min:8|max:25|regex:/^(?=(?:[^\d]*\d){8,15}[^\d]*$)[\d().,\s-]+$/',
+            'country_code' => 'required_with:phone|string|min:2|max:4|regex:/^\+\d{1,3}$/',
             'universe_id' => 'required|exists:universes,id',
             'skills' => 'required|array',
             'skills.*' => 'exists:skills,id',

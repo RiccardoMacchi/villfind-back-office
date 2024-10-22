@@ -15,16 +15,17 @@
             Name
         </label>
 
-        <div class="col-11 col-lg-8">
+        <div class="col-11 col-lg-8 position-relative">
             <div class="input-group">
                 <input type="text" name="name" id="name" aria-errormessage="name-error"
                        class="form-control @error('name') is-invalid @enderror"
                        value="{{ old('name', $is_update_form ? $villain->name : '') }}"
-                       placeholder="Villain name" required>
+                       minlength="3" maxlength="250" placeholder="Villain name" required>
             </div>
 
             @error('name')
-                <small id="name-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                <small id="name-error" class="invalid-feedback position-absolute start-0 px-3"
+                       style="bottom: -1.25em; font-size: .75em;" role="alert">
                     {{ $message }}
                 </small>
             @enderror
@@ -40,7 +41,7 @@
             Image
         </label>
 
-        <div class="col-11 col-lg-8">
+        <div class="col-11 col-lg-8 position-relative">
             <div class="input-group">
                 <input type="file" name="image" id="image" aria-errormessage="image-error"
                        class="form-control @error('image') is-invalid @enderror">
@@ -55,7 +56,8 @@
             </div>
 
             @error('image')
-                <small id="image-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                <small id="image-error" class="invalid-feedback position-absolute start-0 px-3"
+                       style="bottom: -1.25em; font-size: .75em;" role="alert">
                     {{ $message }}
                 </small>
             @enderror
@@ -67,7 +69,7 @@
             Phone
         </label>
 
-        <div class="col-11 col-lg-8">
+        <div class="col-11 col-lg-8 position-relative">
             <div class="input-group">
                 <select name="country_code" id="country_code"
                         class="form-select @error('country_code') is-invalid @enderror"
@@ -87,12 +89,14 @@
                        class="form-control @error('phone') is-invalid @enderror"
                        value="{{ old('phone', $is_update_form && $villain->phone ? explode(' ', $villain->phone)[1] : '') }}"
                        placeholder="Phone number" pattern="^(?:[^\d]*[\d][^\d]*){8,15}$"
-                       maxlength="25" title="Enter a valid phone number (8 to 15 digits)."
+                       minlength="8" maxlength="25"
+                       title="Enter a valid phone number (8 to 15 digits)."
                        style="flex-shrink: 1; flex-grow: 4">
             </div>
 
             @error('phone')
-                <small id="phone-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                <small id="phone-error" class="invalid-feedback position-absolute start-0 px-3"
+                       style="bottom: -1.25em; font-size: .75em;" role="alert">
                     {{ $message }}
                 </small>
             @enderror
@@ -104,7 +108,7 @@
             Universe
         </label>
 
-        <div class="col-11 col-lg-8">
+        <div class="col-11 col-lg-8 position-relative">
             <div class="input-group">
                 <select name="universe_id" id="universe_id" aria-errormessage="universe_id-error"
                         class="form-select select-height @error('universe_id') is-invalid @enderror"
@@ -124,7 +128,7 @@
 
             @error('universe_id')
                 <small id="universe_id-error"
-                       class="invalid-feedback position-absolute bottom-0 start-0">
+                       class="invalid-feedback position-absolute bottom-0 start-0" role="alert">
                     {{ $message }}
                 </small>
             @enderror
@@ -140,7 +144,7 @@
             Skills
         </label>
 
-        <div class="col-11 col-lg-8">
+        <div class="col-11 col-lg-8 position-relative">
             <div class="dropdown">
                 <button type="button" id="skills"
                         class="form-select text-start @error('skills') is-invalid @enderror"
@@ -156,8 +160,8 @@
                                 <input type="checkbox" name="skills[]"
                                        value="{!! $skill->id !!}"
                                        id="skill-{!! $skill->id !!}"
-                                       data-name="{!! $skill->name !!}" class="form-check-input"
-                                       onclick="event.stopPropagation()"
+                                       data-name="{!! $skill->name !!}"
+                                       class="form-check-input" onclick="event.stopPropagation()"
                                        @checked(in_array(
                                                $skill->id,
                                                old('skills', $is_update_form ? $villain->skills->pluck('id')->toArray() : [])))>
@@ -170,7 +174,8 @@
             </div>
 
             @error('skills')
-                <small id="skills-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                <small id="skills-error" class="invalid-feedback position-absolute start-0 px-3"
+                       style="bottom: -1.25em; font-size: .75em;" role="alert">
                     {{ $message }}
                 </small>
             @enderror
@@ -181,12 +186,12 @@
         </span>
     </div>
 
-    <div class="row mb-5">
+    <div class="row mb-4">
         <label for="services" class="col-lg-3 col-form-label">
             Services
         </label>
 
-        <div class="col-11 col-lg-8">
+        <div class="col-11 col-lg-8 position-relative">
             <div class="dropdown">
                 <button type="button" id="services"
                         class="form-select text-start @error('services') is-invalid @enderror"
@@ -216,20 +221,20 @@
             </div>
 
             @error('services')
-                <small id="services-error"
-                       class="invalid-feedback position-absolute bottom-0 start-0">
+                <small id="services-error" class="invalid-feedback position-absolute start-0 px-3"
+                       style="bottom: -1.25em; font-size: .75em;" role="alert">
                     {{ $message }}
                 </small>
             @enderror
         </div>
     </div>
 
-    <div class="row mb-4">
+    <div class="row mb-5">
         <label for="cv" class="col-lg-3 col-form-label">
             Curriculum Vitae
         </label>
 
-        <div class="col-11 col-lg-8">
+        <div class="col-11 col-lg-8 position-relative">
             <div class="input-group">
                 <input type="file" name="cv" id="cv" aria-errormessage="cv-error"
                        class="form-control @error('cv') is-invalid @enderror">
@@ -244,7 +249,8 @@
             </div>
 
             @error('cv')
-                <small id="cv-error" class="invalid-feedback position-absolute bottom-0 start-0">
+                <small id="cv-error" class="invalid-feedback position-absolute start-0 px-3"
+                       style="bottom: -1.25em; font-size: .75em;" role="alert">
                     {{ $message }}
                 </small>
             @enderror

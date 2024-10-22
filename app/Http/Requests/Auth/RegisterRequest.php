@@ -22,11 +22,12 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:250',
-            'email' => 'required|email|max:255',
+            'name' => 'required|string|min:3|max:250',
+            'email' => 'required|unique:users,email|lowercase|email|min:3|max:255|regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/',
             'universe_id' => 'required|exists:universes,id',
             'skills' => 'required|array',
             'skills.*' => 'exists:skills,id',
+            'password' => 'required|string|min:8|max:32|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?])[A-Za-z\d@#$%&*!?]{8,32}$/|confirmed',
         ];
     }
 }

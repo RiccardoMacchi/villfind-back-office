@@ -8,14 +8,15 @@
                     <div class="card-header">{{ __('Register') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('process') }}">
+                        <form id="registration-form" method="POST" action="{{ route('process') }}">
                             @csrf
 
                             <div class="mb-4 row">
-                                <label for="name"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                                <label for="name" class="col-lg-4 col-form-label">
+                                    {{ __('Name') }}
+                                </label>
 
-                                <div class="col-md-6">
+                                <div class="col-11 col-lg-7 position-relative">
                                     <input id="name" type="text"
                                            class="form-control @error('name') is-invalid @enderror"
                                            name="name" pattern=".{3,}"
@@ -24,71 +25,95 @@
                                            autofocus>
 
                                     @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                        <small class="invalid-feedback position-absolute start-0 px-3"
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                            {{ $message }}
+                                        </small>
                                     @enderror
                                 </div>
+
+                                <span class="col-1 text-center align-self-center g-0">
+                                    <i class="fa-solid fa-asterisk"></i>
+                                </span>
                             </div>
 
                             <div class="mb-4 row">
-                                <label for="email"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                <label for="email" class="col-lg-4 col-form-label">
+                                    {{ __('E-Mail Address') }}
+                                </label>
 
-                                <div class="col-md-6">
+                                <div class="col-11 col-lg-7 position-relative">
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror"
-                                           name="email" pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
-                                           title="Please enter a valid email"
+                                           name="email" minlength="3" maxlength="255"
+                                           pattern="^[a-z0-9]+@[a-z0-9]+\.[a-z]{2,}$"
+                                           title="Please enter a valid lowercase email address."
                                            value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                        <small class="invalid-feedback position-absolute start-0 px-3"
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                            {{ $message }}
+                                        </small>
                                     @enderror
                                 </div>
+
+                                <span class="col-1 text-center align-self-center g-0">
+                                    <i class="fa-solid fa-asterisk"></i>
+                                </span>
                             </div>
 
                             <div class="mb-4 row">
-                                <label for="password"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                <label for="password" class="col-lg-4 col-form-label">
+                                    {{ __('Password') }}
+                                </label>
 
-                                <div class="col-md-6">
+                                <div class="col-11 col-lg-7 position-relative">
                                     <input id="password" type="password"
                                            class="form-control @error('password') is-invalid @enderror"
-                                           name="password" pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
-                                           title="Must contain at least one number, and at least 8 or more characters"
-                                           required autocomplete="new-password">
+                                           name="password" minlength="8" maxlength="32"
+                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?])[A-Za-z\d@#$%&*!?]{8,32}$"
+                                           title="Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (@, #, $, %, &, *, !, ?)"
+                                           required autocomplete="new-password" required>
 
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                        <small class="invalid-feedback position-absolute start-0 px-3"
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                            {{ $message }}
+                                        </small>
                                     @enderror
                                 </div>
+
+                                <span class="col-1 text-center align-self-center g-0">
+                                    <i class="fa-solid fa-asterisk"></i>
+                                </span>
                             </div>
 
                             <div class="mb-4 row">
-                                <label for="password-confirm"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                <label for="password-confirm" class="col-lg-4 col-form-label">
+                                    {{ __('Confirm Password') }}
+                                </label>
 
-                                <div class="col-md-6">
+                                <div class="col-11 col-lg-7 position-relative">
                                     <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation" required
-                                           autocomplete="new-password">
+                                           name="password_confirmation" autocomplete="new-password"
+                                           required>
                                 </div>
+
+                                <span class="col-1 text-center align-self-center g-0">
+                                    <i class="fa-solid fa-asterisk"></i>
+                                </span>
                             </div>
 
                             {{-- Universe --}}
                             <div class="mb-4 row">
-                                <label for="universe_id"
-                                       class="col-md-4 col-form-label text-md-right">Universe</label>
+                                <label for="universe_id" class="col-lg-4 col-form-label">
+                                    Universe
+                                </label>
 
-                                <div class="col-md-6">
+                                <div class="col-11 col-lg-7 position-relative">
                                     <div class="input-group">
                                         <select name="universe_id" id="universe_id"
-                                                aria-errormessage="universe_id-error"
                                                 class="form-select select-height @error('universe_id') is-invalid @enderror"
                                                 required>
 
@@ -107,20 +132,25 @@
                                     </div>
 
                                     @error('universe_id')
-                                        <small id="universe_id-error"
-                                               class="invalid-feedback position-absolute bottom-0 start-0">
+                                        <small class="invalid-feedback position-absolute start-0 px-3"
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
                                             {{ $message }}
                                         </small>
                                     @enderror
                                 </div>
+
+                                <span class="col-1 text-center align-self-center g-0">
+                                    <i class="fa-solid fa-asterisk"></i>
+                                </span>
                             </div>
 
                             {{-- Skills --}}
                             <div class="row mb-4">
-                                <label for="skills"
-                                       class="col-md-4 col-form-label text-md-right">Skills</label>
+                                <label for="skills" class="col-lg-4 col-form-label">
+                                    Skills
+                                </label>
 
-                                <div class="col-md-6">
+                                <div class="col-11 col-lg-7 position-relative">
                                     <div class="dropdown">
                                         <button type="button" id="skills"
                                                 class="form-select text-start @error('skills') is-invalid @enderror"
@@ -151,12 +181,16 @@
                                     </div>
 
                                     @error('skills')
-                                        <small id="skills-error"
-                                               class="invalid-feedback position-absolute bottom-0 start-0">
+                                        <small class="invalid-feedback position-absolute start-0 px-3"
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
                                             {{ $message }}
                                         </small>
                                     @enderror
                                 </div>
+
+                                <span class="col-1 text-center align-self-center g-0">
+                                    <i class="fa-solid fa-asterisk"></i>
+                                </span>
                             </div>
 
                             <div class="d-flex justify-content-center">
@@ -173,5 +207,19 @@
 
     <script type="module">
         checkboxListSelector('skills');
+    </script>
+
+    <script>
+        const form = document.getElementById('registration-form');
+
+        const passwordInputField = document.getElementById('password');
+        const passwordConfirmInputField = document.getElementById('password-confirm');
+
+        form.addEventListener('submit', (event) => {
+            if (passwordInputField.value !== passwordConfirmInputField.value) {
+                passwordConfirmInputField.setCustomValidity('Passwords do not match.');
+                event.preventDefault();
+            };
+        });
     </script>
 @endsection
