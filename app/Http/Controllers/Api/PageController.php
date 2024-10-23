@@ -142,7 +142,7 @@ class PageController extends Controller
         ->select('villains.*')
         ->addSelect(\DB::raw('MAX(CASE WHEN sponsorship_villain.expiration_date > NOW() THEN 1 ELSE 0 END) as active_sponsorship'))
         ->groupBy('villains.id')
-        ->orderByDesc('active_sponsorship')  // Sponsorship attiva prima
+        ->orderByDesc('active_sponsorship')
         ->orderBy('name', 'asc');
         if ($request->has('universe_id')) {
             $query->where('universe_id', $request->input('universe_id'));
