@@ -74,7 +74,7 @@
                                            name="password" minlength="8" maxlength="32"
                                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?])[A-Za-z\d@#$%&*!?]{8,32}$"
                                            title="Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (@, #, $, %, &, *, !, ?)"
-                                           required autocomplete="new-password" required>
+                                           autocomplete="new-password" required>
 
                                     @error('password')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
@@ -215,11 +215,22 @@
         const passwordInputField = document.getElementById('password');
         const passwordConfirmInputField = document.getElementById('password-confirm');
 
+        passwordInputField.addEventListener('input', () => {
+            passwordConfirmInputField.setCustomValidity('');
+        });
+
+        passwordConfirmInputField.addEventListener('input', () => {
+            passwordConfirmInputField.setCustomValidity('');
+        });
+
         form.addEventListener('submit', (event) => {
             if (passwordInputField.value !== passwordConfirmInputField.value) {
                 passwordConfirmInputField.setCustomValidity('Passwords do not match.');
+                passwordConfirmInputField.reportValidity();
                 event.preventDefault();
-            };
+            } else {
+                passwordConfirmInputField.setCustomValidity('');
+            }
         });
     </script>
 @endsection

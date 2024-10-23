@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
-use App\Models\Villain;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +16,13 @@ class MessageController extends Controller
     {
         $messages = Message::orderBy('created_at')->where('villain_id', Auth::id())->paginate(25);
 
-        return view('admin.messages.index', compact('messages'));
+        $columns = [
+            ['label' => 'Sender', 'field' => 'full_name'],
+            ['label' => 'Message', 'field' => 'content'],
+            ['label' => 'Sent', 'field' => 'created_at'],
+        ];
+
+        return view('admin.messages.index', compact('messages', 'columns'));
     }
 
     /**
