@@ -37,10 +37,14 @@
         <div>
             <p class="small text-primary">
                 {!! __('Showing') !!}
-                <span class="fw-semibold">{{ $paginator->firstItem() }}</span>
-                {!! __('to') !!}
-                <span class="fw-semibold">{{ $paginator->lastItem() }}</span>
-                {!! __('of') !!}
+
+                @if ($paginator->total())
+                    <span class="fw-semibold">{{ $paginator->firstItem() }}</span>
+                    {!! __('to') !!}
+                    <span class="fw-semibold">{{ $paginator->lastItem() }}</span>
+                    {!! __('of') !!}
+                @endif
+
                 <span class="fw-semibold">{{ $paginator->total() }}</span>
                 {!! __('results') !!}
             </p>
