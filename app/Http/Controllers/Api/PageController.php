@@ -138,12 +138,12 @@ class PageController extends Controller
     public function listByFilters(Request $request)
     {
         $query = Villain::with('ratings', 'universe', 'skills', 'services', 'sponsorships')
-        ->leftJoin('sponsorship_villain', 'villains.id', '=', 'sponsorship_villain.villain_id')
-        ->select('villains.*')
-        ->addSelect(\DB::raw('MAX(CASE WHEN sponsorship_villain.expiration_date > NOW() THEN 1 ELSE 0 END) as active_sponsorship'))
-        ->groupBy('villains.id')
-        ->orderByDesc('active_sponsorship')
-        ->orderBy('name', 'asc');
+            ->leftJoin('sponsorship_villain', 'villains.id', '=', 'sponsorship_villain.villain_id')
+            ->select('villains.*')
+            ->addSelect(\DB::raw('MAX(CASE WHEN sponsorship_villain.expiration_date > NOW() THEN 1 ELSE 0 END) as active_sponsorship'))
+            ->groupBy('villains.id')
+            ->orderByDesc('active_sponsorship')
+            ->orderBy('name', 'asc');
         if ($request->has('universe_id')) {
             $query->where('universe_id', $request->input('universe_id'));
         }
@@ -170,11 +170,11 @@ class PageController extends Controller
             $minReviews = $request->input('min_reviews');
             $query->whereHas('ratings', function ($q) use ($minReviews) {
                 $q->select('villain_id')
-                  ->groupBy('villain_id')
-                  ->havingRaw('COUNT(*) >= ?', [$minReviews]);
+                    ->groupBy('villain_id')
+                    ->havingRaw('COUNT(*) >= ?', [$minReviews]);
             });
         }
-    
+
 
         $villains = $query->get();
 
@@ -203,7 +203,7 @@ class PageController extends Controller
     public function villainsSponsored()
     {
 
-        $villains = Villain::whereHas('sponsorships', function($query) {
+        $villains = Villain::whereHas('sponsorships', function ($query) {
             $query->where('expiration_date', '>', Carbon::now());
         })->get();
 
@@ -217,4 +217,22 @@ class PageController extends Controller
         return response()->json(compact('success', 'villains'));
     }
 
+    public function storeRating(Request $request)
+    {
+        $validated = $request->validate([
+            'villain_id' => 'required|exists:villains,id',
+            'rating_id' => 'required|exists:ratings,id',
+            'full_name' => 'required|string|min:1|max:255',
+            'content' => 'required|string|max:1000'
+        ]);
+
+        $villain = Villain::find($validated['villain_id']);
+
+        $villain->ratings()->attach($validated['rating_id'], [
+            'full_name' => $validated['full_name'],
+            'content' => $validated['content']
+        ]);
+
+        return response()->json(['message' => 'Rating saved successfully!'], 201);
+    }
 }
