@@ -166,11 +166,27 @@ class PageController extends Controller
                 ->having('ratings_avg_value', '>=', $rating);
         }
 
+        if ($request->has('min_reviews')) {
+            $minReviews = $request->input('min_reviews');
+            $query->whereHas('ratings', function ($q) use ($minReviews) {
+                $q->select('villain_id')
+                  ->groupBy('villain_id')
+                  ->havingRaw('COUNT(*) >= ?', [$minReviews]);
+            });
+        }
+    
+
         $villains = $query->get();
+
+        $maxReviews = Villain::withCount('ratings')
+            ->orderBy('ratings_count', 'desc')
+            ->first()
+            ->ratings_count ?? 0;
+
 
         $success = $villains->isNotEmpty();
 
-        return response()->json(compact('success', 'villains'));
+        return response()->json(compact('success', 'villains', 'maxReviews'));
     }
 
     public function storeMessage(Request $request)
