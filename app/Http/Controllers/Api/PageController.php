@@ -8,6 +8,8 @@ use App\Models\Skill;
 use App\Models\Universe;
 use App\Models\Villain;
 use App\Models\Rating;
+use App\Models\Sponsorship;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -132,8 +134,13 @@ class PageController extends Controller
     }
     public function listByFilters(Request $request)
     {
-        $query = Villain::orderBy('name')->with('ratings', 'universe', 'skills', 'services');
-
+        $query = Villain::with('ratings', 'universe', 'skills', 'services', 'sponsorships')
+        ->leftJoin('sponsorship_villain', 'villains.id', '=', 'sponsorship_villain.villain_id')
+        ->select('villains.*')
+        ->addSelect(\DB::raw('MAX(CASE WHEN sponsorship_villain.expiration_date > NOW() THEN 1 ELSE 0 END) as active_sponsorship'))
+        ->groupBy('villains.id')
+        ->orderByDesc('active_sponsorship')  // Sponsorship attiva prima
+        ->orderBy('name', 'asc');
         if ($request->has('universe_id')) {
             $query->where('universe_id', $request->input('universe_id'));
         }
@@ -165,16 +172,20 @@ class PageController extends Controller
 
     public function villainsSponsored()
     {
-        $sponsorships = Sponsorship::where('expiration_date', '>', Carbon::now())
-                                    ->with('villains')
-                                    ->get();
-        if ($sponsorships->isNotEmpty()) {
+
+        $villains = Villain::whereHas('sponsorships', function($query) {
+            $query->where('expiration_date', '>', Carbon::now());
+        })->get();
+
+        if ($villains->isNotEmpty()) {
             $success = true;
-            $villains = $sponsorships->pluck('villains')->flatten();
+        } else {
             $success = false;
             $villains = [];
         }
+
         return response()->json(compact('success', 'villains'));
     }
+
 }
 
