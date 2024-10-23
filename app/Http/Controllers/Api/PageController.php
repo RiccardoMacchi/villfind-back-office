@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\MessageRequest;
+use App\Models\Message;
 use App\Models\Service;
 use App\Models\Skill;
 use App\Models\Universe;
@@ -77,6 +79,7 @@ class PageController extends Controller
     public function allRatings()
     {
         $ratings = Rating::select('value')->distinct()->orderBy('value')->get();
+
 
         $success = $ratings->isNotEmpty();
 
@@ -160,7 +163,7 @@ class PageController extends Controller
         if ($request->has('rating')) {
             $rating = $request->input('rating');
             $query->withAvg('ratings', 'value')
-                  ->having('ratings_avg_value', '>=', $rating);
+                ->having('ratings_avg_value', '>=', $rating);
         }
 
         $villains = $query->get();
@@ -168,6 +171,17 @@ class PageController extends Controller
         $success = $villains->isNotEmpty();
 
         return response()->json(compact('success', 'villains'));
+    }
+
+    public function storeMessage(Request $request)
+    {
+        $data = $request->all();
+
+        $new_mess = new Message;
+
+        $new_mess->fill($data);
+        $new_mess->save();
+        return response()->json(['message' => 'Messaggio salvato con successo!', 'data' => $new_mess], 201);
     }
 
     public function villainsSponsored()
@@ -188,4 +202,3 @@ class PageController extends Controller
     }
 
 }
-

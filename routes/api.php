@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\api\PageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +21,8 @@ Route::get('/skills', [PageController::class, 'allSkills']);
 Route::get('/services', [PageController::class, 'allServices']);
 Route::get('/universes', [PageController::class, 'allUniverses']);
 Route::get('/ratings', [PageController::class, 'allRatings']);
-Route::post('/messages', [MessageController::class, 'store']);
+Route::post('/sent-message', [PageController::class, 'storeMessage']);
 Route::get('/villain/{slug}', [PageController::class, 'villainBySlug']);
-Route::get('/messages-by-villain/{id}', [PageController::class, 'villainBySlug']);
 Route::get('/list-by-skill/{id}', [PageController::class, 'listBySkill']);
 Route::get('/list-by-filters', [PageController::class, 'listByFilters']);
 Route::get('/list-by-service/{id}', [PageController::class, 'listByService']);
