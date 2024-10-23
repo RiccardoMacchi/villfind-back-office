@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('villain_id')->nullable()->constrained('villains')->onCascade('set null');
             $table->foreignId('sponsorship_id')->nullable()->constrained('sponsorships')->onCascade('set null');
             $table->decimal('purchase_price');
-            $table->date('expiration_date');
+            $table->dateTime('expiration_date');
             $table->timestamps();
         });
     }

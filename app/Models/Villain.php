@@ -32,17 +32,17 @@ class Villain extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class);
+        return $this->belongsToMany(Skill::class, 'skill_villain');
     }
 
     public function services()
     {
-        return $this->belongsToMany(Service::class);
+        return $this->belongsToMany(Service::class, 'service_villain');
     }
 
     public function ratings()
     {
-        return $this->belongsToMany(Rating::class)->withPivot('villain_id', 'rating_id', 'full_name', 'content', 'id');
+        return $this->belongsToMany(Rating::class, ('rating_villain'))->withPivot('villain_id', 'rating_id', 'full_name', 'content', 'id');
     }
 
     public function messages()
@@ -51,6 +51,6 @@ class Villain extends Model
     }
     public function sponsorships()
     {
-        return $this->belongsToMany(Sponsorship::class)->withPivot('purchase_price', 'expiration_date')->withTimestamps();
+        return $this->belongsToMany(Sponsorship::class, ('sponsorship_villain'))->withPivot('purchase_price', 'expiration_date', 'created_at')->withTimestamps();
     }
 }
