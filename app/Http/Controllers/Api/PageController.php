@@ -205,7 +205,7 @@ class PageController extends Controller
 
         $villains = Villain::whereHas('sponsorships', function ($query) {
             $query->where('expiration_date', '>', Carbon::now());
-        })->get();
+        })->with(['ratings', 'services'])->get();
 
         if ($villains->isNotEmpty()) {
             $success = true;
