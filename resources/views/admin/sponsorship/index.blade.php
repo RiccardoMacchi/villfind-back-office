@@ -62,7 +62,7 @@
                                     <tr>
                                         <td>{{ $single->name }}</td>
                                         <td>{{ $single->pivot->purchase_price }} &#8364</td>
-                                        <td>{{ $single->pivot->expiration_date }} h</td>
+                                        <td>{{ $single->pivot->expiration_date }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -10,6 +10,7 @@ use App\Models\Skill;
 use App\Models\Universe;
 use App\Models\Villain;
 use App\Models\Rating;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -77,6 +78,7 @@ class PageController extends Controller
     public function allRatings()
     {
         $ratings = Rating::select('value')->distinct()->orderBy('value')->get();
+
 
         $success = $ratings->isNotEmpty();
 
@@ -174,5 +176,19 @@ class PageController extends Controller
         $new_mess->fill($data);
         $new_mess->save();
         return response()->json(['message' => 'Messaggio salvato con successo!', 'data' => $new_mess], 201);
+    }
+
+    public function villainsSponsored()
+    {
+        $sponsorships = Sponsorship::where('expiration_date', '>', Carbon::now())
+            ->with('villains')
+            ->get();
+        if ($sponsorships->isNotEmpty()) {
+            $success = true;
+            $villains = $sponsorships->pluck('villains')->flatten();
+            $success = false;
+            $villains = [];
+        }
+        return response()->json(compact('success', 'villains'));
     }
 }
