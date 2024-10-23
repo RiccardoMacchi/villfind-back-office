@@ -7,7 +7,6 @@ use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\VillainController;
 use App\Http\Controllers\Admin\SponsorshipController;
-use App\Http\Controllers\Admin\SponsorshipVillainController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +30,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('ratings', RatingController::class);
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
+    Route::post('sponsorship/purchase/{sponsorship}', [SponsorshipController::class, 'purchaseSponsorship'])->name('sponsorship.purchase');
     Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);
 });
 

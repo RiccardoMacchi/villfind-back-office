@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Villain;
 use App\Models\Sponsorship;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SponsorshipVillainTableSeeder extends Seeder
 {
@@ -41,10 +41,10 @@ class SponsorshipVillainTableSeeder extends Seeder
 
                     // scadenza nel passato
                     if (rand(0, 100) <= 60) {
-                        $expiration_date = Carbon::now()->subDays(rand(1, 1000 ));
+                        $expiration_date = Carbon::now()->subDays(rand(1, 1000));
                     }
 
-                    \DB::table('sponsorship_villain')->insert([
+                    DB::table('sponsorship_villain')->insert([
                         'villain_id' => $villain->id,
                         'sponsorship_id' => $sponsorship->id,
                         'purchase_price' => $sponsorship->price,

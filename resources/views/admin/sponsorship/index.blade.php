@@ -8,7 +8,8 @@
 
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             @foreach ($sponsorships as $plan)
-                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4" style="width: 15rem">
+                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4"
+                     style="width: 15rem">
                     <h2 class="card-title text-primary mb-auto" style="font-size: 1.75rem">
                         {{ $plan->name }}
                     </h2>
@@ -25,9 +26,12 @@
                         </div>
                     </div>
 
-                    <a href="#" class="btn btn-primary btn-lg">
-                        <i class="fa-solid fa-cart-plus"></i>
-                    </a>
+                    <form action="{{ route('admin.sponsorship.purchase', $plan) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </form>
                 </div>
             @endforeach
         </div>
@@ -39,11 +43,13 @@
             History of your Sponsorship
         </h2>
         @if (isset($sponsorshipDetails) && $sponsorshipDetails->isEmpty())
-            <p class="text-primary">You have no active sponsorship sponsorship. You have no past sponsorship records</p>
+            <p class="text-primary">You have no active sponsorship sponsorship. You have no past
+                sponsorship records</p>
         @else
             <div>
                 <div class="card shadow-lg border-0 mb-4">
-                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <div
+                         class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                         <span><i class="fa-solid fa-timeline"></i> Sponsorships linked to this
                             profile</span>
                         <span class="pagination-info"></span>

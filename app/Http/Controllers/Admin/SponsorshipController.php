@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sponsorship;
 use App\Models\Villain;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class SponsorshipController extends Controller
@@ -74,5 +75,22 @@ class SponsorshipController extends Controller
         //
     }
 
+    // Sponsorship purchasing
+    public function purchaseSponsorship(Sponsorship $sponsorship)
+    {
+        $villain = Villain::where('user_id', Auth::id())->first();
 
+        $last_expiration_date = $villain->sponsorships()->orderBy('expiration_date', 'desc')->first()->pivot->expiration_date;;
+
+        if (Carbon::parse($last_expiration_date) > Carbon::now()) {
+            $expiration_date = Carbon::parse($last_expiration_date);
+        } else {
+            $expiration_date = Carbon::now();
+        }
+
+        $expiration_date->addHours($sponsorship->hours);
+
+        $villain->sponsorships()->attach($sponsorship->id, ['expiration_date' => $expiration_date, 'purchase_price' => $sponsorship->price]);
+        return redirect()->route('admin.sponsorship.index');
+    }
 }
