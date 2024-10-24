@@ -118,10 +118,11 @@
                                 </div>
                             </div>
 
-                            <div>
+                            <div class="mb-3">
                                 <strong class="text-primary">
                                     <i class="fas fa-file"></i>&ensp;Curriculum Vitae:
                                 </strong>
+                                <br>
                                 @if ($villain->cv)
                                     <div class="mb-3">
                                         <div class="ps-3 d-block">
@@ -142,7 +143,7 @@
                                         </div>
                                     </div>
                                 @else
-                                    <span class="fst-italic">You haven't uploaded your CV yet.</span>
+                                    <span class="fst-italic ps-3">You haven't uploaded your CV yet.</span>
                                 @endif
                             </div>
 
