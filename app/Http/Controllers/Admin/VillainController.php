@@ -112,12 +112,12 @@ class VillainController extends Controller
 
         if ($request->hasFile('cv') || $request->input('cv_delete')) {
             if ($villain->cv) {
-                Storage::disk('public')->delete(str_replace(asset('storage'), '', $villain->cv));
+                Storage::delete($villain->cv);
             }
 
             if ($request->hasFile('cv')) {
                 $data['cv'] = Storage::disk('public')->put('uploads/cvs', $request->file('cv'));
-                $data['cv'] = Storage::url($data['cv']);
+                $data['cv'] = asset('storage/' . $data['cv']);
             } else {
                 $data['cv'] = null;
             }
