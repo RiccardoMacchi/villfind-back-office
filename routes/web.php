@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\DasboardController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Guest\PageController;
-use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\VillainController;
 use App\Http\Controllers\Admin\SponsorshipController;
 use App\Http\Controllers\ProfileController;
@@ -26,7 +25,6 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DasboardController::class, 'index'])->name('home');
     Route::resource('villains', VillainController::class)->except(['create', 'show']);
-    Route::resource('skills', SkillController::class);
     Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('ratings', RatingController::class);
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
