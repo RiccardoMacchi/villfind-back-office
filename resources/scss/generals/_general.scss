@@ -1,6 +1,7 @@
-@use './partrials/button';
 @use './variables' as *;
 @use './mixins' as *;
+
+@import './partrials/button';
 
 * {
     margin: 0;
@@ -36,11 +37,11 @@ a {
 }
 
 .bg-white {
-    scrollbar-color: $primary #00000000;
+    scrollbar-color: $primary transparent;
 }
 
 .bg-dark {
-    scrollbar-color: $gray-600 #00000000;
+    scrollbar-color: $gray-600 transparent;
 }
 
 
@@ -54,7 +55,7 @@ a {
         }
 
         .text-fade {
-            background: linear-gradient(to right, #00000000 0%, $dark 100%);
+            background: linear-gradient(to right, transparent 0%, $dark 100%);
         }
     }
 

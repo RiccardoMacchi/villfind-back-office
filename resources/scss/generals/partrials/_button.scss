@@ -1,19 +1,20 @@
-@import '../../bootstrap/bootstrap_variables';
-
 // Base Button Styling
 .btn {
     padding: $btn-padding-y $btn-padding-x;
     font-size: $btn-font-size;
     border-radius: $btn-border-radius;
     font-weight: $btn-font-weight;
-    transition: $btn-transition;
     border-width: none;
     text-transform: uppercase;
     cursor: pointer;
     display: inline-block;
+
+    &:hover {
+        &:active {
+            filter: brightness(80%);
+        }
+    }
 }
-
-
 
 // Primary Button with Gradient Hover Animation
 .btn-primary {
@@ -21,7 +22,7 @@
     color: $light;
 
     &:hover {
-        background: linear-gradient(45deg, $secondary, $accent);
+        background: linear-gradient(45deg, $secondary, $accent), $primary;
     }
 }
 
