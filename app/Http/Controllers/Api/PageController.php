@@ -223,7 +223,7 @@ class PageController extends Controller
             'villain_id' => 'required|exists:villains,id',
             'rating_id' => 'required|exists:ratings,id',
             'full_name' => 'required|string|min:1|max:255',
-            'content' => 'required|string|max:1000'
+            'content' => 'nullable|string|max:1000'
         ]);
 
         $villain = Villain::find($validated['villain_id']);
