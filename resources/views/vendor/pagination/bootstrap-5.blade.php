@@ -1,6 +1,6 @@
 <nav class="d-flex justify-items-center justify-content-between">
     <div class="d-flex justify-content-end flex-fill d-lg-none">
-        <ul class="pagination">
+        <ul class="pagination mb-0">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li class="page-item disabled" aria-disabled="true">
