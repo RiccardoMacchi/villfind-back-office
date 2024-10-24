@@ -9,7 +9,7 @@
         {{ $items->links() }}
     </div>
 
-    <div class="card-body p-0">
+    <div class="card-body p-0 table-responsive">
         @if ($items->count())
             <table class="table table-striped table-hover mb-0">
                 <thead class="table-light">
@@ -29,106 +29,101 @@
                 </thead>
                 <tbody class="align-middle">
                     @foreach ($items as $item)
-                        @if (isset($item->villains) && $item->villains->count())
-                            @foreach ($item->villains as $villain)
-                                <tr>
-                                    @foreach ($columns as $column)
-                                        <td class="border-bottom-0">
+                        <tr>
+                            @foreach ($columns as $column)
+                                <td class="border-bottom-0">
+                                    @php
+                                        $value = $item;
+                                        $parts = explode('->', $column['field']);
+
+                                        foreach ($parts as $part) {
+                                            $value = $value->{$part};
+                                        }
+                                    @endphp
+
+                                    @if ($value)
+                                        {{ $value }}
+                                    @else
+                                        {{ isset($column['default_content']) ? $column['default_content'] : '~' }}
+                                    @endif
+                                </td>
+                            @endforeach
+
+                            @if ($is_viewable || $is_modifiable || $is_deletable)
+                                <td class="col-1 text-center border-bottom-0">
+                                    <menu class="d-flex justify-content-center gap-1">
+                                        @if ($is_viewable)
                                             @php
-                                                $field = $column['field'];
-                                                $value = $villain->pivot->{$field} ?? null; // Usa null se non esiste
+                                                $value = $item;
+
+                                                if ($is_viewable !== true) {
+                                                    $parts = explode('->', $is_viewable);
+
+                                                    foreach ($parts as $part) {
+                                                        $value = $value->{$part};
+                                                    }
+                                                }
                                             @endphp
 
-                                            @if ($value)
-                                                {{ $value }}
-                                            @else
-                                                {{ isset($column['default_content']) ? $column['default_content'] : '' }}
-                                            @endif
-                                        </td>
-                                    @endforeach
+                                            <li>
+                                                @include('admin.general.button_view', [
+                                                    'link' => route(
+                                                        $resource_route . '.show',
+                                                        $value),
+                                                ])
+                                            </li>
+                                        @endif
 
-                                    @if ($is_viewable || $is_modifiable || $is_deletable)
-                                        <td class="col-1 text-center border-bottom-0">
-                                            <menu class="d-flex justify-content-center gap-1">
-                                                @if ($is_viewable)
-                                                    <li>
-                                                        @include('admin.general.button_view', [
-                                                            'link' => route(
-                                                                $resource_route . '.show',
-                                                                $item),
-                                                        ])
-                                                    </li>
-                                                @endif
+                                        @if ($is_modifiable)
+                                            @php
+                                                $value = $item;
 
-                                                @if ($is_modifiable)
-                                                    <li>
-                                                        @include('admin.general.button_edit', [
-                                                            'link' => route(
-                                                                $resource_route . '.update',
-                                                                $item),
-                                                        ])
-                                                    </li>
-                                                @endif
+                                                if ($is_viewable !== true) {
+                                                    $parts = explode('->', $is_modifiable);
 
-                                                @if ($is_deletable)
-                                                    <li>
-                                                        @include('admin.general.button_delete', [
-                                                            'link' => route(
-                                                                $resource_route . '.destroy',
-                                                                $item),
-                                                        ])
-                                                    </li>
-                                                @endif
-                                            </menu>
-                                        </td>
-                                    @endif
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                @foreach ($columns as $column)
-                                    <td class="border-bottom-0">
-                                        {{ $item->{$column['field']} ?? (isset($column['default_content']) ? $column['default_content'] : '') }}
-                                    </td>
-                                @endforeach
+                                                    foreach ($parts as $part) {
+                                                        $value = $value->{$part};
+                                                    }
+                                                }
+                                            @endphp
 
-                                @if ($is_viewable || $is_modifiable || $is_deletable)
-                                    <td class="col-1 text-center border-bottom-0">
-                                        <menu class="d-flex justify-content-center gap-1">
-                                            @if ($is_viewable)
-                                                <li>
-                                                    @include('admin.general.button_view', [
-                                                        'link' => route(
-                                                            $resource_route . '.show',
-                                                            $item),
-                                                    ])
-                                                </li>
-                                            @endif
+                                            <li>
+                                                @include('admin.general.button_edit', [
+                                                    'link' => route(
+                                                        $resource_route . '.update',
+                                                        $value),
+                                                ])
+                                            </li>
+                                        @endif
 
-                                            @if ($is_modifiable)
-                                                <li>
-                                                    @include('admin.general.button_edit', [
-                                                        'link' => route(
-                                                            $resource_route . '.update',
-                                                            $item),
-                                                    ])
-                                                </li>
-                                            @endif
+                                        @if ($is_deletable)
+                                            @php
+                                                $value = $item;
 
-                                            @if ($is_deletable)
-                                                <li>
-                                                    @include('admin.general.button_delete', [
+                                                if ($is_viewable !== true) {
+                                                    $parts = explode('->', $is_deletable);
+
+                                                    foreach ($parts as $part) {
+                                                        $value = $value->{$part};
+                                                    }
+                                                }
+                                            @endphp
+
+                                            <li>
+                                                @include(
+                                                    'admin.general.button_delete',
+                                                    [
                                                         'link' => route(
                                                             $resource_route . '.destroy',
-                                                            $item),
-                                                    ])
-                                                </li>
-                                            @endif
-                                        </menu>
-                                    </td>
-                                @endif
-                            </tr>
-                        @endif
+                                                            $value),
+                                                    ]
+                                                )
+                                            </li>
+                                        @endif
+                                    </menu>
+                                </td>
+                            @endif
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

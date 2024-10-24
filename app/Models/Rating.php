@@ -15,6 +15,6 @@ class Rating extends Model
 
     public function villains()
     {
-        return $this->belongsToMany(Villain::class)->withPivot('id', 'villain_id', 'rating_id', 'full_name', 'content')->withTimestamps();
+        return $this->belongsToMany(Villain::class)->withPivot('id', 'villain_id', 'rating_id', 'full_name', 'content', 'created_at')->withTimestamps();
     }
 }

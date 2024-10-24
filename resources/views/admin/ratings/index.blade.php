@@ -21,7 +21,7 @@
             </div>
         @endif
 
-        <x-admin.table :items="$ratings" :columns="$columns" :isViewable="true" />
+        <x-admin.table :items="$ratings" :columns="$columns" :isViewable="'pivot->id'" />
     </div>
 
 @endsection

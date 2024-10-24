@@ -16,36 +16,20 @@ class RatingController extends Controller
      */
     public function index()
     {
-        $userVillain = Villain::where('user_id', Auth::id())->first();
+        $villain = Villain::where('user_id', Auth::id())->first();
 
-        $ratings = Rating::whereHas('villains', function ($query) use ($userVillain) {
-            $query->where('villains.id', $userVillain->id);
-        })
-            ->with(['villains' => function ($query) use ($userVillain) {
-                $query->where('villains.id', $userVillain->id);
-            }])
-            ->orderBy('created_at')
-            ->paginate(25);
+        if ($villain) {
+            $ratings = $villain->ratings()->withPivot('full_name', 'content', 'created_at')
+                ->orderByPivot('created_at', 'desc')->paginate(25);
 
-        $columns = [
-            ['label' => 'Fullname', 'field' => 'full_name'],
-            ['label' => 'Rating', 'field' => 'rating_id'],
-            ['label' => 'Content', 'field' => 'content'],
-        ];
+            $columns = [
+                ['label' => 'Costumer Name', 'field' => 'pivot->full_name'],
+                ['label' => 'Rating', 'field' => 'value'],
+                ['label' => 'Content', 'field' => 'pivot->content'],
+                ['label' => 'Date', 'field' => 'pivot->created_at'],
+            ];
 
-        if ($userVillain) {
-
-            // recupero nomi e contenuto delle review
-            $ratingsDetails = DB::table('rating_villain')
-                ->where('villain_id', $userVillain->id)
-                ->select('full_name', 'content', 'rating_id', 'id')
-                ->paginate(25);
-
-            // recupero la media dei voti
-            $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
-
-
-            return view('admin.ratings.index', compact('ratings', 'columns', 'ratingsDetails', 'averageRating'));
+            return view('admin.ratings.index', compact('ratings', 'columns'));
         } else {
             return redirect()->route('admin.villains.index');
         }
@@ -70,10 +54,16 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($review_id)
+    public function show(string $review_id)
     {
-        $review = DB::table('rating_villain')->where('id', $review_id)->first();
-        $rating = Rating::find($review->rating_id);
+        $villain = Villain::where('user_id', Auth::id())->first();
+
+        if ($villain) {
+            $rating = $villain->ratings()->wherePivot('id', $review_id)
+                ->withPivot('full_name', 'content', 'created_at')->first();
+        } else {
+            return redirect()->route('admin.ratings.index');
+        }
 
         // if (!$villain) {
         //     return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.',);
@@ -87,7 +77,7 @@ class RatingController extends Controller
         //     return redirect()->route('admin.ratings.index')->with('error', 'Rating non trovato.');
         // }
 
-        return view('admin.ratings.show', compact('review', 'rating'));
+        return view('admin.ratings.show', compact('rating'));
     }
 
 

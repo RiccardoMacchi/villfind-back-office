@@ -25,22 +25,15 @@ class SponsorshipController extends Controller
         $sponsorships = Sponsorship::orderBy('id')->get();
 
         $orders = $villain->sponsorships()
-            ->withPivot('expiration_date', 'purchase_price')
+            ->withPivot('expiration_date', 'purchase_price', 'created_at')
             ->orderBy('pivot_expiration_date', 'desc')
             ->paginate(25);
 
-        $orders->getCollection()->transform(function ($sponsorship) {
-            return (object) [
-                'name' => $sponsorship->name,
-                'expiration_date' => $sponsorship->pivot->expiration_date,
-                'purchase_price' => $sponsorship->pivot->purchase_price,
-            ];
-        });
-
         $columns = [
             ['label' => 'Plan', 'field' => 'name'],
-            ['label' => 'Total', 'field' => 'purchase_price'],
-            ['label' => 'Expiration', 'field' => 'expiration_date'],
+            ['label' => 'Expiration Date', 'field' => 'pivot->expiration_date'],
+            ['label' => 'Purchase Date', 'field' => 'pivot->created_at'],
+            ['label' => 'Total', 'field' => 'pivot->purchase_price'],
         ];
 
         return view('admin.sponsorship.index', compact('sponsorships', 'villain', 'orders', 'columns'));
