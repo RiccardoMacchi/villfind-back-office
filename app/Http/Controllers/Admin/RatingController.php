@@ -18,19 +18,19 @@ class RatingController extends Controller
     {
         $userVillain = Villain::where('user_id', Auth::id())->first();
 
-        $ratings = Rating::whereHas('villains', function($query) use ($userVillain) {
+        $ratings = Rating::whereHas('villains', function ($query) use ($userVillain) {
             $query->where('villains.id', $userVillain->id);
         })
-        ->with(['villains' => function($query) use ($userVillain) {
-            $query->where('villains.id', $userVillain->id);
-        }])
-        ->orderBy('created_at')
-        ->paginate(25);
+            ->with(['villains' => function ($query) use ($userVillain) {
+                $query->where('villains.id', $userVillain->id);
+            }])
+            ->orderBy('created_at')
+            ->paginate(25);
 
         $columns = [
-            ['label' => 'Fullname', 'field' => 'full_name'], 
-            ['label' => 'Rating', 'field' => 'rating_id'], 
-            ['label' => 'Content', 'field' => 'content'], 
+            ['label' => 'Fullname', 'field' => 'full_name'],
+            ['label' => 'Rating', 'field' => 'rating_id'],
+            ['label' => 'Content', 'field' => 'content'],
         ];
 
         if ($userVillain) {
@@ -70,27 +70,24 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $ratingId)
+    public function show($review_id)
     {
-        $villain = Villain::where('user_id', Auth::id())
-            ->with(['ratings' => function ($query) use ($ratingId) {
-                $query->where('rating_villain.rating_id', $ratingId);
-            }])
-            ->first();
+        $review = DB::table('rating_villain')->where('id', $review_id)->first();
+        $rating = Rating::find($review->rating_id);
 
-        if (!$villain) {
-            return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.',);
-        }
+        // if (!$villain) {
+        //     return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.',);
+        // }
 
-        // $rating = $villain->ratings()->where('rating_villain.rating_id', $ratingId)->first();
-        $rating = $villain->ratings()->whereIn('rating_villain.id', [$ratingId])->first();
-        $userVillain = Villain::where('user_id', Auth::id())->first();
+        // // $rating = $villain->ratings()->where('rating_villain.rating_id', $ratingId)->first();
+        // $rating = $villain->ratings()->whereIn('rating_villain.id', [$ratingId])->first();
+        // $userVillain = Villain::where('user_id', Auth::id())->first();
 
-        if (!$rating) {
-            return redirect()->route('admin.ratings.index')->with('error', 'Rating non trovato.');
-        }
+        // if (!$rating) {
+        //     return redirect()->route('admin.ratings.index')->with('error', 'Rating non trovato.');
+        // }
 
-        return view('admin.ratings.show', compact('rating', 'userVillain'));
+        return view('admin.ratings.show', compact('review', 'rating'));
     }
 
 

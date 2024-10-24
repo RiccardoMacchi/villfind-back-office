@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('rating_id')->constrained('ratings')->cascadeOnDelete();
             $table->string('full_name');
             $table->text('content')->nullable();
+            $table->timestamps();
         });
     }
 
