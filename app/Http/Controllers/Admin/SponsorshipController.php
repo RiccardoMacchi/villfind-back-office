@@ -16,15 +16,34 @@ class SponsorshipController extends Controller
      */
     public function index()
     {
-        $userVillain = Villain::where('user_id', Auth::id())->first();
+        $villain = Villain::where('user_id', Auth::id())->first();
 
-        if (!$userVillain) {
+        if (!$villain) {
             return redirect()->back()->with('error', 'Nessun villain trovato per questo utente.');
         }
+
         $sponsorships = Sponsorship::orderBy('id')->get();
 
-        $sponsorshipDetails = $userVillain->sponsorships()->get();
-        return view('admin.sponsorship.index', compact('sponsorships', 'userVillain', 'sponsorshipDetails'));
+        $orders = $villain->sponsorships()
+            ->withPivot('expiration_date', 'purchase_price')
+            ->orderBy('pivot_expiration_date', 'desc')
+            ->paginate(25);
+
+        $orders->getCollection()->transform(function ($sponsorship) {
+            return (object) [
+                'name' => $sponsorship->name,
+                'expiration_date' => $sponsorship->pivot->expiration_date,
+                'purchase_price' => $sponsorship->pivot->purchase_price,
+            ];
+        });
+
+        $columns = [
+            ['label' => 'Plan', 'field' => 'name'],
+            ['label' => 'Total', 'field' => 'purchase_price'],
+            ['label' => 'Expiration', 'field' => 'expiration_date'],
+        ];
+
+        return view('admin.sponsorship.index', compact('sponsorships', 'villain', 'orders', 'columns'));
     }
 
     /**
