@@ -36,11 +36,11 @@ a {
 }
 
 .bg-white {
-    scrollbar-color: $primary $white;
+    scrollbar-color: $primary #00000000;
 }
 
 .bg-dark {
-    scrollbar-color: $gray-600 $dark;
+    scrollbar-color: $gray-600 #00000000;
 }
 
 
