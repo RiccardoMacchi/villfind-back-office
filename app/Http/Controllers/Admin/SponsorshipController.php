@@ -99,10 +99,10 @@ class SponsorshipController extends Controller
     {
         $villain = Villain::where('user_id', Auth::id())->first();
 
-        $last_expiration_date = $villain->sponsorships()->orderBy('expiration_date', 'desc')->first()->pivot->expiration_date;;
+        $last_order = $villain->sponsorships()->orderBy('expiration_date', 'desc')->first();;
 
-        if (Carbon::parse($last_expiration_date) > Carbon::now()) {
-            $expiration_date = Carbon::parse($last_expiration_date);
+        if ($last_order && Carbon::parse($last_order->pivot->expiration_date) > Carbon::now()) {
+            $expiration_date = Carbon::parse($last_order->pivot->expiration_date);
         } else {
             $expiration_date = Carbon::now();
         }
