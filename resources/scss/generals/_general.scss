@@ -25,6 +25,18 @@ h6 {
     font-weight: 800;
 }
 
+h1 {
+    font-size: $fnt-size-xxl;
+}
+
+h2 {
+    font-size: $fnt-size-xl;
+}
+
+h3 {
+    font-size: $fnt-size-l;
+}
+
 menu,
 ul,
 ol {
@@ -78,4 +90,28 @@ a {
     overflow: auto;
 
     scrollbar-color: $primary $gray-100;
+}
+
+.fnt-size-1 {
+    font-size: $fnt-size-xs;
+}
+
+.fnt-size-2 {
+    font-size: $fnt-size-s;
+}
+
+.fnt-size-3 {
+    font-size: $fnt-size-m;
+}
+
+.fnt-size-4 {
+    font-size: $fnt-size-l;
+}
+
+.fnt-size-5 {
+    font-size: $fnt-size-xl;
+}
+
+.fnt-size-6 {
+    font-size: $fnt-size-xxl;
 }
