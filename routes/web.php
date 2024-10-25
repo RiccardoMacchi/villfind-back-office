@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\SponsorshipController;
 use App\Http\Controllers\Admin\ViewController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PageController::class, 'index'])->name('home');
+
+// Rotte payment
+Route::get('/checkout', [PaymentController::class, 'showCheckout'])->name('checkout.show');
+Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout.process');
+Route::get('/checkout/success', function () {
+    return 'Transazione completata con successo!';
+})->name('checkout.success');
+Route::get('/checkout/error', function () {
+    return 'C\'è stato un errore durante la transazione.';
+})->name('checkout.error');
+
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DasboardController::class, 'index'])->name('home');
