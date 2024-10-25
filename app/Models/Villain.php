@@ -48,6 +48,10 @@ class Villain extends Model
     {
         return $this->belongsToMany(Message::class);
     }
+    public function views()
+    {
+        return $this->hasMany(View::class);
+    }
     public function sponsorships()
     {
         return $this->belongsToMany(Sponsorship::class, ('sponsorship_villain'))->withPivot('purchase_price', 'expiration_date', 'created_at')->withTimestamps();
