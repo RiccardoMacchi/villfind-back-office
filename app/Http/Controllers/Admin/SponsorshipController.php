@@ -36,7 +36,11 @@ class SponsorshipController extends Controller
             ['label' => 'Total', 'field' => 'pivot->purchase_price'],
         ];
 
-        return view('admin.sponsorship.index', compact('sponsorships', 'villain', 'orders', 'columns'));
+        if ($orders->count()) {
+            $is_sponsored = Carbon::parse($orders->first()->pivot->expiration_date) > Carbon::now();
+        }
+
+        return view('admin.sponsorship.index', compact('sponsorships', 'villain', 'orders', 'columns', 'is_sponsored'));
     }
 
     /**

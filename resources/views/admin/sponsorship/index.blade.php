@@ -36,6 +36,45 @@
             @endforeach
         </div>
 
+        @if ($is_sponsored)
+            <div class="card shadow text-white p-4 mt-5 gap-3 bg-primary-special w-100">
+                <div class="row">
+                    <div class="col-lg-5 mb-3 mb-lg-0 d-flex flex-column justify-content-center">
+                        <img src="{!! Vite::asset('resources/images/logos/logos-lt/logo-lt-mark.png') !!}" alt="Thank you!" class="w-100">
+                    </div>
+
+                    <div class="col-lg-7 d-flex flex-column justify-content-center gap-2 text-center">
+                        <div>
+                            <h2 class="mb-2">
+                                You are currently sponsored!
+                            </h2>
+
+                            <p class="m-0">
+                                Thank you for choosing our service! Your sponsorship is now active,
+                                providing you with enhanced visibility and positioning you ahead of
+                                others. This is a
+                                valuable opportunity to reach a wider audience and promote your
+                                offerings
+                                effectively. We appreciate your trust in us, and we’re excited to help
+                                you achieve your
+                                goals!
+                            </p>
+                        </div>
+
+                        <div>
+                            <strong class="fnt-size-4 d-block mb-2">
+                                Sponsorship expiration date:
+                            </strong>
+
+                            <span>
+                                {{ $orders->first()->pivot->expiration_date }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <h2 class="text-primary mt-5 mb-3">
             Purchase History
         </h2>

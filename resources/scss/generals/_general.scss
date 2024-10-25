@@ -116,3 +116,7 @@ a {
 .fnt-size-6 {
     font-size: $fnt-size-xxl;
 }
+
+.bg-primary-special {
+    background: linear-gradient(45deg, $secondary, $accent), $primary;
+}
