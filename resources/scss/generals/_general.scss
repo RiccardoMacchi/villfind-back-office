@@ -1,7 +1,8 @@
 @use './variables' as *;
 @use './mixins' as *;
 
-@import './partrials/button';
+@import './partials/button';
+@import './partials/cv_modal';
 
 * {
     margin: 0;
