@@ -6,10 +6,11 @@
             <div class="card mb-3 p-0 col-11 col-lg-9 col-xl-8 overflow-hidden">
                 <div class="row g-0 p-0">
                     <div class="col-lg-5 p-0">
-                        <img src="{!! $villain->image !!}" alt="{!! $villain->name !!}" alt="{!! $villain->name !!}"
-                            class="img-fluid p-0 h-100 w-100 object-fit-cover"
-                            data-original-image-path="{!! $villain->image !!}"
-                            onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
+                        <img src="{!! $villain->image !!}" alt="{!! $villain->name !!}"
+                             alt="{!! $villain->name !!}"
+                             class="img-fluid p-0 h-100 w-100 object-fit-cover"
+                             data-original-image-path="{!! $villain->image !!}"
+                             onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
                     </div>
 
                     <div class="col-lg-7">
@@ -126,30 +127,40 @@
                                 @if ($villain->cv)
                                     <div class="mb-3">
                                         <div class="ps-3 d-block">
-                                            <button class="btn btn-secondary" id="viewCvBtn">View CV</button>
+                                            <a class="text-secondary text-decoration-underline"
+                                               id="viewCvBtn" role='button'>
+                                                View CV
+                                            </a>
                                         </div>
 
                                         <!-- Modal CV -->
                                         <div id="cvModal" class="modal-overlay">
                                             <div class="modal-content">
-                                                <iframe src="{{ asset($villain->cv) }}" width="100%" height="100%"
-                                                    frameborder="0"></iframe>
-                                                <div class="modal-actions">
-                                                    <a href="{{ asset($villain->cv) }}" download
-                                                        class="btn download-btn">Scarica CV</a>
-                                                    <button class="btn close-btn" id="closeCvBtn">Chiudi</button>
-                                                </div>
+                                                <iframe src="{{ asset($villain->cv) }}" width="100%"
+                                                        height="100%" frameborder="0"></iframe>
+                                            </div>
+
+                                            <div class="modal-actions">
+                                                <a href="{{ asset($villain->cv) }}"
+                                                   class="btn btn-primary" download>
+                                                    Download
+                                                </a>
+
+                                                <button class="btn btn-danger" id="closeCvBtn">
+                                                    Close
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 @else
-                                    <span class="fst-italic ps-3">You haven't uploaded your CV yet.</span>
+                                    <span class="fst-italic ps-3">No CV uploaded yet</span>
                                 @endif
                             </div>
 
 
 
-                            <a href="{{ route('admin.villains.edit', $villain) }}" class="btn btn-primary">
+                            <a href="{{ route('admin.villains.edit', $villain) }}"
+                               class="btn btn-primary">
                                 Edit your profile
                             </a>
                         </div>
