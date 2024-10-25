@@ -17,6 +17,7 @@ class SponsorshipController extends Controller
     public function index()
     {
         $villain = Villain::where('user_id', Auth::id())->first();
+        $is_sponsored = false;
 
         if (!$villain) {
             return redirect()->back()->with('error', 'Nessun villain trovato per questo utente.');
