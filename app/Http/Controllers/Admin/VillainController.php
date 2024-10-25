@@ -12,6 +12,7 @@ use App\Models\Universe;
 use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class VillainController extends Controller
@@ -25,7 +26,11 @@ class VillainController extends Controller
 
         if ($userVillain) {
             $villain = Villain::where('user_id', Auth::id())->first();
-            $average_rating = Rating::whereIn('id', $villain->ratings()->pluck('rating_id'))->avg('value');
+            $average_rating = DB::table('rating_villain')
+                ->join('ratings', 'rating_villain.rating_id', '=', 'ratings.id')
+                ->where('rating_villain.villain_id', $villain->id)
+                ->select(DB::raw('AVG(ratings.value) as average_rating'))
+                ->value('average_rating');
             $average_rating_icons = Helper::iconifyRating($average_rating);
             $user = Auth::user();
             $userEmail = $user->email;
