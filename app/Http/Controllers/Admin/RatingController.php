@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Functions\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use App\Models\Villain;
@@ -29,7 +30,32 @@ class RatingController extends Controller
                 ['label' => 'Date', 'field' => 'pivot->created_at'],
             ];
 
-            return view('admin.ratings.index', compact('ratings', 'columns'));
+            if ($ratings->count()) {
+                $ratings_counts = $villain->ratings()->select('value', DB::raw('count(*) as total'))
+                    ->groupBy('value')->pluck('total', 'value');
+
+                for ($i = 1; $i <= 5; $i++) {
+                    if (!isset($ratings_counts[$i])) {
+                        $ratings_counts[$i] = 0;
+                    }
+                }
+
+                $average_rating = DB::table('rating_villain')
+                    ->join('ratings', 'rating_villain.rating_id', '=', 'ratings.id')
+                    ->where('rating_villain.villain_id', $villain->id)
+                    ->select(DB::raw('AVG(ratings.value) as average_rating'))
+                    ->value('average_rating');
+            } else {
+                for ($i = 1; $i <= 5; $i++) {
+                    $ratings_counts[$i] = 0;
+                }
+
+                $average_rating = 0;
+            }
+
+            $average_rating_icons = Helper::iconifyRating($average_rating);
+
+            return view('admin.ratings.index', compact('ratings', 'columns', 'ratings_counts', 'average_rating', 'average_rating_icons'));
         } else {
             return redirect()->route('admin.villains.index');
         }
@@ -65,18 +91,6 @@ class RatingController extends Controller
             return redirect()->route('admin.ratings.index');
         }
 
-        // if (!$villain) {
-        //     return redirect()->route('admin.ratings.index')->with('error', 'Villain non trovato.',);
-        // }
-
-        // // $rating = $villain->ratings()->where('rating_villain.rating_id', $ratingId)->first();
-        // $rating = $villain->ratings()->whereIn('rating_villain.id', [$ratingId])->first();
-        // $userVillain = Villain::where('user_id', Auth::id())->first();
-
-        // if (!$rating) {
-        //     return redirect()->route('admin.ratings.index')->with('error', 'Rating non trovato.');
-        // }
-
         return view('admin.ratings.show', compact('rating'));
     }
 
@@ -105,33 +119,33 @@ class RatingController extends Controller
         //
     }
 
-    public function statistics(Rating $rating)
-    {
-        $userVillain = Villain::where('user_id', Auth::id())->first();
+    // public function statistics(Rating $rating)
+    // {
+    //     $userVillain = Villain::where('user_id', Auth::id())->first();
 
-        if ($userVillain) {
+    //     if ($userVillain) {
 
-            // recupero i ratings da inserire nel grafico
-            $ratingsCount = DB::table('rating_villain')
-                ->where('villain_id', $userVillain->id)
-                ->select('rating_id', DB::raw('count(*) as total'))
-                ->groupBy('rating_id')
-                ->pluck('total', 'rating_id');
+    //         // recupero i ratings da inserire nel grafico
+    //         $ratingsCount = DB::table('rating_villain')
+    //             ->where('villain_id', $userVillain->id)
+    //             ->select('rating_id', DB::raw('count(*) as total'))
+    //             ->groupBy('rating_id')
+    //             ->pluck('total', 'rating_id');
 
-            $ratingsData = [
-                '1_star' => $ratingsCount[1] ?? 0,
-                '2_stars' => $ratingsCount[2] ?? 0,
-                '3_stars' => $ratingsCount[3] ?? 0,
-                '4_stars' => $ratingsCount[4] ?? 0,
-                '5_stars' => $ratingsCount[5] ?? 0
-            ];
+    //         $ratingsData = [
+    //             '1_star' => $ratingsCount[1] ?? 0,
+    //             '2_stars' => $ratingsCount[2] ?? 0,
+    //             '3_stars' => $ratingsCount[3] ?? 0,
+    //             '4_stars' => $ratingsCount[4] ?? 0,
+    //             '5_stars' => $ratingsCount[5] ?? 0
+    //         ];
 
-            // recupero la media dei voti
-            $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
+    //         // recupero la media dei voti
+    //         $averageRating = Rating::whereIn('id', $userVillain->ratings()->pluck('rating_id'))->avg('value');
 
-            return view('admin.ratings.statistics', compact('ratingsCount', 'ratingsData', 'averageRating'));
-        } else {
-            return redirect()->route('admin.villains.index');
-        }
-    }
+    //         return view('admin.ratings.statistics', compact('ratingsCount', 'ratingsData', 'averageRating'));
+    //     } else {
+    //         return redirect()->route('admin.villains.index');
+    //     }
+    // }
 }
