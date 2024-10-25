@@ -11,7 +11,6 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        dd(env('BRAINTREE_ENV'));
         $this->gateway = new Gateway([
             'environment' => env('BRAINTREE_ENV'),
             'merchantId' => env('BRAINTREE_MERCHANT_ID'),
@@ -43,5 +42,11 @@ class PaymentController extends Controller
         } else {
             return redirect()->route('checkout.error')->with('message', 'Transazione fallita: ' . $result->message);
         }
+    }
+
+    public function showCheckout()
+    {
+        $clientToken = $this->token();
+        return view('checkout', compact('clientToken'));
     }
 }
