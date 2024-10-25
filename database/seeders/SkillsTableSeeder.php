@@ -12,23 +12,14 @@ class SkillsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $csv_file = fopen(__DIR__ . '/../data/villains.csv', 'r');
+        $csv_file = fopen(__DIR__ . '/../data/skills.csv', 'r');
 
         for ($row_count = 0; ($row_data = fgetcsv($csv_file)) != false; $row_count++) {
             if ($row_count) {
-                if ($row_data[4]) {
-                    $new_skills_names = explode(';', $row_data[4]);
+                $new_service = new Skill();
+                $new_service->name = $row_data[0];
 
-                    foreach ($new_skills_names as $new_skill_name) {
-                        if (!Skill::where('name', '=', $new_skill_name)->count()) {
-                            $new_skill = new Skill();
-
-                            $new_skill->name = $new_skill_name;
-
-                            $new_skill->save();
-                        }
-                    }
-                }
+                $new_service->save();
             }
         }
     }
