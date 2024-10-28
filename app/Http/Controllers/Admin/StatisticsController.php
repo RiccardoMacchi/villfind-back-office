@@ -26,16 +26,15 @@ class StatisticsController extends Controller
         $months = array_reverse($months, true); // Ordina in ordine cronologico
 
         // Statistiche valutazioni
-        $monthlyRatings = Rating::whereHas('villains', function($query) use ($villainId) {
-            $query->where('villain_id', $villainId);
-        })
+        $monthlyReviews = DB::table('rating_villain')
+        ->where('villain_id', $villainId)
         ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as total")
         ->where('created_at', '>=', Carbon::now()->subYear())
         ->groupBy('month')
         ->pluck('total', 'month')
         ->toArray();
 
-        $ratingsMonthly = array_merge($months, $monthlyRatings);
+    $reviewsMonthly = array_merge($months, $monthlyReviews);
 
         // Statistiche visualizzazioni
         $monthlyViews = View::where('villain_id', $villainId)
@@ -57,8 +56,8 @@ class StatisticsController extends Controller
 
         $messagesMonthly = array_merge($months, $monthlyMessages);
 
-        dd($messagesMonthly, $viewsMonthly, $ratingsMonthly);
+        dd($messagesMonthly, $viewsMonthly, $monthlyReviews);
 
-        return view('admin.statistic.index', compact('ratingsMonthly', 'viewsMonthly', 'messagesMonthly'));
+        return view('admin.statistic.index', compact('monthlyReviews', 'viewsMonthly', 'messagesMonthly'));
     }
 }
