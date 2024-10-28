@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sponsorship;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
 
@@ -28,9 +29,10 @@ class PaymentController extends Controller
     public function checkout(Request $request)
     {
         $nonceFromTheClient = $request->input('payment_method_nonce');
-
+        $sponsorship = Sponsorship::where('price', $request->price)->first();
+        $clicked = false;
         $result = $this->gateway->transaction()->sale([
-            'amount' => '10.00',
+            'amount' => $request->price,
             'paymentMethodNonce' => $nonceFromTheClient,
             'options' => [
                 'submitForSettlement' => true
@@ -38,15 +40,21 @@ class PaymentController extends Controller
         ]);
 
         if ($result->success) {
-            return redirect()->route('checkout.success')->with('message', 'Transazione riuscita! ID: ' . $result->transaction->id);
+            session(['clicked' => $clicked]);
+            return redirect()->route('admin.sponsorship.purchase', ['sponsorship' => $sponsorship]);
         } else {
             return redirect()->route('checkout.error')->with('message', 'Transazione fallita: ' . $result->message);
         }
     }
 
-    public function showCheckout()
+    public function showCheckout(Sponsorship $sponsorship)
     {
+        $price = $sponsorship->price;
+        $hours = $sponsorship->hours;
+        $clicked = true;
         $clientToken = $this->token();
-        return view('checkout', compact('clientToken'));
+        // return view('checkout', compact('clientToken', 'price', 'hours', 'clicked'));
+        session(['clientToken' => $clientToken, 'price' => $price, 'hours' => $hours, 'clicked' => $clicked]);
+        return redirect()->route('admin.sponsorship.index');
     }
 }

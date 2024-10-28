@@ -1,3 +1,10 @@
+<?php
+$clientToken = session('clientToken');
+$price = session('price');
+$hours = session('hours');
+$clicked = session('clicked', false);
+?>
+
 @extends('layouts.app')
 
 @section('content')
@@ -5,11 +12,16 @@
         <h1 class="text-primary my-4">
             Sponsorships
         </h1>
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+
 
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             @foreach ($sponsorships as $plan)
-                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4"
-                     style="width: 15rem">
+                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4" style="width: 15rem">
                     <h2 class="card-title text-primary mb-auto" style="font-size: 1.75rem">
                         {{ $plan->name }}
                     </h2>
@@ -26,15 +38,26 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('admin.sponsorship.purchase', $plan) }}" method="POST">
+                    <form action="{{ route('checkout.show', $plan) }}" method="GET">
+                        <button id="active_payment" type="submit" class="btn btn-primary btn-lg">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </form>
+
+                    {{-- <form action="{{ route('admin.sponsorship.purchase', $plan) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-primary btn-lg">
                             <i class="fa-solid fa-cart-plus"></i>
                         </button>
-                    </form>
+                    </form> --}}
                 </div>
             @endforeach
         </div>
+        @if ($clicked)
+            <div>
+                @include('../../checkout')
+            </div>
+        @endif
 
         @if ($is_sponsored)
             <div class="card shadow text-white p-4 mt-5 gap-3 bg-primary-special w-100">
@@ -81,4 +104,9 @@
 
         <x-admin.table :items="$orders" :columns="$columns" />
     </div>
+
+    <script>
+        var activeScript = document.getElementById('active_payment')
+        activeScript
+    </script>
 @endsection

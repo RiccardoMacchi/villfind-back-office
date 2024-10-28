@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\ViewController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
-
+use App\Models\Sponsorship;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ use App\Http\Controllers\PaymentController;
 Route::get('/', [PageController::class, 'index'])->name('home');
 
 // Rotte payment
-Route::get('/checkout', [PaymentController::class, 'showCheckout'])->name('checkout.show');
+Route::get('/checkout/{sponsorship}', [PaymentController::class, 'showCheckout'])->name('checkout.show');
 Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout.process');
 Route::get('/checkout/success', function () {
     return 'Transazione completata con successo!';
@@ -42,7 +42,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('ratings', RatingController::class);
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
-    Route::post('sponsorship/purchase/{sponsorship}', [SponsorshipController::class, 'purchaseSponsorship'])->name('sponsorship.purchase');
+    Route::post('/reset-session', [SponsorshipController::class, 'resetSession'])->name('session.reset');
+    Route::get('sponsorship/purchase/{sponsorship}', [SponsorshipController::class, 'purchaseSponsorship'])->name('sponsorship.purchase');
     Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);
     Route::resource('views', ViewController::class)->except(['create', 'update', 'show', 'destroy']);;
 });
