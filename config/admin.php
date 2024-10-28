@@ -30,7 +30,7 @@ return [
         ],
         [
             'menu_text' => 'VIEWS',
-            'route_name' => 'admin.views.index',
+            'route_name' => 'admin.statistic.index',
             'menu_icon' => '<i class="fa-solid fa-users-viewfinder"></i>',
         ],
     ],

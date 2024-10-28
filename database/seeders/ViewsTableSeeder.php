@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Villain;
 use App\Models\View;
+use Carbon\Carbon;
 
 class ViewsTableSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class ViewsTableSeeder extends Seeder
                 $view = new View();
                 $view->villain_id = $row_data[0];
                 $view->visitor_ip= $row_data[1];
+                $view->created_at= Carbon::parse($row_data[2]);
                 $view->save();
             }
         }
