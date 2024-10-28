@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\VillainController;
 use App\Http\Controllers\Admin\SponsorshipController;
-use App\Http\Controllers\Admin\ViewController;
+use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('/reset-session', [SponsorshipController::class, 'resetSession'])->name('session.reset');
     Route::get('sponsorship/purchase/{sponsorship}', [SponsorshipController::class, 'purchaseSponsorship'])->name('sponsorship.purchase');
     Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);
-    Route::resource('views', ViewController::class)->except(['create', 'update', 'show', 'destroy']);;
+    Route::resource('statistic', StatisticsController::class)->except(['create', 'update', 'show', 'destroy']);;
 });
 
 
