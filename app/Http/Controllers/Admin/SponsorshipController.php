@@ -18,7 +18,6 @@ class SponsorshipController extends Controller
     {
         $villain = Villain::where('user_id', Auth::id())->first();
         $is_sponsored = false;
-
         if (!$villain) {
             return redirect()->back()->with('error', 'Nessun villain trovato per questo utente.');
         }
@@ -108,6 +107,12 @@ class SponsorshipController extends Controller
         $expiration_date->addHours($sponsorship->hours);
 
         $villain->sponsorships()->attach($sponsorship->id, ['expiration_date' => $expiration_date, 'purchase_price' => $sponsorship->price]);
+        return redirect()->route('admin.sponsorship.index')->with('message', 'Sponsorship purchased successfully!');
+    }
+
+    public function resetSession()
+    {
+        session()->forget(['clientToken', 'price', 'hours', 'clicked']);
         return redirect()->route('admin.sponsorship.index');
     }
 }
