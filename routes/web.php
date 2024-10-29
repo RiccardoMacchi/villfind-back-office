@@ -39,7 +39,6 @@ Route::get('/checkout/error', function () {
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DasboardController::class, 'index'])->name('home');
     Route::resource('villains', VillainController::class)->except(['create', 'show']);
-    // Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('ratings', RatingController::class);
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
     Route::post('/reset-session', [SponsorshipController::class, 'resetSession'])->name('session.reset');
