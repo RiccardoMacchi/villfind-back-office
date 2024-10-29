@@ -30,10 +30,6 @@
                 </small>
             @enderror
         </div>
-
-        <span class="col-1 text-center align-self-center g-0">
-            <i class="fa-solid fa-asterisk"></i>
-        </span>
     </div>
 
     <div class="row mb-4">
@@ -128,10 +124,6 @@
                 </small>
             @enderror
         </div>
-
-        <span class="col-1 text-center align-self-center g-0">
-            <i class="fa-solid fa-asterisk"></i>
-        </span>
     </div>
 
     <div class="row mb-4">
@@ -171,10 +163,6 @@
                 </small>
             @enderror
         </div>
-
-        <span class="col-1 text-center align-self-center g-0">
-            <i class="fa-solid fa-asterisk"></i>
-        </span>
     </div>
 
     <div class="row mb-4">
