@@ -17,34 +17,33 @@ class StatisticsController extends Controller
     {
         $villainId = Auth::id();
 
-        // Array dei mesi per gli ultimi 12 mesi, inizializzati a 0
         $months = [];
         foreach (range(0, 11) as $i) {
-            $month = Carbon::now()->subMonths($i)->format('Y-m');
+            $month = Carbon::now()->subMonths($i)->format('F');
             $months[$month] = 0;
         }
-        $months = array_reverse($months, true); // Ordina in ordine cronologico
+        $months = array_reverse($months, true);
 
-        // Statistiche valutazioni
-        $monthlyReviews = DB::table('rating_villain')
-        ->where('villain_id', $villainId)
+        // Statistiche visualizzazioni
+        $monthlyViews = View::where('villain_id', $villainId)
         ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as total")
         ->where('created_at', '>=', Carbon::now()->subYear())
         ->groupBy('month')
         ->pluck('total', 'month')
         ->toArray();
 
-    $reviewsMonthly = array_merge($months, $monthlyReviews);
+        $viewsMonthly = array_merge($months, $monthlyViews);
 
-        // Statistiche visualizzazioni
-        $monthlyViews = View::where('villain_id', $villainId)
+        // Statistiche valutazioni
+        $monthlyReviews = DB::table('rating_villain')
+            ->where('villain_id', $villainId)
             ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as total")
             ->where('created_at', '>=', Carbon::now()->subYear())
             ->groupBy('month')
             ->pluck('total', 'month')
             ->toArray();
 
-        $viewsMonthly = array_merge($months, $monthlyViews);
+
 
         // Statistiche messaggi
         $monthlyMessages = Message::where('villain_id', $villainId)
@@ -54,10 +53,9 @@ class StatisticsController extends Controller
             ->pluck('total', 'month')
             ->toArray();
 
-        $messagesMonthly = array_merge($months, $monthlyMessages);
+        $messagesMonthly = array_merge($months, $monthlyMessages,);
+        // dd($monthlyViews, $monthlyReviews, $monthlyMessages );
 
-        dd($messagesMonthly, $viewsMonthly, $monthlyReviews);
-
-        return view('admin.statistic.index', compact('monthlyReviews', 'viewsMonthly', 'messagesMonthly'));
+        return view('admin.statistic.index', compact('monthlyViews','monthlyReviews', 'monthlyMessages', 'months'));
     }
 }

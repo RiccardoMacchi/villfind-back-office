@@ -29,9 +29,9 @@ return [
             'menu_icon' => '<i class="fa-solid fa-star"></i>',
         ],
         [
-            'menu_text' => 'VIEWS',
+            'menu_text' => 'STATISTIC',
             'route_name' => 'admin.statistic.index',
-            'menu_icon' => '<i class="fa-solid fa-users-viewfinder"></i>',
+            'menu_icon' => '<i class="fa-solid fa-chart-column"></i>',
         ],
     ],
 ];
