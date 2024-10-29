@@ -216,7 +216,7 @@ class PageController extends Controller
 
         $new_mess->fill($data);
         $new_mess->save();
-        return response()->json(['message' => 'Messaggio salvato con successo!', 'data' => $new_mess], 201);
+        return response()->json(['message' => 'Message saved successfully!', 'data' => $new_mess], 201);
     }
 
     public function storeRating(Request $request)
