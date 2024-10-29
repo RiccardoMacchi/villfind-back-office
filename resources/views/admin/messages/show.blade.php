@@ -28,7 +28,7 @@
             <div class="mb-4 col-lg-4">
                 <h2 class="text-primary">Date:</h2>
                 <span class="fnt-size-4">
-                    {{ $message->created_at }}
+                    {{ $message->created_at_formatted }}
                 </span>
             </div>
 

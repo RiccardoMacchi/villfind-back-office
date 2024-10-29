@@ -29,10 +29,15 @@ class SponsorshipController extends Controller
             ->orderBy('pivot_expiration_date', 'desc')
             ->paginate(25);
 
+        foreach ($orders as $order) {
+            $order->pivot->formatted_expiration_date = \Carbon\Carbon::parse($order->pivot->expiration_date)->format('d/m/Y');
+            $order->pivot->formatted_created_at = \Carbon\Carbon::parse($order->pivot->created_at)->format('d/m/Y');
+        };
+
         $columns = [
             ['label' => 'Plan', 'field' => 'name'],
-            ['label' => 'Expiration Date', 'field' => 'pivot->expiration_date'],
-            ['label' => 'Purchase Date', 'field' => 'pivot->created_at'],
+            ['label' => 'Expiration Date', 'field' => 'pivot->formatted_expiration_date'],
+            ['label' => 'Purchase Date', 'field' => 'formatted_created_at'],
             ['label' => 'Total', 'field' => 'pivot->purchase_price'],
         ];
 
@@ -107,7 +112,8 @@ class SponsorshipController extends Controller
         $expiration_date->addHours($sponsorship->hours);
 
         $villain->sponsorships()->attach($sponsorship->id, ['expiration_date' => $expiration_date, 'purchase_price' => $sponsorship->price]);
-        return redirect()->route('admin.sponsorship.index')->with('message', 'Sponsorship purchased successfully!');
+
+        return redirect()->route('admin.sponsorship.index')->with('message', 'Sponsorship purchased successfully! ');
     }
 
     public function resetSession()

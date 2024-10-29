@@ -16,10 +16,14 @@ class MessageController extends Controller
     {
         $messages = Message::orderBy('created_at')->where('villain_id', Auth::id())->paginate(25);
 
+        foreach ($messages as $message) {
+            $message->created_at_formatted = $message->created_at->format('d/m/Y H:i');
+        }
+
         $columns = [
             ['label' => 'Sender', 'field' => 'full_name'],
             ['label' => 'Message', 'field' => 'content'],
-            ['label' => 'Sent', 'field' => 'created_at'],
+            ['label' => 'Sent', 'field' => 'created_at_formatted'],
         ];
 
         return view('admin.messages.index', compact('messages', 'columns'));
