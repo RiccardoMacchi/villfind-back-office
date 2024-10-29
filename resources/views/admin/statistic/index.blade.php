@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <h2 class="text-primary my-4">Statistics Views</h2>
         <h4 class="text-primary mt-2 mb-3">Total Views in the Last 12 Months: {{ array_sum($monthlyViews) }}</h4>
         @include('admin.statistic.partials.chart', [
