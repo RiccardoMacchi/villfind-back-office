@@ -29,3 +29,5 @@ Route::get('/list-by-skill/{id}', [PageController::class, 'listBySkill']);
 Route::get('/list-by-filters', [PageController::class, 'listByFilters']);
 Route::get('/villains-rating', [PageController::class, 'villainsRating']);
 Route::get('/active-sponsorship', [PageController::class, 'villainsSponsored']);
+
+Route::post('/receive-client-ip', [PageController::class, 'receiveClientIp']);

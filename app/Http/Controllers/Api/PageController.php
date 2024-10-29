@@ -11,6 +11,7 @@ use App\Models\Universe;
 use App\Models\Villain;
 use App\Models\Rating;
 use App\Models\Sponsorship;
+use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -226,5 +227,15 @@ class PageController extends Controller
         ]);
 
         return response()->json(['message' => 'Rating saved successfully!'], 201);
+    }
+
+    public function receiveClientIp(Request $request)
+    {
+        $clientIp = $request->input('ip');
+
+        $new_ip = new View;
+        $new_ip->save($clientIp);
+
+        return response()->json(['success' => true]);
     }
 }
