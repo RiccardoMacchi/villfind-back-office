@@ -13,6 +13,7 @@ use App\Models\Rating;
 use App\Models\Sponsorship;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
@@ -46,6 +47,7 @@ class PageController extends Controller
     public function allSkills()
     {
         $skills = Skill::orderBy('name')->get();
+
         if ($skills) {
             $success = true;
         } else {
@@ -57,6 +59,7 @@ class PageController extends Controller
     public function allServices()
     {
         $services = Service::orderBy('name')->get();
+
         if ($services) {
             $success = true;
         } else {
@@ -68,6 +71,7 @@ class PageController extends Controller
     public function allUniverses()
     {
         $universes = Universe::orderBy('name')->get();
+
         if ($universes) {
             $success = true;
         } else {
@@ -76,105 +80,93 @@ class PageController extends Controller
         return response()->json(compact('success', 'universes'));
     }
 
-    public function allRatings()
+    public function maxPossibleReviews()
     {
-        $ratings = Rating::select('value')->distinct()->orderBy('value')->get();
+        $max_possible_reviews = DB::table('rating_villain')
+            ->select(DB::raw('COUNT(*) as rating_count'))
+            ->groupBy('villain_id')
+            ->orderByDesc('rating_count')
+            ->limit(1)
+            ->value('rating_count');
 
-
-        $success = $ratings->isNotEmpty();
-
-        return response()->json(compact('success', 'ratings'));
+        return response()->json(compact('max_possible_reviews'));
     }
 
-    public function villainBySlug($slug)
+    public function maxRatingValue()
     {
-        $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
-        if ($villain) {
-            $success = true;
-            if ($villain->image) {
-                $villain->image = asset($villain->image);
-            } else {
-                $villain->image = Storage::url('placeholder_img.jpg');
-            }
-        } else {
-            $success = false;
-        }
+        $max_rating_value = Rating::max('value');
 
-        return response()->json(compact('success', 'villain'));
+        return response()->json(compact('max_rating_value'));
     }
 
-    public function listByUniverse($id)
-    {
-        $universe = Universe::where('id', $id)->with('villains')->first();
-        if ($universe) {
-            $success = true;
-        } else {
-            $success = false;
-        }
-        return response()->json(compact('success', 'universe'));
-    }
+    // public function villainBySlug($slug)
+    // {
+    //     $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
+    //     if ($villain) {
+    //         $success = true;
+    //         if ($villain->image) {
+    //             $villain->image = asset($villain->image);
+    //         } else {
+    //             $villain->image = Storage::url('placeholder_img.jpg');
+    //         }
+    //     } else {
+    //         $success = false;
+    //     }
 
-    public function listBySkill($id)
-    {
-        $skill = Skill::where('id', $id)->with('villains')->first();
-        if ($skill) {
-            $success = true;
-        } else {
-            $success = false;
-        }
-        return response()->json(compact('success', 'skill'));
-    }
+    //     return response()->json(compact('success', 'villain'));
+    // }
 
-    public function listByService($id)
-    {
-        $service = Service::where('id', $id)->with('villains')->first();
-        if ($service) {
-            $success = true;
-        } else {
-            $success = false;
-        }
-        return response()->json(compact('success', 'service'));
-    }
     public function listByFilters(Request $request)
     {
         $query = Villain::with('ratings', 'universe', 'skills', 'services', 'sponsorships')
             ->leftJoin('sponsorship_villain', 'villains.id', '=', 'sponsorship_villain.villain_id')
             ->select('villains.*')
-            ->addSelect(\DB::raw('MAX(CASE WHEN sponsorship_villain.expiration_date > NOW() THEN 1 ELSE 0 END) as active_sponsorship'))
+            ->addSelect(DB::raw('MAX(CASE WHEN sponsorship_villain.expiration_date > NOW() THEN 1 ELSE 0 END) as active_sponsorship'))
             ->groupBy('villains.id')
             ->orderByDesc('active_sponsorship')
             ->orderBy('name', 'asc');
+
         if ($request->has('universe_id')) {
-            $query->where('universe_id', $request->input('universe_id'));
+            $universe_id = $request->input('universe_id');
+
+            $query->where('universe_id', $universe_id);
         }
 
         if ($request->has('skill_id')) {
-            $query->whereHas('skills', function ($q) use ($request) {
-                $q->where('id', $request->input('skill_id'));
+            $skill_id = $request->input('skill_id');
+
+            $query->whereHas('skills', function ($q) use ($skill_id) {
+                $q->where('id', $skill_id);
             });
         }
 
         if ($request->has('service_id')) {
-            $query->whereHas('services', function ($q) use ($request) {
-                $q->where('id', $request->input('service_id'));
+            $service_id = $request->input('service_id');
+
+            $query->whereHas('services', function ($q) use ($service_id) {
+                $q->where('id', $service_id);
             });
         }
 
         if ($request->has('rating')) {
-            $rating = $request->input('rating');
-            $query->withAvg('ratings', 'value')
-                ->having('ratings_avg_value', '>=', $rating);
+            $avg_rating = $request->input('rating');
+
+            $query->leftJoin('rating_villain', 'villains.id', '=', 'rating_villain.villain_id')
+                ->leftJoin('ratings', 'rating_villain.rating_id', '=', 'ratings.id')
+                ->addSelect(DB::raw('AVG(ratings.value) as weighted_average_rating'))
+                ->groupBy('villains.id')
+                ->having('weighted_average_rating', '>=', $avg_rating);
         }
 
         if ($request->has('min_reviews')) {
-            $minReviews = $request->input('min_reviews');
-            $query->whereHas('ratings', function ($q) use ($minReviews) {
+            $min_reviews = $request->input('min_reviews');
+
+            $query->whereHas('ratings', function ($q) use ($min_reviews) {
                 $q->select('villain_id')
                     ->groupBy('villain_id')
-                    ->havingRaw('COUNT(*) >= ?', [$minReviews]);
+                    ->havingRaw('COUNT(*) >= ?', [$min_reviews]);
             });
         }
-
 
         $villains = $query->get();
 
@@ -186,7 +178,7 @@ class PageController extends Controller
 
         $success = $villains->isNotEmpty();
 
-        return response()->json(compact('success', 'villains', 'maxReviews'));
+        return response()->json(compact('success', 'villains'));
     }
 
     public function storeMessage(Request $request)
