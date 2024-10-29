@@ -32,7 +32,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Using Vite -->
-    @vite(['resources/scss/app.scss'])
+    @vite(['resources/js/app.js'])
+    @vite(['resources/js/cv_modal.js'])
 </head>
 
 <body class="bg-dark">

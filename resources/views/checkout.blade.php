@@ -52,7 +52,7 @@
                 event.preventDefault();
 
                 if (isProcessing) {
-                    return; // Don't submit the form if already processing
+                    return;
                 }
 
                 isProcessing = true;
@@ -62,7 +62,7 @@
                         isProcessing = false;
                         console.error('Errore nel metodo di pagamento:', err);
                         document.getElementById('error-message').classList.remove('d-none');
-                        return; // Do not hide the buttons in case of an error
+                        return;
                     }
 
                     var nonceInput = document.createElement('input');
@@ -78,7 +78,7 @@
 
                     document.getElementById('checkout-form').submit();
 
-                    clear(); // Hide the buttons only if the payment request is successful
+                    clear();
                 });
             });
         });
@@ -89,7 +89,7 @@
 
         function checkPaymentOption() {
             if (isProcessing) {
-                return; // Non eseguire controlli mentre è in elaborazione
+                return;
             }
 
             const showCardClass = paymentBraintree.querySelector('.braintree-show-card');
@@ -108,7 +108,7 @@
 
         function clear() {
             console.log('clicked');
-            optionsPay.classList.add('d-none'); // Nasconde il contenitore solo quando non ci sono errori
+            optionsPay.classList.add('d-none');
         }
 
         function resetSession(event) {

@@ -99,22 +99,22 @@ class PageController extends Controller
         return response()->json(compact('max_rating_value'));
     }
 
-    // public function villainBySlug($slug)
-    // {
-    //     $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
-    //     if ($villain) {
-    //         $success = true;
-    //         if ($villain->image) {
-    //             $villain->image = asset($villain->image);
-    //         } else {
-    //             $villain->image = Storage::url('placeholder_img.jpg');
-    //         }
-    //     } else {
-    //         $success = false;
-    //     }
+    public function villainBySlug($slug)
+    {
+        $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
+        if ($villain) {
+            $success = true;
+            if ($villain->image) {
+                $villain->image = asset($villain->image);
+            } else {
+                $villain->image = Storage::url('placeholder_img.jpg');
+            }
+        } else {
+            $success = false;
+        }
 
-    //     return response()->json(compact('success', 'villain'));
-    // }
+        return response()->json(compact('success', 'villain'));
+    }
 
     public function listByFilters(Request $request)
     {
