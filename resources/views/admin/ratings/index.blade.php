@@ -31,8 +31,6 @@
         </h2>
 
         <x-admin.table :items="$ratings" :columns="$columns" :isViewable="'pivot->id'" />
-
-        {{-- <a href="{{ route('admin.ratings.statistics') }}" class="btn btn-primary mt-3">Statistics</a> --}}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
