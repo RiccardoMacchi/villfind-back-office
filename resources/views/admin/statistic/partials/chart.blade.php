@@ -1,5 +1,4 @@
-<canvas id="{{ $chartId }}" style="style=position: relative; height:80vh; max-width:90%; min-width:200px"
-    class="w-100 h-auto mx-auto my d-block"></canvas>
+<canvas id="{{ $chartId }}" style="max-width: 90%;" class="w-100 h-auto mx-auto my d-block"></canvas>
 
 <script>
     const dataValues_{{ $chartId }} = @json($data);
