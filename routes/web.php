@@ -6,8 +6,11 @@ use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\Admin\VillainController;
 use App\Http\Controllers\Admin\SponsorshipController;
+use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
+use App\Models\Sponsorship;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,14 +25,27 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 
+// Rotte payment
+Route::get('/checkout/{sponsorship}', [PaymentController::class, 'showCheckout'])->name('checkout.show');
+Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout.process');
+Route::get('/checkout/success', function () {
+    return 'Transazione completata con successo!';
+})->name('checkout.success');
+Route::get('/checkout/error', function () {
+    return 'C\'è stato un errore durante la transazione.';
+})->name('checkout.error');
+
+
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DasboardController::class, 'index'])->name('home');
     Route::resource('villains', VillainController::class)->except(['create', 'show']);
     // Route::get('ratings/statistics', [RatingController::class, 'statistics'])->name('ratings.statistics');
     Route::resource('ratings', RatingController::class);
     Route::resource('messages', MessageController::class)->except(['create', 'update']);
-    Route::post('sponsorship/purchase/{sponsorship}', [SponsorshipController::class, 'purchaseSponsorship'])->name('sponsorship.purchase');
+    Route::post('/reset-session', [SponsorshipController::class, 'resetSession'])->name('session.reset');
+    Route::get('sponsorship/purchase/{sponsorship}', [SponsorshipController::class, 'purchaseSponsorship'])->name('sponsorship.purchase');
     Route::resource('sponsorship', SponsorshipController::class)->except(['create', 'update', 'show', 'destroy']);
+    Route::resource('statistic', StatisticsController::class)->except(['create', 'update', 'show', 'destroy']);;
 });
 
 

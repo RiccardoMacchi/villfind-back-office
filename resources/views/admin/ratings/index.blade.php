@@ -9,8 +9,7 @@
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -23,8 +22,7 @@
             </span>
         @endif
 
-        <canvas id="ratingsChart" style="max-width: 600px;"
-                class="w-100 h-auto mx-auto d-block"></canvas>
+        <canvas id="ratingsChart" style="max-width: 600px;" class="w-100 h-auto mx-auto d-block"></canvas>
 
         <h2 class="text-primary mt-5 mb-3">
             Reviews
@@ -46,7 +44,7 @@
             displayNoReviewsMessage();
         } else {
             const ratingsChart = new Chart(ctx, {
-                type: 'pie',
+                type: 'doughnut',
                 data: {
                     labels: [
                         '1 Star',
@@ -65,24 +63,17 @@
                             ratingsCounts[5]
                         ],
                         backgroundColor: [
-                            '#35005fb0',
-                            '#6a0dadb0',
-                            '#4737a2b0',
-                            '#236196b0',
-                            '#008b8bb0'
-                        ],
-                        borderColor: [
                             '#35005f',
                             '#6a0dad',
                             '#4737a2',
                             '#236196',
                             '#008b8b'
                         ],
-                        borderWidth: 2
+
                     }]
                 },
                 options: {
-                    devicePixelRatio: 2,
+
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
@@ -105,6 +96,7 @@
                             }
                         }
                     }
+
                 }
             });
 

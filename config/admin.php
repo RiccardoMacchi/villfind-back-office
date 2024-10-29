@@ -28,5 +28,10 @@ return [
             'route_name' => 'admin.ratings.index',
             'menu_icon' => '<i class="fa-solid fa-star"></i>',
         ],
+        [
+            'menu_text' => 'VIEWS',
+            'route_name' => 'admin.statistic.index',
+            'menu_icon' => '<i class="fa-solid fa-users-viewfinder"></i>',
+        ],
     ],
 ];

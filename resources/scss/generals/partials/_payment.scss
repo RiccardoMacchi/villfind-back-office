@@ -1,0 +1,66 @@
+#checkout-form {
+    width: 80%;
+    margin: 50px auto;
+    position: relative;
+
+    button {
+        // float: right;
+        margin: 5px auto;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .input-container {
+        margin-bottom: 20px;
+        position: absolute;
+        top: 6rem;
+        right: 1rem;
+        color: $success;
+        z-index: 99;
+
+        small {
+            color: black;
+            font-size: 0.7rem;
+        }
+
+        #fixed_price {
+            position: relative;
+
+            #currency {
+                position: absolute;
+                top: 50%;
+                left: 4px;
+                transform: translate(0, -50%);
+            }
+        }
+
+        .price-input {
+            border: 1px solid white;
+            border-radius: 8px;
+            padding: 5px 15px;
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            color: $success;
+
+        }
+    }
+}
+
+@media screen and (max-width: 998px) {
+    #checkout-form {
+        .input-container {
+            position: static;
+            margin-bottom: 10px;
+            right: auto;
+            bottom: auto;
+        }
+
+        div.braintree-form-number.braintree-form__hosted-field {
+            input {
+                width: 100%;
+            }
+        }
+
+    }
+}
