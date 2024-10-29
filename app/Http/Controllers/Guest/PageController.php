@@ -9,6 +9,6 @@ class PageController extends Controller
 {
     public function index()
     {
-        return view('guest.index');
+        return redirect()->away('http://localhost:5174/');
     }
 }
