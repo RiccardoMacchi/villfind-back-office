@@ -15,7 +15,7 @@
             Name *
         </label>
 
-        <div class="col-11 col-lg-8 position-relative">
+        <div class="col-12  col-lg-9 position-relative">
             <div class="input-group">
                 <input type="text" name="name" id="name" aria-errormessage="name-error"
                     class="form-control @error('name') is-invalid @enderror"
@@ -30,10 +30,6 @@
                 </small>
             @enderror
         </div>
-
-        <span class="col-1 text-center align-self-center g-0">
-            <i class="fa-solid fa-asterisk"></i>
-        </span>
     </div>
 
     <div class="row mb-4">
@@ -41,7 +37,7 @@
             Image
         </label>
 
-        <div class="col-11 col-lg-8 position-relative">
+        <div class="col-12  col-lg-9 position-relative">
             <div class="input-group">
                 <input type="file" name="image" id="image" aria-errormessage="image-error"
                     class="form-control @error('image') is-invalid @enderror">
@@ -68,7 +64,7 @@
             Phone
         </label>
 
-        <div class="col-11 col-lg-8 position-relative">
+        <div class="col-12  col-lg-9 position-relative">
             <div class="input-group">
                 <select name="country_code" id="country_code"
                     class="form-select @error('country_code') is-invalid @enderror"
@@ -105,7 +101,7 @@
             Universe *
         </label>
 
-        <div class="col-11 col-lg-8 position-relative">
+        <div class="col-12  col-lg-9 position-relative">
             <div class="input-group">
                 <select name="universe_id" id="universe_id" aria-errormessage="universe_id-error"
                     class="form-select select-height @error('universe_id') is-invalid @enderror" required>
@@ -128,10 +124,6 @@
                 </small>
             @enderror
         </div>
-
-        <span class="col-1 text-center align-self-center g-0">
-            <i class="fa-solid fa-asterisk"></i>
-        </span>
     </div>
 
     <div class="row mb-4">
@@ -139,7 +131,7 @@
             Skills
         </label>
 
-        <div class="col-11 col-lg-8 position-relative">
+        <div class="col-12 col-lg-9 position-relative">
             <div class="dropdown">
                 <button type="button" id="skills"
                     class="form-select text-start @error('skills') is-invalid @enderror" data-bs-toggle="dropdown"
@@ -171,10 +163,6 @@
                 </small>
             @enderror
         </div>
-
-        <span class="col-1 text-center align-self-center g-0">
-            <i class="fa-solid fa-asterisk"></i>
-        </span>
     </div>
 
     <div class="row mb-4">
@@ -182,7 +170,7 @@
             Services
         </label>
 
-        <div class="col-11 col-lg-8 position-relative">
+        <div class="col-12 col-lg-9 position-relative">
             <div class="dropdown">
                 <button type="button" id="services"
                     class="form-select text-start @error('services') is-invalid @enderror" data-bs-toggle="dropdown"
@@ -221,7 +209,7 @@
             Curriculum Vitae
         </label>
 
-        <div class="col-11 col-lg-8 position-relative">
+        <div class="col-12 col-lg-9 position-relative">
             <div class="input-group">
                 <input type="file" name="cv" id="cv" aria-errormessage="cv-error"
                     class="form-control @error('cv') is-invalid @enderror">
