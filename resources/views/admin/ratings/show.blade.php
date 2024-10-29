@@ -28,7 +28,7 @@
             <div class="mb-4 col-lg-4">
                 <h2 class="text-primary">Date:</h2>
                 <span class="fnt-size-4">
-                    {{ $rating->pivot->created_at }}
+                    {{ $rating->pivot->formatted_created_at }}
                 </span>
             </div>
 

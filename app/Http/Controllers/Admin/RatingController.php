@@ -23,11 +23,15 @@ class RatingController extends Controller
             $ratings = $villain->ratings()->withPivot('full_name', 'content', 'created_at')
                 ->orderByPivot('created_at', 'desc')->paginate(25);
 
+            foreach ($ratings as $rating) {
+                $rating->pivot->formatted_created_at = \Carbon\Carbon::parse($rating->pivot->created_at)->format('d/m/Y');
+            }
+
             $columns = [
                 ['label' => 'Costumer Name', 'field' => 'pivot->full_name'],
                 ['label' => 'Rating', 'field' => 'value'],
                 ['label' => 'Content', 'field' => 'pivot->content'],
-                ['label' => 'Date', 'field' => 'pivot->created_at'],
+                ['label' => 'Date', 'field' => 'pivot->formatted_created_at'],
             ];
 
             if ($ratings->count()) {
@@ -87,6 +91,10 @@ class RatingController extends Controller
         if ($villain) {
             $rating = $villain->ratings()->wherePivot('id', $review_id)
                 ->withPivot('full_name', 'content', 'created_at')->first();
+
+            if ($rating) {
+                $rating->pivot->formatted_created_at = \Carbon\Carbon::parse($rating->pivot->created_at)->format('d/m/Y');
+            }
         } else {
             return redirect()->route('admin.ratings.index');
         }
