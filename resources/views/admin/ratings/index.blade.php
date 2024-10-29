@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mb-3">
+    <div class="container ">
         <h1 class="text-primary my-4">
             Ratings
         </h1>

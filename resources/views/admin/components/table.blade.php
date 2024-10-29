@@ -5,9 +5,11 @@
 @endphp
 
 <div class="card shadow-lg mb-3 overflow-hidden border-primary-subtle">
-    {{-- <div class="card-header bg-primary-subtle border-primary-subtle">
-        {{ $items->links() }}
-    </div> --}}
+    @if ($items->count())
+        <div class="card-header bg-primary-subtle border-primary-subtle">
+            {{ $items->links() }}
+        </div>
+    @endif
 
     <div class="card-body p-0 table-responsive">
         @if ($items->count())
@@ -67,7 +69,9 @@
 
                                             <li>
                                                 @include('admin.general.button_view', [
-                                                    'link' => route($resource_route . '.show', $value),
+                                                    'link' => route(
+                                                        $resource_route . '.show',
+                                                        $value),
                                                 ])
                                             </li>
                                         @endif
@@ -87,7 +91,9 @@
 
                                             <li>
                                                 @include('admin.general.button_edit', [
-                                                    'link' => route($resource_route . '.update', $value),
+                                                    'link' => route(
+                                                        $resource_route . '.update',
+                                                        $value),
                                                 ])
                                             </li>
                                         @endif
@@ -106,9 +112,14 @@
                                             @endphp
 
                                             <li>
-                                                @include('admin.general.button_delete', [
-                                                    'link' => route($resource_route . '.destroy', $value),
-                                                ])
+                                                @include(
+                                                    'admin.general.button_delete',
+                                                    [
+                                                        'link' => route(
+                                                            $resource_route . '.destroy',
+                                                            $value),
+                                                    ]
+                                                )
                                             </li>
                                         @endif
                                     </menu>
