@@ -29,7 +29,7 @@ return [
             'menu_icon' => '<i class="fa-solid fa-star"></i>',
         ],
         [
-            'menu_text' => 'STATISTIC',
+            'menu_text' => 'STATISTICS',
             'route_name' => 'admin.statistic.index',
             'menu_icon' => '<i class="fa-solid fa-chart-column"></i>',
         ],

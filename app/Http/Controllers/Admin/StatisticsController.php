@@ -19,18 +19,18 @@ class StatisticsController extends Controller
 
         $months = [];
         foreach (range(0, 11) as $i) {
-            $month = Carbon::now()->subMonths($i)->format('F');
+            $month = Carbon::now()->subMonths($i)->format('M');
             $months[$month] = 0;
         }
         $months = array_reverse($months, true);
 
         // Statistiche visualizzazioni
         $monthlyViews = View::where('villain_id', $villainId)
-        ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as total")
-        ->where('created_at', '>=', Carbon::now()->subYear())
-        ->groupBy('month')
-        ->pluck('total', 'month')
-        ->toArray();
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, COUNT(*) as total")
+            ->where('created_at', '>=', Carbon::now()->subYear())
+            ->groupBy('month')
+            ->pluck('total', 'month')
+            ->toArray();
 
         $viewsMonthly = array_merge($months, $monthlyViews);
 
@@ -56,6 +56,6 @@ class StatisticsController extends Controller
         $messagesMonthly = array_merge($months, $monthlyMessages,);
         // dd($monthlyViews, $monthlyReviews, $monthlyMessages );
 
-        return view('admin.statistic.index', compact('monthlyViews','monthlyReviews', 'monthlyMessages', 'months'));
+        return view('admin.statistic.index', compact('monthlyViews', 'monthlyReviews', 'monthlyMessages', 'months'));
     }
 }

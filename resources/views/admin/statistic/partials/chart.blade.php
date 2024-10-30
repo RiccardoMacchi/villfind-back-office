@@ -1,4 +1,6 @@
-<canvas id="{{ $chartId }}" style="max-width: 90%;" class="w-100 h-auto mx-auto my-4 d-block"></canvas>
+<div style="height: 400px" class="mx-auto w-100 my-4">
+    <canvas id="{{ $chartId }}" class="d-block w-100 h-100"></canvas>
+</div>
 
 <script>
     const dataValues_{{ $chartId }} = @json($data);
@@ -25,7 +27,7 @@
             options: {
                 devicePixelRatio: 2,
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         display: true,
@@ -41,11 +43,12 @@
                     tooltip: {
                         callbacks: {
                             label: function(tooltipItem) {
-                                const total = dataValues_{{ $chartId }}.reduce((acc, curr) => acc +
+                                const total = dataValues_{{ $chartId }}.reduce((
+                                        acc, curr) => acc +
                                     curr, 0);
                                 const value = tooltipItem.raw;
                                 const percentage = ((value / total) * 100).toFixed(2);
-                                return `${value} (${percentage}%)`;
+                                return ` ${value} (${percentage}%)`;
                             }
                         }
                     }
@@ -55,24 +58,24 @@
                         ticks: {
                             color: 'black',
                             font: {
-                                weight: '900',
-                                size: 15
+                                weight: 'bold',
+                                size: 14
                             }
                         },
                         grid: {
-                            color: '#ccc'
+                            color: '#aaa'
                         }
                     },
                     x: {
                         ticks: {
                             color: 'black',
                             font: {
-                                weight: '900',
-                                size: 15
+                                weight: 'bold',
+                                size: 14
                             }
                         },
                         grid: {
-                            color: '#ccc'
+                            color: '#aaa'
                         }
                     }
                 }
