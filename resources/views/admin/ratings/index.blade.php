@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mb-3 d-flex flex-column align-items-center">
+    <div class="container mb-3">
         <h1 class="text-primary my-4">
             Ratings
         </h1>
@@ -27,7 +27,7 @@
         <h2 class="text-primary mt-5 mb-3">
             Reviews
         </h2>
-        <div class="col-md-8 col-12 custom-table">
+        <div class="col-12">
             <x-admin.table :items="$ratings" :columns="$columns" :isViewable="'pivot->id'" />
         </div>
     </div>

@@ -33,7 +33,7 @@
                     @foreach ($items as $item)
                         <tr>
                             @foreach ($columns as $column)
-                                <td class="border-bottom-0">
+                                <td class="border-bottom-0 text-nowrap">
                                     @php
                                         $value = $item;
                                         $parts = explode('->', $column['field']);
@@ -44,7 +44,10 @@
                                     @endphp
 
                                     @if ($column['field'] === 'value' && isset($item->pivot->stars))
-                                        {!! $item->pivot->stars !!}
+                                        {!! $item->pivot->stars !!} {{-- Renderizza le stelle gialle --}}
+                                    @elseif ($column['field'] === 'pivot->formatted_created_at')
+                                        <span class="short-date">{{ $item->pivot->formatted_created_at }}</span>
+                                        <span class="mobile-date">{{ $item->pivot->mobile_formatted_created_at }}</span>
                                     @elseif ($value)
                                         {{ $value }}
                                     @else

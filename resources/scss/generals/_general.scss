@@ -124,4 +124,25 @@ a {
     background: linear-gradient(45deg, $secondary, $accent), $primary;
 }
 
+.fa-star {
+    color: rgb(250, 204, 0,);
+}
+
+@media (max-width: 497px){
+    .fa-star {
+        font-size: 0.8rem;
+    }
+}
+.mobile-date {
+    display: none;
+}
+@media (max-width: 470px) {
+    .short-date {
+        display: none;
+    }
+    .mobile-date {
+        display: inline;
+    }
+}
+
 

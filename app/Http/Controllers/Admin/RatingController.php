@@ -25,6 +25,7 @@ class RatingController extends Controller
 
             foreach ($ratings as $rating) {
                 $rating->pivot->formatted_created_at = \Carbon\Carbon::parse($rating->pivot->created_at)->format('d/m/Y');
+                $rating->pivot->mobile_formatted_created_at = \Carbon\Carbon::parse($rating->pivot->created_at)->format('d/m/y');
                 $rating->pivot->stars = Helper::iconifyRating($rating->value);
             }
 
