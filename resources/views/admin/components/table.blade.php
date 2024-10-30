@@ -43,7 +43,9 @@
                                         }
                                     @endphp
 
-                                    @if ($value)
+                                    @if ($column['field'] === 'value' && isset($item->pivot->stars))
+                                        {!! $item->pivot->stars !!}
+                                    @elseif ($value)
                                         {{ $value }}
                                     @else
                                         {{ isset($column['default_content']) ? $column['default_content'] : '~' }}
@@ -69,9 +71,7 @@
 
                                             <li>
                                                 @include('admin.general.button_view', [
-                                                    'link' => route(
-                                                        $resource_route . '.show',
-                                                        $value),
+                                                    'link' => route($resource_route . '.show', $value),
                                                 ])
                                             </li>
                                         @endif
@@ -91,9 +91,7 @@
 
                                             <li>
                                                 @include('admin.general.button_edit', [
-                                                    'link' => route(
-                                                        $resource_route . '.update',
-                                                        $value),
+                                                    'link' => route($resource_route . '.update', $value),
                                                 ])
                                             </li>
                                         @endif
@@ -112,14 +110,9 @@
                                             @endphp
 
                                             <li>
-                                                @include(
-                                                    'admin.general.button_delete',
-                                                    [
-                                                        'link' => route(
-                                                            $resource_route . '.destroy',
-                                                            $value),
-                                                    ]
-                                                )
+                                                @include('admin.general.button_delete', [
+                                                    'link' => route($resource_route . '.destroy', $value),
+                                                ])
                                             </li>
                                         @endif
                                     </menu>
