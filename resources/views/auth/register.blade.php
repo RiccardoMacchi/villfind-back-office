@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-lg-10">
                 <div class="card">
                     <div class="card-header">{{ __('Register') }}</div>
 
@@ -22,7 +22,7 @@
                                            name="name" pattern=".{3,}"
                                            title="The name must be at least 3 characters long"
                                            value="{{ old('name') }}" required autocomplete="name"
-                                           autofocus>
+                                           placeholder="At least 3 characters" autofocus>
 
                                     @error('name')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
@@ -44,6 +44,7 @@
                                            name="email" minlength="3" maxlength="255"
                                            pattern="[a-z0-9\._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}"
                                            title="Please enter a valid lowercase email address."
+                                           placeholder="Valid lowercase email address"
                                            value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
@@ -66,20 +67,9 @@
                                            name="password" minlength="8" maxlength="32"
                                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?])[A-Za-z\d@#$%&*!?]{8,32}$"
                                            title="Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (@, #, $, %, &, *, !, ?)"
+                                           placeholder="At least 8 characters: require uppers, lowers, digits and symbols"
                                            autocomplete="new-password" required
                                            oninput="validatePassword()">
-
-                                    <!-- Password requirements message -->
-                                    <small class="d-flex align-items-start mt-2">
-                                        <i class="fas fa-exclamation-circle mt-1 text-warning"></i>
-                                        <ul class="mb-0 ps-2">
-                                            <li id="length">Minimum 8 and maximum 32 characters</li>
-                                            <li id="uppercase">Minimum 1 uppercase letter</li>
-                                            <li id="lowercase">Minimum 1 lowercase letter</li>
-                                            <li id="number">Minimum 1 number</li>
-                                            <li id="special">Minimum 1 special character</li>
-                                        </ul>
-                                    </small>
 
                                     @error('password')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
@@ -98,7 +88,7 @@
                                 <div class="col-lg-8 position-relative">
                                     <input id="password-confirm" type="password" class="form-control"
                                            name="password_confirmation" autocomplete="new-password"
-                                           required>
+                                           placeholder="Re-enter your password" required>
                                 </div>
                             </div>
 
@@ -221,36 +211,5 @@
                 passwordConfirmInputField.setCustomValidity('');
             }
         });
-
-
-        // password validator
-        function validatePassword() {
-            const password = document.getElementById("password").value;
-
-            // Requirements
-            const lengthRequirement = document.getElementById("length");
-            const uppercaseRequirement = document.getElementById("uppercase");
-            const lowercaseRequirement = document.getElementById("lowercase");
-            const numberRequirement = document.getElementById("number");
-            const specialRequirement = document.getElementById("special");
-
-            // Check the requirements
-            lengthRequirement.classList.toggle("text-success", password.length >= 8 && password
-                .length <= 32);
-            lengthRequirement.classList.toggle("text-danger", !(password.length >= 8 && password
-                .length <= 32));
-
-            uppercaseRequirement.classList.toggle("text-success", /[A-Z]/.test(password));
-            uppercaseRequirement.classList.toggle("text-danger", !/[A-Z]/.test(password));
-
-            lowercaseRequirement.classList.toggle("text-success", /[a-z]/.test(password));
-            lowercaseRequirement.classList.toggle("text-danger", !/[a-z]/.test(password));
-
-            numberRequirement.classList.toggle("text-success", /\d/.test(password));
-            numberRequirement.classList.toggle("text-danger", !/\d/.test(password));
-
-            specialRequirement.classList.toggle("text-success", /[@#$%&*!?]/.test(password));
-            specialRequirement.classList.toggle("text-danger", !/[@#$%&*!?]/.test(password));
-        }
     </script>
 @endsection
