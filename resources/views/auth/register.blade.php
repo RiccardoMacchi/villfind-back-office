@@ -16,15 +16,17 @@
                                     {{ __('Name *') }}
                                 </label>
 
-                                <div class="col-11 col-lg-7 position-relative">
+                                <div class="col-lg-8 position-relative">
                                     <input id="name" type="text"
-                                        class="form-control @error('name') is-invalid @enderror" name="name"
-                                        pattern=".{3,}" title="The name must be at least 3 characters long"
-                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                           class="form-control @error('name') is-invalid @enderror"
+                                           name="name" pattern=".{3,}"
+                                           title="The name must be at least 3 characters long"
+                                           value="{{ old('name') }}" required autocomplete="name"
+                                           autofocus>
 
                                     @error('name')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
-                                            style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
                                             {{ $message }}
                                         </small>
                                     @enderror
@@ -36,16 +38,17 @@
                                     {{ __('E-Mail Address *') }}
                                 </label>
 
-                                <div class="col-11 col-lg-7 position-relative">
-                                    <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        minlength="3" maxlength="255" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                        title="Please enter a valid lowercase email address." value="{{ old('email') }}"
-                                        required autocomplete="email">
+                                <div class="col-lg-8 position-relative">
+                                    <input id="email" type="text"
+                                           class="form-control @error('email') is-invalid @enderror"
+                                           name="email" minlength="3" maxlength="255"
+                                           pattern="[a-z0-9\._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}"
+                                           title="Please enter a valid lowercase email address."
+                                           value="{{ old('email') }}" required autocomplete="email">
 
                                     @error('email')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
-                                            style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
                                             {{ $message }}
                                         </small>
                                     @enderror
@@ -57,17 +60,30 @@
                                     {{ __('Password *') }}
                                 </label>
 
-                                <div class="col-11 col-lg-7 position-relative">
+                                <div class="col-lg-8 position-relative">
                                     <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        minlength="8" maxlength="32"
-                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?])[A-Za-z\d@#$%&*!?]{8,32}$"
-                                        title="Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (@, #, $, %, &, *, !, ?)"
-                                        autocomplete="new-password" required>
+                                           class="form-control @error('password') is-invalid @enderror"
+                                           name="password" minlength="8" maxlength="32"
+                                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?])[A-Za-z\d@#$%&*!?]{8,32}$"
+                                           title="Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (@, #, $, %, &, *, !, ?)"
+                                           autocomplete="new-password" required
+                                           oninput="validatePassword()">
+
+                                    <!-- Password requirements message -->
+                                    <small class="d-flex align-items-start mt-2">
+                                        <i class="fas fa-exclamation-circle mt-1 text-warning"></i>
+                                        <ul class="mb-0 ps-2">
+                                            <li id="length">Minimum 8 and maximum 32 characters</li>
+                                            <li id="uppercase">Minimum 1 uppercase letter</li>
+                                            <li id="lowercase">Minimum 1 lowercase letter</li>
+                                            <li id="number">Minimum 1 number</li>
+                                            <li id="special">Minimum 1 special character</li>
+                                        </ul>
+                                    </small>
 
                                     @error('password')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
-                                            style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
                                             {{ $message }}
                                         </small>
                                     @enderror
@@ -79,9 +95,10 @@
                                     {{ __('Confirm Password *') }}
                                 </label>
 
-                                <div class="col-11 col-lg-7 position-relative">
+                                <div class="col-lg-8 position-relative">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" autocomplete="new-password" required>
+                                           name="password_confirmation" autocomplete="new-password"
+                                           required>
                                 </div>
                             </div>
 
@@ -91,18 +108,20 @@
                                     Universe *
                                 </label>
 
-                                <div class="col-11 col-lg-7 position-relative">
+                                <div class="col-lg-8 position-relative">
                                     <div class="input-group">
                                         <select name="universe_id" id="universe_id"
-                                            class="form-select select-height @error('universe_id') is-invalid @enderror"
-                                            required>
+                                                class="form-select select-height @error('universe_id') is-invalid @enderror"
+                                                required>
 
-                                            <option value="" disabled @selected(!old('universe_id', null))>
+                                            <option value="" disabled
+                                                    @selected(!old('universe_id', null))>
                                                 Select a universe of origin
                                             </option>
 
                                             @foreach ($universes as $universe)
-                                                <option value="{!! $universe->id !!}" @selected($universe->id === old('universe_id', null))>
+                                                <option value="{!! $universe->id !!}"
+                                                        @selected($universe->id === old('universe_id', null))>
                                                     {{ $universe->name }}
                                                 </option>
                                             @endforeach
@@ -111,7 +130,7 @@
 
                                     @error('universe_id')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
-                                            style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
                                             {{ $message }}
                                         </small>
                                     @enderror
@@ -124,24 +143,28 @@
                                     Skills *
                                 </label>
 
-                                <div class="col-11 col-lg-7 position-relative">
+                                <div class="col-lg-8 position-relative">
                                     <div class="dropdown">
                                         <button type="button" id="skills"
-                                            class="form-select text-start @error('skills') is-invalid @enderror"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                class="form-select text-start @error('skills') is-invalid @enderror"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
                                             None
                                         </button>
 
-                                        <ul class="dropdown-menu w-100 select-height" aria-labelledby="skills">
+                                        <ul class="dropdown-menu w-100 select-height"
+                                            aria-labelledby="skills">
                                             @foreach ($skills as $skill)
                                                 <li>
-                                                    <label class="dropdown-item" for="skill-{!! $skill->id !!}"
-                                                        onclick="event.stopPropagation()">
+                                                    <label class="dropdown-item"
+                                                           for="skill-{!! $skill->id !!}"
+                                                           onclick="event.stopPropagation()">
                                                         <input type="checkbox" name="skills[]"
-                                                            value="{!! $skill->id !!}"
-                                                            id="skill-{!! $skill->id !!}"
-                                                            data-name="{!! $skill->name !!}" class="form-check-input"
-                                                            @checked(in_array($skill->id, old('skills', []))) onclick="event.stopPropagation()">
+                                                               value="{!! $skill->id !!}"
+                                                               id="skill-{!! $skill->id !!}"
+                                                               data-name="{!! $skill->name !!}"
+                                                               class="form-check-input"
+                                                               @checked(in_array($skill->id, old('skills', [])))
+                                                               onclick="event.stopPropagation()">
 
                                                         {{ $skill->name }}
                                                     </label>
@@ -152,7 +175,7 @@
 
                                     @error('skills')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
-                                            style="bottom: -1.25em; font-size: .75em;" role="alert">
+                                               style="bottom: -1.25em; font-size: .75em;" role="alert">
                                             {{ $message }}
                                         </small>
                                     @enderror
@@ -198,5 +221,36 @@
                 passwordConfirmInputField.setCustomValidity('');
             }
         });
+
+
+        // password validator
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+
+            // Requirements
+            const lengthRequirement = document.getElementById("length");
+            const uppercaseRequirement = document.getElementById("uppercase");
+            const lowercaseRequirement = document.getElementById("lowercase");
+            const numberRequirement = document.getElementById("number");
+            const specialRequirement = document.getElementById("special");
+
+            // Check the requirements
+            lengthRequirement.classList.toggle("text-success", password.length >= 8 && password
+                .length <= 32);
+            lengthRequirement.classList.toggle("text-danger", !(password.length >= 8 && password
+                .length <= 32));
+
+            uppercaseRequirement.classList.toggle("text-success", /[A-Z]/.test(password));
+            uppercaseRequirement.classList.toggle("text-danger", !/[A-Z]/.test(password));
+
+            lowercaseRequirement.classList.toggle("text-success", /[a-z]/.test(password));
+            lowercaseRequirement.classList.toggle("text-danger", !/[a-z]/.test(password));
+
+            numberRequirement.classList.toggle("text-success", /\d/.test(password));
+            numberRequirement.classList.toggle("text-danger", !/\d/.test(password));
+
+            specialRequirement.classList.toggle("text-success", /[@#$%&*!?]/.test(password));
+            specialRequirement.classList.toggle("text-danger", !/[@#$%&*!?]/.test(password));
+        }
     </script>
 @endsection
