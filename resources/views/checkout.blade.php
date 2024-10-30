@@ -31,7 +31,7 @@
                 <button class="btn btn-danger" type="button" onclick="resetSession(event)">Cancel</button>
             </div>
         </div>
-        <div id="error-message" class="text-danger d-none"></div> <!-- Area per mostrare messaggi di errore -->
+        <div id="error-message" class="text-danger d-none"></div>
     </form>
 
     <script>
@@ -44,9 +44,11 @@
             container: '#bt-dropin'
         }, function(createErr, instance) {
             if (createErr) {
-                console.error('Errore nella creazione del Drop-in:', createErr);
+                console.error('Error in creating the Drop-in:', createErr);
                 return;
             }
+
+            checkPaymentOption();
 
             document.getElementById('checkout-form').addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -60,7 +62,7 @@
                 instance.requestPaymentMethod(function(err, payload) {
                     if (err) {
                         isProcessing = false;
-                        console.error('Errore nel metodo di pagamento:', err);
+                        console.error('Error in the payment method:', err);
                         document.getElementById('error-message').classList.remove('d-none');
                         return;
                     }
@@ -83,28 +85,18 @@
             });
         });
 
-
         const optionsPay = document.querySelector('.input-container');
         const paymentBraintree = document.getElementById('bt-dropin');
 
         function checkPaymentOption() {
-            if (isProcessing) {
-                return;
-            }
-
             const showCardClass = paymentBraintree.querySelector('.braintree-show-card');
+
             if (showCardClass) {
                 optionsPay.classList.remove('d-none');
             } else {
                 optionsPay.classList.add('d-none');
             }
         }
-
-        const observer = new MutationObserver(checkPaymentOption);
-        observer.observe(paymentBraintree, {
-            childList: true,
-            subtree: true
-        });
 
         function clear() {
             console.log('clicked');
@@ -122,7 +114,7 @@
                 window.location.href = "{{ route('admin.sponsorship.index') }}";
             }).catch((error) => {
                 isProcessing = false;
-                console.error('Errore durante il reset della sessione:', error)
+                console.error('Error during session reset:', error)
             });
         }
     </script>
