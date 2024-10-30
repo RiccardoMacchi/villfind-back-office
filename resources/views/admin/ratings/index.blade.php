@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container ">
+    <div class="container mb-3">
         <h1 class="text-primary my-4">
             Ratings
         </h1>
@@ -9,7 +9,8 @@
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                        aria-label="Close"></button>
             </div>
         @endif
 
@@ -22,7 +23,8 @@
             </span>
         @endif
 
-        <canvas id="ratingsChart" style="max-width: 600px;" class="w-100 h-auto mx-auto d-block"></canvas>
+        <canvas id="ratingsChart" style="max-width: 600px;"
+                class="w-100 h-auto mx-auto d-block"></canvas>
 
         <h2 class="text-primary mt-5 mb-3">
             Reviews
@@ -69,11 +71,12 @@
                             '#236196',
                             '#008b8b'
                         ],
-
+                        borderColor: '#F5F5F5',
+                        borderWidth: 4
                     }]
                 },
                 options: {
-
+                    cutout: '60%',
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
