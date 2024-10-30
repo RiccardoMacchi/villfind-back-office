@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mb-3">
+    <div class="container mb-3 d-flex flex-column align-items-center">
         <h1 class="text-primary my-4">
             Ratings
         </h1>
@@ -9,8 +9,7 @@
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -23,14 +22,14 @@
             </span>
         @endif
 
-        <canvas id="ratingsChart" style="max-width: 600px;"
-                class="w-100 h-auto mx-auto d-block"></canvas>
+        <canvas id="ratingsChart" style="max-width: 600px;" class="w-100 h-auto mx-auto d-block"></canvas>
 
         <h2 class="text-primary mt-5 mb-3">
             Reviews
         </h2>
-
-        <x-admin.table :items="$ratings" :columns="$columns" :isViewable="'pivot->id'" />
+        <div class="col-md-8 col-12 custom-table">
+            <x-admin.table :items="$ratings" :columns="$columns" :isViewable="'pivot->id'" />
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

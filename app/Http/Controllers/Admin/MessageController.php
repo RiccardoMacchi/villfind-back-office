@@ -22,7 +22,6 @@ class MessageController extends Controller
 
         $columns = [
             ['label' => 'Sender', 'field' => 'full_name'],
-            ['label' => 'Message', 'field' => 'content'],
             ['label' => 'Sent', 'field' => 'created_at_formatted'],
         ];
 
