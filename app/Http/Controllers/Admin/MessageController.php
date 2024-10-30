@@ -14,14 +14,15 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::orderBy('created_at')->where('villain_id', Auth::id())->paginate(25);
+        $messages = Message::orderBy('created_at')->where('villain_id', Auth::id())->paginate(25)->onEachSide(0);
 
         foreach ($messages as $message) {
-            $message->created_at_formatted = $message->created_at->format('d/m/Y H:i');
+            $message->created_at_formatted = $message->created_at->format('d/m/y H:i');
         }
 
         $columns = [
             ['label' => 'Sender', 'field' => 'full_name'],
+            ['label' => 'e-mail', 'field' => 'email'],
             ['label' => 'Sent', 'field' => 'created_at_formatted'],
         ];
 

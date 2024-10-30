@@ -21,7 +21,7 @@ class RatingController extends Controller
 
         if ($villain) {
             $ratings = $villain->ratings()->withPivot('full_name', 'content', 'created_at')
-                ->orderByPivot('created_at', 'desc')->paginate(25);
+                ->orderByPivot('created_at', 'desc')->paginate(25)->onEachSide(0);
 
             foreach ($ratings as $rating) {
                 $rating->pivot->formatted_created_at = \Carbon\Carbon::parse($rating->pivot->created_at)->format('d/m/Y');
