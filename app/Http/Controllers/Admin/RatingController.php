@@ -30,7 +30,6 @@ class RatingController extends Controller
             $columns = [
                 ['label' => 'Costumer Name', 'field' => 'pivot->full_name'],
                 ['label' => 'Rating', 'field' => 'value'],
-                ['label' => 'Content', 'field' => 'pivot->content'],
                 ['label' => 'Date', 'field' => 'pivot->formatted_created_at'],
             ];
 

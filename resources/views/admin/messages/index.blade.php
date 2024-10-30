@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mb-3">
+    <div class="container mb-3 ">
         <h1 class="text-primary my-4">
             Messages
         </h1>
@@ -19,6 +19,8 @@
             </div>
         @endif
 
-        <x-admin.table :items="$messages" :columns="$columns" :isViewable="true" />
+        <div class="col-md-8 col-12">
+            <x-admin.table :items="$messages" :columns="$columns" :isViewable="true" class="custom-table" />
+        </div>
     </div>
 @endsection
