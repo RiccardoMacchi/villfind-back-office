@@ -199,7 +199,9 @@ class PageController extends Controller
             $villain->image = $villain->image ? asset($villain->image) : Storage::url('placeholder_img.jpg');
 
             $visitor_ip = $request->ip();
-            $exists = View::where('visitor_ip', $visitor_ip)->where('villain_id', $villain->id)->exists();
+            $exists = View::where('visitor_ip', $visitor_ip)->where('villain_id', $villain->id)
+                ->where('created_at', '>', now()->startOfDay())->exists();
+
             if (!$exists) {
                 $view = new View();
                 $view->villain_id = $villain->id;
