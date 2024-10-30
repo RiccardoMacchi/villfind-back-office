@@ -21,8 +21,8 @@ class ViewsTableSeeder extends Seeder
             if ($row_count) {
                 $view = new View();
                 $view->villain_id = $row_data[0];
-                $view->visitor_ip= $row_data[1];
-                $view->created_at= Carbon::parse($row_data[2]);
+                $view->visitor_ip = $row_data[1];
+                $view->created_at = Carbon::parse($row_data[2]);
                 $view->save();
             }
         }

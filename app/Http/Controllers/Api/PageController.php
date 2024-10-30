@@ -100,23 +100,25 @@ class PageController extends Controller
         return response()->json(compact('max_rating_value'));
     }
 
-    public function villainBySlug($slug)
+    // Send only sponsored villains
+    public function villainsSponsored()
     {
-        $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
-        if ($villain) {
+
+        $villains = Villain::whereHas('sponsorships', function ($query) {
+            $query->where('expiration_date', '>', Carbon::now());
+        })->with(['ratings', 'services'])->get();
+
+        if ($villains->isNotEmpty()) {
             $success = true;
-            if ($villain->image) {
-                $villain->image = asset($villain->image);
-            } else {
-                $villain->image = Storage::url('placeholder_img.jpg');
-            }
         } else {
             $success = false;
+            $villains = [];
         }
 
-        return response()->json(compact('success', 'villain'));
+        return response()->json(compact('success', 'villains'));
     }
 
+    // Send villains filtered based by request filters
     public function listByFilters(Request $request)
     {
         $query = Villain::with('ratings', 'universe', 'skills', 'services', 'sponsorships')
@@ -182,6 +184,30 @@ class PageController extends Controller
         return response()->json(compact('success', 'villains'));
     }
 
+    // Send single villain data and log view
+    public function villainBySlug($slug, Request $request)
+    {
+        $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
+
+        if ($villain) {
+            $success = true;
+
+            $villain->image = $villain->image ? asset($villain->image) : Storage::url('placeholder_img.jpg');
+
+            $visitor_ip = $request->ip();
+
+            $view = new View();
+            $view->villain_id = $villain->id;
+            $view->visitor_ip = $visitor_ip;
+            $view->save();
+        } else {
+            $success = false;
+        }
+
+        return response()->json(compact('success', 'villain'));
+    }
+
+    // Get and store a message for a villain
     public function storeMessage(Request $request)
     {
         $data = $request->all();
@@ -190,24 +216,7 @@ class PageController extends Controller
 
         $new_mess->fill($data);
         $new_mess->save();
-        return response()->json(['message' => 'Messaggio salvato con successo!', 'data' => $new_mess], 201);
-    }
-
-    public function villainsSponsored()
-    {
-
-        $villains = Villain::whereHas('sponsorships', function ($query) {
-            $query->where('expiration_date', '>', Carbon::now());
-        })->with(['ratings', 'services'])->get();
-
-        if ($villains->isNotEmpty()) {
-            $success = true;
-        } else {
-            $success = false;
-            $villains = [];
-        }
-
-        return response()->json(compact('success', 'villains'));
+        return response()->json(['message' => 'Message saved successfully!', 'data' => $new_mess], 201);
     }
 
     public function storeRating(Request $request)
@@ -227,15 +236,5 @@ class PageController extends Controller
         ]);
 
         return response()->json(['message' => 'Rating saved successfully!'], 201);
-    }
-
-    public function receiveClientIp(Request $request)
-    {
-        $clientIp = $request->input('ip');
-
-        $new_ip = new View;
-        $new_ip->save($clientIp);
-
-        return response()->json(['success' => true]);
     }
 }
