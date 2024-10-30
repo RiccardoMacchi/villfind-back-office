@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MessageRequest;
+use App\Mail\UserContacted;
 use App\Models\Message;
 use App\Models\Service;
 use App\Models\Skill;
@@ -11,10 +12,13 @@ use App\Models\Universe;
 use App\Models\Villain;
 use App\Models\Rating;
 use App\Models\Sponsorship;
+use App\Models\User;
 use App\Models\View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
@@ -218,6 +222,16 @@ class PageController extends Controller
 
         $new_mess->fill($data);
         $new_mess->save();
+
+        $villainMail = User::where('id', $request->villain_id)->value('email');
+
+        $data = (object) [
+            'name' => $request->full_name,
+            'villainEmail' => $villainMail
+        ];
+
+        Mail::to($data->villainEmail)->send(new UserContacted($data));
+
         return response()->json(['message' => 'Message saved successfully!', 'data' => $new_mess], 201);
     }
 
