@@ -30,14 +30,16 @@ class SponsorshipController extends Controller
             ->paginate(25);
 
         foreach ($orders as $order) {
-            $order->pivot->formatted_expiration_date = \Carbon\Carbon::parse($order->pivot->expiration_date)->format('d/m/Y');
-            $order->pivot->formatted_created_at = \Carbon\Carbon::parse($order->pivot->created_at)->format('d/m/Y');
+            $order->pivot->formatted_expiration_date = Carbon::parse($order->pivot->expiration_date)->format('d/m/Y');
+            $order->pivot->mobile_formatted_expiration_date = Carbon::parse($order->pivot->expiration_date)->format('d/m/y');
+            $order->pivot->formatted_created_at = Carbon::parse($order->pivot->created_at)->format('d/m/Y');
+            $order->pivot->mobile_formatted_created_at = Carbon::parse($order->pivot->created_at)->format('d/m/y');
         };
 
         $columns = [
             ['label' => 'Plan', 'field' => 'name'],
             ['label' => 'Expiration Date', 'field' => 'pivot->formatted_expiration_date'],
-            ['label' => 'Purchase Date', 'field' => 'formatted_created_at'],
+            ['label' => 'Purchase Date', 'field' => 'pivot->formatted_created_at'],
             ['label' => 'Total', 'field' => 'pivot->purchase_price'],
         ];
 

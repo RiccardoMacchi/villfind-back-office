@@ -46,9 +46,16 @@
                                     @if ($column['field'] === 'value' && isset($item->pivot->stars))
                                         {!! $item->pivot->stars !!} {{-- Renderizza le stelle gialle --}}
                                     @elseif ($column['field'] === 'pivot->formatted_created_at')
-                                        <span class="short-date">{{ $item->pivot->formatted_created_at }}</span>
+                                        <span class="date">{{ $item->pivot->formatted_created_at }}</span>
                                         <span class="mobile-date">{{ $item->pivot->mobile_formatted_created_at }}</span>
-                                    @elseif ($value)
+                                    @elseif ($column['field'] === 'created_at_formatted')
+                                        <span class="date">{{ $item->formatted_created_at }}</span>
+                                        <span class="mobile-date">{{ $item->mobile_formatted_created_at }}</span>
+                                    @elseif($column['field'] === 'pivot->formatted_expiration_date')
+                                        <span class="date">{{ $item->pivot->formatted_expiration_date }}</span>
+                                        <span
+                                            class="mobile-date">{{ $item->pivot->mobile_formatted_expiration_date }}</span>
+                                    @elseif($value)
                                         {{ $value }}
                                     @else
                                         {{ isset($column['default_content']) ? $column['default_content'] : '~' }}

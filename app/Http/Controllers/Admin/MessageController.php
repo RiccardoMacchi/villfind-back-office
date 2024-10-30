@@ -17,7 +17,9 @@ class MessageController extends Controller
         $messages = Message::orderBy('created_at')->where('villain_id', Auth::id())->paginate(25)->onEachSide(0);
 
         foreach ($messages as $message) {
-            $message->created_at_formatted = $message->created_at->format('d/m/y H:i');
+            $message->created_at_formatted = $message->created_at->format('d/m/Y H:i');
+            $message->mobile_formatted_created_at = $message->created_at->format('d/m/y');
+
         }
 
         $columns = [
