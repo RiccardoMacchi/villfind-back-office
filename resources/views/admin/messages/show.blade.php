@@ -54,9 +54,8 @@
             </div>
         </div>
 
-        <a href="{{ route('admin.ratings.index') }}" class="btn btn-primary mt-3">
+        <a href="{{ route('admin.messages.index') }}" class="btn btn-primary mt-3">
             Back
         </a>
-
     </div>
 @endsection

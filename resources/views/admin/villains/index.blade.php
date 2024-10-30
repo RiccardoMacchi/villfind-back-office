@@ -136,8 +136,12 @@
                                         <!-- Modal CV -->
                                         <div id="cvModal" class="modal-overlay">
                                             <div class="modal-content">
-                                                <iframe src="{{ asset($villain->cv) }}" width="100%"
-                                                        height="100%" frameborder="0"></iframe>
+                                                <div class="position-relative w-100 h-0"
+                                                     style="padding-bottom: 100%">
+                                                    <iframe src="{{ asset($villain->cv) }}"
+                                                            class="position-absolute top-0 start-0 w-100 h-100"
+                                                            frameborder="0"></iframe>
+                                                </div>
                                             </div>
 
                                             <div class="modal-actions">
