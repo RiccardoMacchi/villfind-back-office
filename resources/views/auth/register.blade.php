@@ -39,7 +39,7 @@
                                 <div class="col-11 col-lg-7 position-relative">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        minlength="3" maxlength="255" pattern="^[a-z0-9]+@[a-z0-9]+\.[a-z]{2,}$"
+                                        minlength="3" maxlength="255" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                         title="Please enter a valid lowercase email address." value="{{ old('email') }}"
                                         required autocomplete="email">
 
