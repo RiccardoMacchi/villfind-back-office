@@ -33,7 +33,7 @@
                     @foreach ($items as $item)
                         <tr>
                             @foreach ($columns as $column)
-                                <td class="border-bottom-0">
+                                <td class="border-bottom-0 text-nowrap">
                                     @php
                                         $value = $item;
                                         $parts = explode('->', $column['field']);
@@ -43,7 +43,19 @@
                                         }
                                     @endphp
 
-                                    @if ($value)
+                                    @if ($column['field'] === 'value' && isset($item->pivot->stars))
+                                        {!! $item->pivot->stars !!} {{-- Renderizza le stelle gialle --}}
+                                    @elseif ($column['field'] === 'pivot->formatted_created_at')
+                                        <span class="date">{{ $item->pivot->formatted_created_at }}</span>
+                                        <span class="mobile-date">{{ $item->pivot->mobile_formatted_created_at }}</span>
+                                    @elseif ($column['field'] === 'created_at_formatted')
+                                        <span class="date">{{ $item->formatted_created_at }}</span>
+                                        <span class="mobile-date">{{ $item->mobile_formatted_created_at }}</span>
+                                    @elseif($column['field'] === 'pivot->formatted_expiration_date')
+                                        <span class="date">{{ $item->pivot->formatted_expiration_date }}</span>
+                                        <span
+                                            class="mobile-date">{{ $item->pivot->mobile_formatted_expiration_date }}</span>
+                                    @elseif($value)
                                         {{ $value }}
                                     @else
                                         {{ isset($column['default_content']) ? $column['default_content'] : '~' }}
@@ -69,9 +81,7 @@
 
                                             <li>
                                                 @include('admin.general.button_view', [
-                                                    'link' => route(
-                                                        $resource_route . '.show',
-                                                        $value),
+                                                    'link' => route($resource_route . '.show', $value),
                                                 ])
                                             </li>
                                         @endif
@@ -91,9 +101,7 @@
 
                                             <li>
                                                 @include('admin.general.button_edit', [
-                                                    'link' => route(
-                                                        $resource_route . '.update',
-                                                        $value),
+                                                    'link' => route($resource_route . '.update', $value),
                                                 ])
                                             </li>
                                         @endif
@@ -112,14 +120,9 @@
                                             @endphp
 
                                             <li>
-                                                @include(
-                                                    'admin.general.button_delete',
-                                                    [
-                                                        'link' => route(
-                                                            $resource_route . '.destroy',
-                                                            $value),
-                                                    ]
-                                                )
+                                                @include('admin.general.button_delete', [
+                                                    'link' => route($resource_route . '.destroy', $value),
+                                                ])
                                             </li>
                                         @endif
                                     </menu>

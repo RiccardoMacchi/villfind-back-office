@@ -26,7 +26,7 @@ return [
         [
             'menu_text' => 'RATINGS',
             'route_name' => 'admin.ratings.index',
-            'menu_icon' => '<i class="fa-solid fa-star"></i>',
+            'menu_icon' => '<i class="fa-solid fa-star-half-stroke"></i>',
         ],
         [
             'menu_text' => 'STATISTICS',
