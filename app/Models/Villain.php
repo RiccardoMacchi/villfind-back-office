@@ -41,7 +41,7 @@ class Villain extends Model
 
     public function ratings()
     {
-        return $this->belongsToMany(Rating::class, ('rating_villain'))->withPivot('id', 'villain_id', 'rating_id', 'full_name', 'content', 'created_at')->withTimestamps();
+        return $this->belongsToMany(Rating::class, ('rating_villain'))->withPivot('id', 'villain_id', 'rating_id', 'full_name', 'content', 'created_at')->orderBy('pivot_created_at', 'desc')->withTimestamps();
     }
 
     public function messages()
