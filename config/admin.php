@@ -19,14 +19,14 @@ return [
             'menu_icon' => '<i class="fa-solid fa-envelope"></i>',
         ],
         [
-            'menu_text' => 'SPONSORSHIPS',
-            'route_name' => 'admin.sponsorship.index',
-            'menu_icon' => '<i class="fa-solid fa-hand-holding-dollar"></i>',
-        ],
-        [
             'menu_text' => 'RATINGS',
             'route_name' => 'admin.ratings.index',
             'menu_icon' => '<i class="fa-solid fa-star-half-stroke"></i>',
+        ],
+        [
+            'menu_text' => 'SPONSORSHIPS',
+            'route_name' => 'admin.sponsorship.index',
+            'menu_icon' => '<i class="fa-solid fa-hand-holding-dollar"></i>',
         ],
         [
             'menu_text' => 'STATISTICS',
