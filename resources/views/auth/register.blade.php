@@ -68,8 +68,7 @@
                                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?])[A-Za-z\d@#$%&*!?]{8,32}$"
                                            title="Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character (@, #, $, %, &, *, !, ?)"
                                            placeholder="At least 8 characters: require uppers, lowers, digits and symbols"
-                                           autocomplete="new-password" required
-                                           oninput="validatePassword()">
+                                           autocomplete="new-password" required>
 
                                     @error('password')
                                         <small class="invalid-feedback position-absolute start-0 px-3"
