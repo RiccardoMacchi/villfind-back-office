@@ -216,7 +216,7 @@ class PageController extends Controller
     }
 
     // Get and store a message for a villain
-    public function storeMessage(Request $request)
+    public function storeMessage(MessageRequest $request)
     {
         $data = $request->all();
 

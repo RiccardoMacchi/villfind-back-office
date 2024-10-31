@@ -77,7 +77,7 @@ a {
 
     main {
         border-radius: $border-radius-sm 0 0 0;
-        background-image: url('~resources/images/logos/logos-dk/logo-dk-mark-50.png');
+        background-image: url('~resources/images/logos/logos-dk/logo-dk-mark-25.png');
         background-repeat: no-repeat;
         background-size: 40%;
         background-position: center;
@@ -129,10 +129,10 @@ a {
 }
 
 .fa-star {
-    color: rgb(250, 204, 0,);
+    color: rgb(250, 204, 0, );
 }
 
-@media (max-width: 497px){
+@media (max-width: 497px) {
     .fa-star {
         font-size: 0.8rem;
     }
@@ -141,16 +141,17 @@ a {
     }
 
 }
+
 .mobile-date {
     display: none;
 }
+
 @media (max-width: 470px) {
     .date {
         display: none;
     }
+
     .mobile-date {
         display: inline;
     }
 }
-
-
