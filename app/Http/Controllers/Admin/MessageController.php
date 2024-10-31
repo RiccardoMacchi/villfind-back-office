@@ -51,7 +51,7 @@ class MessageController extends Controller
      */
     public function show(Message $message)
     {
-        if ($message->villain_id == Auth::id()) {
+        if ($message && $message->villain_id == Auth::id()){
             return view('admin.messages.show', compact('message'));
         }
 

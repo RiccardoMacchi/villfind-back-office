@@ -6,11 +6,10 @@
             <div class="card mb-3 p-0 col-11 col-lg-9 col-xl-8 overflow-hidden">
                 <div class="row g-0 p-0">
                     <div class="col-lg-5 p-0">
-                        <img src="{!! $villain->image !!}" alt="{!! $villain->name !!}"
-                             alt="{!! $villain->name !!}"
-                             class="img-fluid p-0 h-100 w-100 object-fit-cover"
-                             data-original-image-path="{!! $villain->image !!}"
-                             onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
+                        <img src="{!! $villain->image !!}" alt="{!! $villain->name !!}" alt="{!! $villain->name !!}"
+                            class="img-fluid p-0 h-100 w-100 object-fit-cover"
+                            data-original-image-path="{!! $villain->image !!}"
+                            onerror="this.onerror=null; this.src='{!! Vite::asset('resources/images/placeholders/image-placeholder-vertical.jpg') !!}'">
                     </div>
 
                     <div class="col-lg-7">
@@ -53,7 +52,7 @@
 
                                 <div class="mb-3">
                                     <strong class="text-primary">
-                                        <i class="fas fa-star"></i>&ensp;Average Rating:
+                                        <i class="fa-solid fa-star-half-stroke"></i>&ensp;Average Rating:
                                     </strong>
 
                                     @if (!$villain->ratings->isEmpty())
@@ -127,8 +126,8 @@
                                 @if ($villain->cv)
                                     <div class="mb-3">
                                         <div class="ps-3 d-block">
-                                            <a class="text-secondary text-decoration-underline"
-                                               id="viewCvBtn" role='button'>
+                                            <a class="text-secondary text-decoration-underline" id="viewCvBtn"
+                                                role='button'>
                                                 View CV
                                             </a>
                                         </div>
@@ -136,17 +135,15 @@
                                         <!-- Modal CV -->
                                         <div id="cvModal" class="modal-overlay">
                                             <div class="modal-content">
-                                                <div class="position-relative w-100 h-0"
-                                                     style="padding-bottom: 100%">
+                                                <div class="position-relative w-100 h-0" style="padding-bottom: 100%">
                                                     <iframe src="{{ asset($villain->cv) }}"
-                                                            class="position-absolute top-0 start-0 w-100 h-100"
-                                                            frameborder="0"></iframe>
+                                                        class="position-absolute top-0 start-0 w-100 h-100"
+                                                        frameborder="0"></iframe>
                                                 </div>
                                             </div>
 
                                             <div class="modal-actions">
-                                                <a href="{{ asset($villain->cv) }}"
-                                                   class="btn btn-primary" download>
+                                                <a href="{{ asset($villain->cv) }}" class="btn btn-primary" download>
                                                     Download
                                                 </a>
 
@@ -163,8 +160,7 @@
 
 
 
-                            <a href="{{ route('admin.villains.edit', $villain) }}"
-                               class="btn btn-primary">
+                            <a href="{{ route('admin.villains.edit', $villain) }}" class="btn btn-primary">
                                 Edit your profile
                             </a>
                         </div>
