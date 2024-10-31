@@ -57,7 +57,7 @@
 
                                     @if (!$villain->ratings->isEmpty())
                                         <span class="ps-3 d-block">
-                                            <span class="rating">
+                                            <span class="rating idx-star">
                                                 {!! $average_rating_icons !!}
                                             </span>
                                             &#40;{{ number_format($average_rating, 2) }}&#41;
