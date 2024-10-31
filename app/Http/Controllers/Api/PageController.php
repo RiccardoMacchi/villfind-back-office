@@ -191,7 +191,15 @@ class PageController extends Controller
     // Send single villain data and log view
     public function villainBySlug($slug, Request $request)
     {
-        $villain = Villain::where('slug', $slug)->with('skills', 'universe', 'services', 'ratings')->first();
+        $villain = Villain::where('slug', $slug)->with([
+            'skills',
+            'universe',
+            'user',
+            'services',
+            'ratings' => function ($query) {
+                $query->orderBy('rating_villain.created_at', 'desc');
+            }
+        ])->first();
 
         if ($villain) {
             $success = true;
