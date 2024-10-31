@@ -18,13 +18,13 @@ class MessageController extends Controller
 
         foreach ($messages as $message) {
             $message->formatted_created_at= $message->created_at->format('d/m/Y - H:i');
-            $message->mobile_formatted_created_at = $message->created_at->format('d/m/y');
+            $message->mobile_created_at = $message->created_at->format('d/m/y');
 
         }
 
         $columns = [
             ['label' => 'Sender', 'field' => 'full_name'],
-            ['label' => 'Sent', 'field' => 'created_at_formatted'],
+            ['label' => 'Sent', 'field' => 'formatted_created_at'],
         ];
 
         return view('admin.messages.index', compact('messages', 'columns'));
@@ -52,6 +52,8 @@ class MessageController extends Controller
     public function show(Message $message)
     {
         if ($message && $message->villain_id == Auth::id()){
+            $message->formatted_created_at = $message->created_at->format('d/m/Y - H:i');
+            $message->mobile_formatted_created_at = $message->created_at->format('d/m/y');
             return view('admin.messages.show', compact('message'));
         }
 

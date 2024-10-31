@@ -48,9 +48,9 @@
                                     @elseif ($column['field'] === 'pivot->formatted_created_at')
                                         <span class="date">{{ $item->pivot->formatted_created_at }}</span>
                                         <span class="mobile-date">{{ $item->pivot->mobile_formatted_created_at }}</span>
-                                    @elseif ($column['field'] === 'created_at_formatted')
+                                    @elseif ($column['field'] === 'formatted_created_at')
                                         <span class="date">{{ $item->formatted_created_at }}</span>
-                                        <span class="mobile-date">{{ $item->mobile_formatted_created_at }}</span>
+                                        <span class="mobile-date">{{ $item->mobile_created_at }}</span>
                                     @elseif($column['field'] === 'pivot->formatted_expiration_date')
                                         <span class="date">{{ $item->pivot->formatted_expiration_date }}</span>
                                         <span
