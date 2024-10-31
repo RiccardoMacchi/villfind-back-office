@@ -90,7 +90,7 @@ $clicked = session('clicked', false);
                             </strong>
 
                             <span>
-                                {{ $orders->first()->pivot->expiration_date }}
+                                {{ $orders->first()->pivot->precise_expiration_date }}
                             </span>
                         </div>
                     </div>

@@ -95,12 +95,13 @@ class RatingController extends Controller
 
             if ($rating) {
                 $rating->pivot->formatted_created_at = \Carbon\Carbon::parse($rating->pivot->created_at)->format('d/m/Y');
+                return view('admin.ratings.show', compact('rating'));
             }
-        } else {
-            return redirect()->route('admin.ratings.index');
         }
 
-        return view('admin.ratings.show', compact('rating'));
+        return redirect()->route('admin.ratings.index');
+
+
     }
 
 
