@@ -12,6 +12,12 @@ $clicked = session('clicked', false);
         <h1 class="text-primary my-4">
             Sponsorships
         </h1>
+        <p class="text-primary fw-semibold pb-3" style="font-size: 1.1rem">Do you want to highlight your profile? Our Premium
+            packages provide a unique
+            visibility
+            boost: your profile will
+            appear on the home page with an exclusive, customized style, and will always be at the top of advanced searches,
+            making you immediately visible and attractive to visitors throughout the selected period.</p>
         @if (session('message'))
             <div class="alert alert-success">
                 {{ session('message') }}
@@ -21,7 +27,7 @@ $clicked = session('clicked', false);
 
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             @foreach ($sponsorships as $plan)
-                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-4" style="width: 15rem">
+                <div class="card shadow p-3 d-flex flex-column justify-content-end gap-3" style="width: 18rem">
                     <h2 class="card-title text-primary mb-auto" style="font-size: 1.75rem">
                         {{ $plan->name }}
                     </h2>
@@ -35,6 +41,10 @@ $clicked = session('clicked', false);
                         <div>
                             <strong class="fw-bolder">Duration:</strong>
                             <span>{{ $plan->hours }} hours</span>
+                        </div>
+
+                        <div class="pt-2">
+                            <span>{{ $plan->description }}</span>
                         </div>
                     </div>
 

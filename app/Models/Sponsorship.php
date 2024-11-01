@@ -12,7 +12,8 @@ class Sponsorship extends Model
     protected $fillable = [
         'name',
         'price',
-        'hours'
+        'hours',
+        'description'
     ];
 
     public function villains()

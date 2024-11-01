@@ -1,4 +1,4 @@
-name,price,hours
-Boost Flash,2.99,24
-Boost Plus,5.99,72
-Boost Premium,9.99,144
+name,price,hours,description
+Premium Flash,2.99,24,"Rapid and targeted visibility, ideal for those looking to capture immediate attention in a short timeframe."
+Premium Plus,5.9,72,"Greater exposure with enhanced visibility, perfect for strategically reaching a wider audience effectively"
+Premium Elite,9.99,144,"The most powerful solution, guaranteeing consistent visibility for a solid and enduring presence in the spotlight."

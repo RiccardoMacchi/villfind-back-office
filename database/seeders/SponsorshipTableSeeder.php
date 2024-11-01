@@ -19,7 +19,8 @@ class SponsorshipTableSeeder extends Seeder
                 $sponsorship = new Sponsorship();
                 $sponsorship->name = $row_data[0];
                 $sponsorship->price = $row_data[1];
-                $sponsorship->hours = $row_data[2];;
+                $sponsorship->hours = $row_data[2];
+                $sponsorship->description = $row_data[3];
                 $sponsorship->save();
             }
         }
