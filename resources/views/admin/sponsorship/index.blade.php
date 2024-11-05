@@ -13,11 +13,11 @@ $clicked = session('clicked', false);
             Sponsorships
         </h1>
         <p class="text-primary fw-semibold pb-3" style="font-size: 1.1rem">Do you want to highlight your profile? Our Premium
-            packages provide a unique
-            visibility
-            boost: your profile will
-            appear on the home page with an exclusive, customized style, and will always be at the top of advanced searches,
-            making you immediately visible and attractive to visitors throughout the selected period.</p>
+            packages provide a unique visibility boost: your profile will appear on the home page with an exclusive,
+            customized style, and will always be at the top of advanced searches, making you immediately visible and
+            attractive to visitors throughout the selected period. <br>
+            You can purchase a new sponsorship even if the previous one hasn’t expired, because the plans are cumulative.
+        </p>
         @if (session('message'))
             <div class="alert alert-success">
                 {{ session('message') }}
